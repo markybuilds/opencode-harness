@@ -136,7 +136,7 @@ function formatRecent(tracker: ContextTracker, limit: number): string {
 }
 
 function formatImportant(tracker: ContextTracker, limit: number): string {
-    const items = tracker.getByImportance().slice(0, limit);
+    const items = tracker.getImportant().slice(0, limit);
     if (items.length === 0) return 'No items tracked yet.';
 
     const lines = ['## High Importance Items', ''];

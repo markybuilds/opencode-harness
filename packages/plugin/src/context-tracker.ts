@@ -26,28 +26,29 @@ const DEFAULT_CONFIG: ContextTrackerConfig = {
  * Tracks what files, functions, and search results the AI has viewed.
  * Calculates importance scores and signals when compaction is needed.
  */
-export class ContextTracker {
-    private state: ContextState;
-    private config: ContextTrackerConfig;
-
-    constructor(config: Partial<ContextTrackerConfig> = {}) {
-        this.config = { ...DEFAULT_CONFIG, ...config };
-        this.state = {
-            items: [],
-            totalTokensEstimate: 0,
-            needsCompaction: false,
-        };
-    }
+/**
+ * Context Tracker - RLM-inspired state machine
+ * 
+ * Tracks what files, functions, and search results the AI has viewed.
+ * Calculates importance scores and signals when compaction is needed.
+ */
+export function createContextTracker(initialConfig: Partial<ContextTrackerConfig> = {}) {
+    const config = { ...DEFAULT_CONFIG, ...initialConfig };
+    let state: ContextState = {
+        items: [],
+        totalTokensEstimate: 0,
+        needsCompaction: false,
+    };
 
     /**
      * Record that a file was viewed
      */
-    trackFile(path: string, tokens: number, summary?: string): void {
-        this.addItem({
+    function trackFile(path: string, tokens: number, summary?: string): void {
+        addItem({
             path,
             type: 'file',
             viewedAt: Date.now(),
-            importance: this.calculateImportance('file'),
+            importance: calculateImportance('file'),
             summary,
         }, tokens);
     }
@@ -55,24 +56,24 @@ export class ContextTracker {
     /**
      * Record that a function/class was viewed
      */
-    trackSymbol(path: string, symbolName: string, tokens: number): void {
-        this.addItem({
+    function trackSymbol(path: string, symbolName: string, tokens: number): void {
+        addItem({
             path: `${path}#${symbolName}`,
             type: 'function',
             viewedAt: Date.now(),
-            importance: this.calculateImportance('function'),
+            importance: calculateImportance('function'),
         }, tokens);
     }
 
     /**
      * Record a search query
      */
-    trackSearch(query: string, resultCount: number): void {
-        this.addItem({
+    function trackSearch(query: string, resultCount: number): void {
+        addItem({
             path: `search:${query}`,
             type: 'search',
             viewedAt: Date.now(),
-            importance: this.calculateImportance('search'),
+            importance: calculateImportance('search'),
             summary: `${resultCount} results`,
         }, 100);
     }
@@ -80,34 +81,34 @@ export class ContextTracker {
     /**
      * Record a command execution
      */
-    trackCommand(command: string, outputTokens: number): void {
-        this.addItem({
+    function trackCommand(command: string, outputTokens: number): void {
+        addItem({
             path: `cmd:${command.substring(0, 50)}`,
             type: 'command',
             viewedAt: Date.now(),
-            importance: this.calculateImportance('command'),
+            importance: calculateImportance('command'),
         }, outputTokens);
     }
 
     /**
      * Get current context state
      */
-    getState(): ContextState {
-        return { ...this.state };
+    function getState(): ContextState {
+        return { ...state };
     }
 
     /**
      * Get items sorted by importance
      */
-    getByImportance(): ContextItem[] {
-        return [...this.state.items].sort((a, b) => b.importance - a.importance);
+    function getByImportance(): ContextItem[] {
+        return [...state.items].sort((a, b) => b.importance - a.importance);
     }
 
     /**
      * Get recently viewed items
      */
-    getRecent(limit: number = 10): ContextItem[] {
-        return [...this.state.items]
+    function getRecent(limit: number = 10): ContextItem[] {
+        return [...state.items]
             .sort((a, b) => b.viewedAt - a.viewedAt)
             .slice(0, limit);
     }
@@ -115,16 +116,16 @@ export class ContextTracker {
     /**
      * Check if we've seen a specific path
      */
-    hasSeen(path: string): boolean {
-        return this.state.items.some((item) => item.path === path);
+    function hasSeen(path: string): boolean {
+        return state.items.some((item) => item.path === path);
     }
 
     /**
      * Mark compaction as complete
      */
-    markCompacted(): void {
-        this.state = {
-            ...this.state,
+    function markCompacted(): void {
+        state = {
+            ...state,
             needsCompaction: false,
             lastCompactionAt: Date.now(),
         };
@@ -134,12 +135,12 @@ export class ContextTracker {
      * Apply importance decay to all items
      * Call this periodically to reduce importance of old items
      */
-    applyDecay(): void {
-        this.state = {
-            ...this.state,
-            items: this.state.items.map((item) => ({
+    function applyDecay(): void {
+        state = {
+            ...state,
+            items: state.items.map((item) => ({
                 ...item,
-                importance: item.importance * this.config.importanceDecayRate,
+                importance: item.importance * config.importanceDecayRate,
             })),
         };
     }
@@ -147,37 +148,37 @@ export class ContextTracker {
     /**
      * Remove low-importance items to free up context
      */
-    prune(importanceThreshold: number = 0.1): ContextItem[] {
-        const removed = this.state.items.filter(
+    function prune(importanceThreshold: number = 0.1): ContextItem[] {
+        const removed = state.items.filter(
             (item) => item.importance < importanceThreshold
         );
 
-        this.state = {
-            ...this.state,
-            items: this.state.items.filter(
+        state = {
+            ...state,
+            items: state.items.filter(
                 (item) => item.importance >= importanceThreshold
             ),
-            totalTokensEstimate: this.state.items.reduce(
-                (sum, item) => sum + this.estimateTokens(item),
+            totalTokensEstimate: state.items.reduce(
+                (sum, item) => sum + estimateTokens(item),
                 0
             ),
         };
 
-        this.checkCompactionNeeded();
+        checkCompactionNeeded();
         return removed;
     }
 
     /**
      * Format context for RLM-style navigation prompt
      */
-    formatForPrompt(): string {
-        const items = this.getByImportance().slice(0, 20);
+    function formatForPrompt(): string {
+        const items = getByImportance().slice(0, 20);
 
         const lines = [
             '## Context Navigator',
             '',
             '**Recently Viewed:**',
-            ...this.getRecent(5).map(
+            ...getRecent(5).map(
                 (item) => `- ${item.type}: ${item.path}`
             ),
             '',
@@ -187,7 +188,7 @@ export class ContextTracker {
             ),
         ];
 
-        if (this.state.needsCompaction) {
+        if (state.needsCompaction) {
             lines.push('', '⚠️ **Context approaching limit - consider compacting**');
         }
 
@@ -196,16 +197,16 @@ export class ContextTracker {
 
     // Private methods
 
-    private addItem(item: ContextItem, tokens: number): void {
+    function addItem(item: ContextItem, tokens: number): void {
         // Check if item already exists
-        const existingIndex = this.state.items.findIndex(
+        const existingIndex = state.items.findIndex(
             (i) => i.path === item.path
         );
 
         if (existingIndex >= 0) {
             // Update existing item
-            const existing = this.state.items[existingIndex];
-            this.state.items[existingIndex] = {
+            const existing = state.items[existingIndex];
+            state.items[existingIndex] = {
                 ...existing,
                 viewedAt: item.viewedAt,
                 importance: Math.min(1, existing.importance + 0.1),
@@ -213,14 +214,14 @@ export class ContextTracker {
             };
         } else {
             // Add new item
-            this.state.items.push(item);
-            this.state.totalTokensEstimate += tokens;
+            state.items.push(item);
+            state.totalTokensEstimate += tokens;
         }
 
-        this.checkCompactionNeeded();
+        checkCompactionNeeded();
     }
 
-    private calculateImportance(type: ContextItem['type']): number {
+    function calculateImportance(type: ContextItem['type']): number {
         // Base importance by type
         const baseImportance: Record<ContextItem['type'], number> = {
             file: 0.7,
@@ -233,7 +234,7 @@ export class ContextTracker {
         return baseImportance[type] ?? 0.5;
     }
 
-    private estimateTokens(item: ContextItem): number {
+    function estimateTokens(item: ContextItem): number {
         // Rough estimation based on type
         const tokenEstimates: Record<ContextItem['type'], number> = {
             file: 500,
@@ -246,8 +247,38 @@ export class ContextTracker {
         return tokenEstimates[item.type] ?? 100;
     }
 
-    private checkCompactionNeeded(): void {
-        const ratio = this.state.totalTokensEstimate / this.config.maxTokens;
-        this.state.needsCompaction = ratio >= this.config.compactionThreshold;
+    function checkCompactionNeeded(): void {
+        const ratio = state.totalTokensEstimate / config.maxTokens;
+        state.needsCompaction = ratio >= config.compactionThreshold;
     }
+
+    function reset(): void {
+        state = {
+            items: [],
+            totalTokensEstimate: 0,
+            needsCompaction: false,
+        };
+    }
+
+    function getImportant(): ContextItem[] {
+        return getByImportance();
+    }
+
+    return {
+        trackFile,
+        trackSymbol,
+        trackSearch,
+        trackCommand,
+        getState,
+        reset,
+        hasSeen,
+        getRecent,
+        getImportant,
+        applyDecay,
+        prune,
+        markCompacted,
+        formatForPrompt
+    };
 }
+
+export type ContextTracker = ReturnType<typeof createContextTracker>;

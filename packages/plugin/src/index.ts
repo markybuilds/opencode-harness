@@ -5,14 +5,14 @@
  * Provides RLM-style context management and memory persistence.
  */
 
-import { ContextTracker } from './context-tracker.js';
-import { MemoryHooks } from './memory-hooks.js';
+import { createContextTracker } from './context-tracker.js';
+import { createMemoryHooks } from './memory-hooks.js';
 import { createContextNavTool } from './tools/context-nav.js';
 import type { Plugin, PluginContext, PluginHooks } from './types.js';
 
 // Re-export components for direct usage
-export { ContextTracker } from './context-tracker.js';
-export { MemoryHooks } from './memory-hooks.js';
+export { createContextTracker, type ContextTracker } from './context-tracker.js';
+export { createMemoryHooks, type MemoryHooks } from './memory-hooks.js';
 export { createContextNavTool } from './tools/context-nav.js';
 export type * from './types.js';
 
@@ -26,8 +26,8 @@ export type * from './types.js';
  */
 export const HarnessPlugin: Plugin = async (ctx: PluginContext): Promise<PluginHooks> => {
     const sessionId = crypto.randomUUID();
-    const tracker = new ContextTracker();
-    const memory = new MemoryHooks(ctx.project.path, sessionId);
+    const tracker = createContextTracker();
+    const memory = createMemoryHooks(ctx.project.path, sessionId);
 
     // Initialize memory store
     await memory.initialize();
