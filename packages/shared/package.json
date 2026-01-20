@@ -1,6 +1,6 @@
 {
     "name": "@opencode-harness/shared",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "description": "Shared types and utilities for OpenCode Harness",
     "private": false,
     "publishConfig": {
