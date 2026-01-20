@@ -1,6 +1,6 @@
 {
   "name": "opencode-harness",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "AI Coding Harness for OpenCode - Autonomous task loops with RLM context management",
   "private": false,
   "type": "module",
@@ -11,7 +11,7 @@
     "oc-harness": "./packages/cli/dist/index.js"
   },
   "scripts": {
-    "build": "turbo run build",
+    "build": "npm run build --workspaces --if-present",
     "dev": "turbo run dev",
     "test": "turbo run test",
     "lint": "turbo run lint",
