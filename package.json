@@ -2,18 +2,22 @@
   "name": "opencode-harness",
   "version": "0.1.0",
   "description": "AI Coding Harness for OpenCode - Autonomous task loops with RLM context management",
-  "private": true,
+  "private": false,
   "type": "module",
   "workspaces": [
     "packages/*"
   ],
+  "bin": {
+    "oc-harness": "./packages/cli/dist/index.js"
+  },
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
     "test": "turbo run test",
     "lint": "turbo run lint",
     "clean": "turbo run clean && rimraf node_modules",
-    "test:integration": "vitest run --config vitest.integration.config.ts"
+    "test:integration": "vitest run --config vitest.integration.config.ts",
+    "prepare": "npm run build"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
