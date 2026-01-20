@@ -1,0 +1,25 @@
+{
+    "name": "@opencode-harness/shared",
+    "version": "0.1.0",
+    "description": "Shared types and utilities for OpenCode Harness",
+    "type": "module",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "import": "./dist/index.js",
+            "types": "./dist/index.d.ts"
+        }
+    },
+    "scripts": {
+        "build": "tsup src/index.ts --format esm --dts",
+        "dev": "tsup src/index.ts --format esm --dts --watch",
+        "test": "vitest run",
+        "clean": "rimraf dist"
+    },
+    "devDependencies": {
+        "rimraf": "^6.0.0",
+        "tsup": "^8.0.0",
+        "vitest": "^3.0.0"
+    }
+}

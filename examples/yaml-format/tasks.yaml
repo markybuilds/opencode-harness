@@ -1,0 +1,19 @@
+tasks:
+  - title: Create project structure
+    completed: false
+  
+  - title: Add authentication system
+    completed: false
+    parallel_group: 1
+  
+  - title: Add user profile page
+    completed: false
+    parallel_group: 1
+  
+  - title: Add dashboard with charts
+    completed: false
+    parallel_group: 2
+  
+  - title: Write integration tests
+    completed: false
+    parallel_group: 3
