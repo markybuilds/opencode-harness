@@ -64,6 +64,13 @@ export async function initCommand(options: InitOptions): Promise<void> {
                     if (existsSync(localPluginPath)) {
                         pluginPath = `file://${localPluginPath}`;
                     }
+                } else if (normalizedPath.endsWith('/dist')) {
+                    // We are likely in the bundled root structure (dist/oc-harness.js)
+                    const rootDir = dirname(normalizedPath);
+                    const localPluginPath = join(rootDir, 'packages', 'plugin').replace(/\\/g, '/');
+                    if (existsSync(localPluginPath)) {
+                        pluginPath = `file://${localPluginPath}`;
+                    }
                 }
             } catch (e) {
                 // Fallback to npm package name if resolution fails
