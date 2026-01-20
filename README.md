@@ -14,21 +14,36 @@
 
 ---
 
-## Quick Start
+## Installation
 
-**One command to get started:**
+Since this project is hosted on GitHub, you can install it directly:
 
 ```bash
-npx opencode-harness setup
+npm install -g github:markybuilds/opencode-harness
+```
+
+Then run the setup command:
+
+```bash
+oc-harness setup
+```
+
+## Quick Start
+
+**1. Install globally:**
+```bash
+npm install -g github:markybuilds/opencode-harness
+```
+
+**2. Setup in your project:**
+```bash
+oc-harness setup
 ```
 
 This will:
 1. ✅ Check if OpenCode is installed
 2. ✅ Install OpenCode if missing
 3. ✅ Initialize harness in your project
-4. ✅ Create agents and commands
-
-**That's it!** You're ready to use autonomous AI coding.
 
 ---
 
@@ -190,28 +205,20 @@ your-project/
 
 ## Installation Options
 
-### Option 1: npx (Recommended)
+### From GitHub (Recommended)
 
 ```bash
-npx opencode-harness setup
-```
-
-### Option 2: Global Install
-
-```bash
-npm install -g opencode-harness
+npm install -g github:markybuilds/opencode-harness
 oc-harness setup
 ```
 
-### Option 3: Manual
+### For Development (Local)
 
 ```bash
-# Install OpenCode first
-npm install -g opencode-ai
-
-# Then install harness
-npm install -g opencode-harness
-oc-harness init
+git clone https://github.com/markybuilds/opencode-harness.git
+cd opencode-harness
+npm install
+npm link
 ```
 
 ---
