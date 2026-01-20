@@ -93,5 +93,5 @@ export async function setupCommand(options: SetupOptions): Promise<void> {
     console.log(chalk.cyan('     /harness') + chalk.gray(' - Start autonomous mode'));
     console.log(chalk.cyan('     /compact') + chalk.gray(' - Compact context'));
     console.log('');
-    console.log(chalk.gray('Documentation: https://github.com/your-username/opencode-harness'));
+    console.log(chalk.gray('Documentation: https://github.com/markybuilds/opencode-harness'));
 }
