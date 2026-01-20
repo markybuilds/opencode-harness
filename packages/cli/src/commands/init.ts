@@ -4,8 +4,9 @@
  */
 
 import { mkdir, writeFile, copyFile } from 'fs/promises';
-import { join } from 'path';
+import { join, dirname } from 'path';
 import { existsSync } from 'fs';
+import { fileURLToPath } from 'url';
 import chalk from 'chalk';
 import ora from 'ora';
 import { DEFAULT_CONFIG, type HarnessConfig } from '@opencode-harness/shared';
@@ -44,9 +45,33 @@ export async function initCommand(options: InitOptions): Promise<void> {
         const opencodeConfigPath = join(cwd, 'opencode.json');
         if (!existsSync(opencodeConfigPath)) {
             spinner.text = 'Creating opencode.json...';
+
+            // Resolve path to plugin package
+            let pluginPath = '@opencode-harness/plugin';
+
+            try {
+                // Get the directory of the current module (ESM compatible)
+                const __filename = fileURLToPath(import.meta.url);
+                const __dirname = dirname(__filename);
+
+                // Windows path handling
+                const normalizedPath = __dirname.replace(/\\/g, '/');
+
+                if (normalizedPath.includes('packages/cli')) {
+                    // We are likely in the source/monorepo structure
+                    const rootDir = normalizedPath.split('packages/cli')[0];
+                    const localPluginPath = join(rootDir, 'packages', 'plugin').replace(/\\/g, '/');
+                    if (existsSync(localPluginPath)) {
+                        pluginPath = `file://${localPluginPath}`;
+                    }
+                }
+            } catch (e) {
+                // Fallback to npm package name if resolution fails
+            }
+
             const opencodeConfig = {
                 $schema: 'https://opencode.ai/config.json',
-                plugin: ['@opencode-harness/plugin'],
+                plugin: [pluginPath],
                 compaction: {
                     auto: true,
                     prune: true,
