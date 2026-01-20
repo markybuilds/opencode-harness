@@ -16,7 +16,18 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 # 2. Get Version
-$version = (Get-Content -Raw "packages/cli/package.json" | ConvertFrom-Json).version
+$pkgPath = Join-Path $scriptPath "packages/cli/package.json"
+Write-Host "Reading version from: $pkgPath" -ForegroundColor Gray
+if (-not (Test-Path $pkgPath)) {
+    Write-Host "❌ Package.json not found!" -ForegroundColor Red
+    exit 1
+}
+$pkgJson = Get-Content -Raw $pkgPath | ConvertFrom-Json
+$version = $pkgJson.version
+if ([string]::IsNullOrWhiteSpace($version)) {
+    Write-Host "❌ Could not read version!" -ForegroundColor Red
+    exit 1
+}
 $tagName = "v$version"
 Write-Host "`n🔖 Preparing release for $tagName..." -ForegroundColor Cyan
 
