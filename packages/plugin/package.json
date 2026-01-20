@@ -1,8 +1,12 @@
 {
     "name": "@opencode-harness/plugin",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "description": "OpenCode plugin for harness - RLM context management and memory persistence",
     "private": false,
+    "files": [
+        "dist",
+        "package.json"
+    ],
     "publishConfig": {
         "access": "public"
     },
