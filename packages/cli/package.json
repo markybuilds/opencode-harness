@@ -1,6 +1,6 @@
 {
     "name": "opencode-harness",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "description": "AI Coding Harness for OpenCode - Autonomous task loops with RLM context management",
     "private": false,
     "publishConfig": {
