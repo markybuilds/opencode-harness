@@ -1,0 +1,32 @@
+# Ignore source files
+src/
+*.ts
+!*.d.ts
+
+# Ignore dev config
+tsconfig*.json
+tsup*.ts
+turbo.json
+.turbo/
+vitest*.ts
+
+# Ignore test files
+__tests__/
+*.test.js
+*.spec.js
+
+# Ignore dev files
+.git/
+.github/
+.vscode/
+node_modules/
+*.log
+.opencode/
+.harness/
+*.tsbuildinfo
+*.md
+!README.md
+
+# Always include these
+!dist/
+!packages/
