@@ -60,16 +60,16 @@ export async function initCommand(options: InitOptions): Promise<void> {
                 if (normalizedPath.includes('packages/cli')) {
                     // We are likely in the source/monorepo structure
                     const rootDir = normalizedPath.split('packages/cli')[0];
-                    const localPluginPath = join(rootDir, 'packages', 'plugin').replace(/\\/g, '/');
-                    if (existsSync(localPluginPath)) {
-                        pluginPath = `file://${localPluginPath}`;
+                    const localPluginDist = join(rootDir, 'packages', 'plugin', 'dist', 'index.js').replace(/\\/g, '/');
+                    if (existsSync(localPluginDist)) {
+                        pluginPath = `file://${localPluginDist}`;
                     }
                 } else if (normalizedPath.endsWith('/dist')) {
                     // We are likely in the bundled root structure (dist/oc-harness.js)
                     const rootDir = dirname(normalizedPath);
-                    const localPluginPath = join(rootDir, 'packages', 'plugin').replace(/\\/g, '/');
-                    if (existsSync(localPluginPath)) {
-                        pluginPath = `file://${localPluginPath}`;
+                    const localPluginDist = join(rootDir, 'packages', 'plugin', 'dist', 'index.js').replace(/\\/g, '/');
+                    if (existsSync(localPluginDist)) {
+                        pluginPath = `file://${localPluginDist}`;
                     }
                 }
             } catch (e) {

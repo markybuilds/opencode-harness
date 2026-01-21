@@ -14326,15 +14326,15 @@ async function initCommand(options) {
         const normalizedPath = __dirname.replace(/\\/g, "/");
         if (normalizedPath.includes("packages/cli")) {
           const rootDir = normalizedPath.split("packages/cli")[0];
-          const localPluginPath = (0, import_path.join)(rootDir, "packages", "plugin").replace(/\\/g, "/");
-          if ((0, import_fs.existsSync)(localPluginPath)) {
-            pluginPath = `file://${localPluginPath}`;
+          const localPluginDist = (0, import_path.join)(rootDir, "packages", "plugin", "dist", "index.js").replace(/\\/g, "/");
+          if ((0, import_fs.existsSync)(localPluginDist)) {
+            pluginPath = `file://${localPluginDist}`;
           }
         } else if (normalizedPath.endsWith("/dist")) {
           const rootDir = (0, import_path.dirname)(normalizedPath);
-          const localPluginPath = (0, import_path.join)(rootDir, "packages", "plugin").replace(/\\/g, "/");
-          if ((0, import_fs.existsSync)(localPluginPath)) {
-            pluginPath = `file://${localPluginPath}`;
+          const localPluginDist = (0, import_path.join)(rootDir, "packages", "plugin", "dist", "index.js").replace(/\\/g, "/");
+          if ((0, import_fs.existsSync)(localPluginDist)) {
+            pluginPath = `file://${localPluginDist}`;
           }
         }
       } catch (e) {
