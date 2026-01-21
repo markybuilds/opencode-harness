@@ -1,128 +1,145 @@
 /**
  * OpenCode Harness Plugin
  * 
- * Main plugin entry point for OpenCode integration.
- * Provides RLM-style context management and memory persistence.
+ * A minimal plugin for OpenCode that tracks context and persists memory.
+ * No custom tools - just hooks for tracking.
  */
 
-import { createContextTracker } from './context-tracker.js';
-import { createMemoryHooks } from './memory-hooks.js';
-import { createContextNavTool } from './tools/context-nav.js';
-import type { Plugin, PluginContext, PluginHooks } from './types.js';
+import { readFile, writeFile, mkdir } from 'fs/promises';
+import { join, dirname } from 'path';
+import { existsSync } from 'fs';
 
-// Re-export components for direct usage
-export { createContextTracker, type ContextTracker } from './context-tracker.js';
-export { createMemoryHooks, type MemoryHooks } from './memory-hooks.js';
-export { createContextNavTool } from './tools/context-nav.js';
-export type * from './types.js';
+// Simple in-memory context tracker
+interface ContextItem {
+    path: string;
+    type: 'file' | 'search' | 'command';
+    viewedAt: number;
+    tokens: number;
+}
+
+interface ContextState {
+    items: ContextItem[];
+    totalTokens: number;
+}
+
+function createTracker() {
+    const state: ContextState = { items: [], totalTokens: 0 };
+
+    return {
+        trackFile(path: string, tokens: number) {
+            state.items.push({ path, type: 'file', viewedAt: Date.now(), tokens });
+            state.totalTokens += tokens;
+        },
+        trackSearch(query: string, resultCount: number) {
+            state.items.push({ path: query, type: 'search', viewedAt: Date.now(), tokens: resultCount * 10 });
+        },
+        trackCommand(cmd: string, tokens: number) {
+            state.items.push({ path: cmd, type: 'command', viewedAt: Date.now(), tokens });
+            state.totalTokens += tokens;
+        },
+        getState() { return state; }
+    };
+}
+
+// Simple memory persistence
+async function createMemory(projectPath: string, sessionId: string) {
+    const memoryPath = join(projectPath, '.opencode', '.harness', 'memory.json');
+    let entries: Array<{ type: string; content: string; timestamp: number }> = [];
+
+    async function load() {
+        try {
+            if (existsSync(memoryPath)) {
+                const data = await readFile(memoryPath, 'utf-8');
+                entries = JSON.parse(data).entries || [];
+            }
+        } catch {
+            entries = [];
+        }
+    }
+
+    async function save() {
+        try {
+            await mkdir(dirname(memoryPath), { recursive: true });
+            await writeFile(memoryPath, JSON.stringify({ sessionId, entries }, null, 2));
+        } catch {
+            // Ignore save errors
+        }
+    }
+
+    return { load, save, entries };
+}
+
+// Plugin type (minimal)
+type PluginContext = {
+    project?: { path?: string };
+    path?: string;
+    client?: { app?: { log?: (entry: unknown) => Promise<void> } };
+};
+
+type PluginHooks = {
+    event?: (ctx: { event: { type: string } }) => Promise<void>;
+    'tool.execute.after'?: (input: { tool: string }, output: { args: Record<string, unknown> }, result: string) => Promise<void>;
+};
 
 /**
  * OpenCode Harness Plugin
- * 
- * Features:
- * - RLM-style context tracking
- * - Session memory persistence
- * - Custom context navigation tool
  */
-export const HarnessPlugin: Plugin = async (ctx: PluginContext): Promise<PluginHooks> => {
+export const HarnessPlugin = async (ctx: PluginContext): Promise<PluginHooks> => {
     const sessionId = crypto.randomUUID();
-    const tracker = createContextTracker();
-
-    // Get project path with fallbacks
     const projectPath = ctx.project?.path || ctx.path || process.cwd();
+    const tracker = createTracker();
+    const memory = await createMemory(projectPath, sessionId);
 
-    const memory = createMemoryHooks(projectPath, sessionId);
+    // Load existing memory
+    await memory.load();
 
-    // Helper for safe logging
-    const log = async (level: 'debug' | 'info' | 'warn' | 'error', message: string, extra?: Record<string, unknown>) => {
+    // Safe logging helper
+    const log = async (message: string) => {
         try {
             if (ctx.client?.app?.log) {
-                await ctx.client.app.log({ service: 'harness-plugin', level, message, extra });
+                await ctx.client.app.log({ service: 'harness', level: 'info', message });
             }
         } catch {
-            // Ignore logging errors
+            // Silent fail
         }
     };
 
-    // Initialize memory store (with error handling)
-    try {
-        await memory.initialize();
-    } catch (err) {
-        await log('error', 'Failed to initialize memory store', { error: String(err) });
-    }
-
-    // Log startup (non-blocking)
-    log('info', 'OpenCode Harness Plugin initialized', { sessionId, projectPath });
+    await log('Harness Plugin initialized');
 
     return {
-        // Handle events
         async event({ event }) {
-            switch (event.type) {
-                case 'session.start':
-                    await log('debug', 'Session started');
-                    break;
-
-                case 'session.idle':
-                case 'session.end':
-                    // Persist memory when session ends
-                    try {
-                        await memory.persist();
-                        await log('info', 'Memory persisted on session end');
-                    } catch {
-                        // Ignore persist errors
-                    }
-                    break;
+            if (event.type === 'session.idle' || event.type === 'session.end') {
+                await memory.save();
+                await log('Memory saved');
             }
         },
 
-        // Track tool executions
-        async 'tool.execute.after'(input, _output, result) {
+        async 'tool.execute.after'(input, output, result) {
             const tool = input.tool;
 
-            // Track file reads
             if (tool === 'read') {
-                const filePath = (_output.args as { filePath?: string }).filePath;
+                const filePath = output.args?.filePath as string;
                 if (filePath) {
-                    const tokens = Math.ceil(result.length / 4);
-                    tracker.trackFile(filePath, tokens);
+                    tracker.trackFile(filePath, Math.ceil(result.length / 4));
                 }
             }
 
-            // Track searches
             if (tool === 'grep' || tool === 'search') {
-                const query = (_output.args as { query?: string }).query;
+                const query = output.args?.query as string;
                 if (query) {
-                    const resultCount = (result.match(/\n/g) || []).length;
-                    tracker.trackSearch(query, resultCount);
+                    tracker.trackSearch(query, (result.match(/\n/g) || []).length);
                 }
             }
 
-            // Track command executions
             if (tool === 'bash' || tool === 'shell') {
-                const command = (_output.args as { command?: string }).command;
+                const command = output.args?.command as string;
                 if (command) {
-                    const tokens = Math.ceil(result.length / 4);
-                    tracker.trackCommand(command, tokens);
+                    tracker.trackCommand(command, Math.ceil(result.length / 4));
                 }
             }
-
-            // Check if compaction is needed
-            const state = tracker.getState();
-            if (state.needsCompaction) {
-                log('warn', 'Context approaching limit - consider compacting', { totalTokens: state.totalTokensEstimate });
-            }
-
-            // Apply importance decay periodically
-            tracker.applyDecay();
         },
-
-        // Custom tools disabled for now - requires @opencode-ai/plugin package
-        // TODO: Re-enable when proper integration with official plugin package is done
-        // tool: {
-        //     'context-nav': createContextNavTool(tracker, memory, schema),
-        // },
     };
 };
 
-// Default export for OpenCode plugin loading
+// Default export for OpenCode
 export default HarnessPlugin;
