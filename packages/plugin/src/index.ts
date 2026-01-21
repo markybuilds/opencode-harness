@@ -27,7 +27,11 @@ export type * from './types.js';
 export const HarnessPlugin: Plugin = async (ctx: PluginContext): Promise<PluginHooks> => {
     const sessionId = crypto.randomUUID();
     const tracker = createContextTracker();
-    const memory = createMemoryHooks(ctx.project.path, sessionId);
+
+    // Get project path with fallbacks
+    const projectPath = ctx.project?.path || ctx.path || process.cwd();
+
+    const memory = createMemoryHooks(projectPath, sessionId);
 
     // Initialize memory store
     await memory.initialize();
@@ -37,7 +41,7 @@ export const HarnessPlugin: Plugin = async (ctx: PluginContext): Promise<PluginH
         service: 'harness-plugin',
         level: 'info',
         message: 'OpenCode Harness Plugin initialized',
-        extra: { sessionId, projectPath: ctx.project.path },
+        extra: { sessionId, projectPath },
     });
 
     return {

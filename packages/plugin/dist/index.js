@@ -396,13 +396,14 @@ function formatSearch(memory, query) {
 var HarnessPlugin = async (ctx) => {
   const sessionId = crypto.randomUUID();
   const tracker = createContextTracker();
-  const memory = createMemoryHooks(ctx.project.path, sessionId);
+  const projectPath = ctx.project?.path || ctx.path || process.cwd();
+  const memory = createMemoryHooks(projectPath, sessionId);
   await memory.initialize();
   await ctx.client.app.log({
     service: "harness-plugin",
     level: "info",
     message: "OpenCode Harness Plugin initialized",
-    extra: { sessionId, projectPath: ctx.project.path }
+    extra: { sessionId, projectPath }
   });
   return {
     // Handle events

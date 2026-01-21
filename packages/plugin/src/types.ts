@@ -7,12 +7,13 @@
  * Plugin context provided by OpenCode
  */
 export interface PluginContext {
-    project: {
-        path: string;
-        name: string;
+    project?: {
+        path?: string;
+        name?: string;
     };
-    directory: string;
-    worktree: string;
+    path?: string;
+    directory?: string;
+    worktree?: string;
     client: {
         app: {
             log: (entry: LogEntry) => Promise<void>;
