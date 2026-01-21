@@ -33,38 +33,44 @@ export const HarnessPlugin: Plugin = async (ctx: PluginContext): Promise<PluginH
 
     const memory = createMemoryHooks(projectPath, sessionId);
 
-    // Initialize memory store
-    await memory.initialize();
+    // Helper for safe logging
+    const log = async (level: 'debug' | 'info' | 'warn' | 'error', message: string, extra?: Record<string, unknown>) => {
+        try {
+            if (ctx.client?.app?.log) {
+                await ctx.client.app.log({ service: 'harness-plugin', level, message, extra });
+            }
+        } catch {
+            // Ignore logging errors
+        }
+    };
 
-    // Log startup
-    await ctx.client.app.log({
-        service: 'harness-plugin',
-        level: 'info',
-        message: 'OpenCode Harness Plugin initialized',
-        extra: { sessionId, projectPath },
-    });
+    // Initialize memory store (with error handling)
+    try {
+        await memory.initialize();
+    } catch (err) {
+        await log('error', 'Failed to initialize memory store', { error: String(err) });
+    }
+
+    // Log startup (non-blocking)
+    log('info', 'OpenCode Harness Plugin initialized', { sessionId, projectPath });
 
     return {
         // Handle events
         async event({ event }) {
             switch (event.type) {
                 case 'session.start':
-                    await ctx.client.app.log({
-                        service: 'harness-plugin',
-                        level: 'debug',
-                        message: 'Session started',
-                    });
+                    await log('debug', 'Session started');
                     break;
 
                 case 'session.idle':
                 case 'session.end':
                     // Persist memory when session ends
-                    await memory.persist();
-                    await ctx.client.app.log({
-                        service: 'harness-plugin',
-                        level: 'info',
-                        message: 'Memory persisted on session end',
-                    });
+                    try {
+                        await memory.persist();
+                        await log('info', 'Memory persisted on session end');
+                    } catch {
+                        // Ignore persist errors
+                    }
                     break;
             }
         },
@@ -103,12 +109,7 @@ export const HarnessPlugin: Plugin = async (ctx: PluginContext): Promise<PluginH
             // Check if compaction is needed
             const state = tracker.getState();
             if (state.needsCompaction) {
-                await ctx.client.app.log({
-                    service: 'harness-plugin',
-                    level: 'warn',
-                    message: 'Context approaching limit - consider compacting',
-                    extra: { totalTokens: state.totalTokensEstimate },
-                });
+                log('warn', 'Context approaching limit - consider compacting', { totalTokens: state.totalTokensEstimate });
             }
 
             // Apply importance decay periodically

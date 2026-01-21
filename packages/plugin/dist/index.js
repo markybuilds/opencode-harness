@@ -398,32 +398,34 @@ var HarnessPlugin = async (ctx) => {
   const tracker = createContextTracker();
   const projectPath = ctx.project?.path || ctx.path || process.cwd();
   const memory = createMemoryHooks(projectPath, sessionId);
-  await memory.initialize();
-  await ctx.client.app.log({
-    service: "harness-plugin",
-    level: "info",
-    message: "OpenCode Harness Plugin initialized",
-    extra: { sessionId, projectPath }
-  });
+  const log = async (level, message, extra) => {
+    try {
+      if (ctx.client?.app?.log) {
+        await ctx.client.app.log({ service: "harness-plugin", level, message, extra });
+      }
+    } catch {
+    }
+  };
+  try {
+    await memory.initialize();
+  } catch (err) {
+    await log("error", "Failed to initialize memory store", { error: String(err) });
+  }
+  log("info", "OpenCode Harness Plugin initialized", { sessionId, projectPath });
   return {
     // Handle events
     async event({ event }) {
       switch (event.type) {
         case "session.start":
-          await ctx.client.app.log({
-            service: "harness-plugin",
-            level: "debug",
-            message: "Session started"
-          });
+          await log("debug", "Session started");
           break;
         case "session.idle":
         case "session.end":
-          await memory.persist();
-          await ctx.client.app.log({
-            service: "harness-plugin",
-            level: "info",
-            message: "Memory persisted on session end"
-          });
+          try {
+            await memory.persist();
+            await log("info", "Memory persisted on session end");
+          } catch {
+          }
           break;
       }
     },
@@ -453,12 +455,7 @@ var HarnessPlugin = async (ctx) => {
       }
       const state = tracker.getState();
       if (state.needsCompaction) {
-        await ctx.client.app.log({
-          service: "harness-plugin",
-          level: "warn",
-          message: "Context approaching limit - consider compacting",
-          extra: { totalTokens: state.totalTokensEstimate }
-        });
+        log("warn", "Context approaching limit - consider compacting", { totalTokens: state.totalTokensEstimate });
       }
       tracker.applyDecay();
     },
