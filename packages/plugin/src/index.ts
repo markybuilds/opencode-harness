@@ -116,16 +116,11 @@ export const HarnessPlugin: Plugin = async (ctx: PluginContext): Promise<PluginH
             tracker.applyDecay();
         },
 
-        // Register custom tools
-        tool: {
-            'context-nav': createContextNavTool(tracker, memory, {
-                string: () => ({ type: 'string' }),
-                number: () => ({ type: 'number' }),
-                boolean: () => ({ type: 'boolean' }),
-                enum: <T extends string>(values: T[]) => ({ type: 'string' as const, enum: values }),
-                optional: <T>(schema: T) => ({ ...schema, optional: true as const }),
-            }),
-        },
+        // Custom tools disabled for now - requires @opencode-ai/plugin package
+        // TODO: Re-enable when proper integration with official plugin package is done
+        // tool: {
+        //     'context-nav': createContextNavTool(tracker, memory, schema),
+        // },
     };
 };
 

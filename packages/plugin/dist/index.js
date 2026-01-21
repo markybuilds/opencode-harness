@@ -458,17 +458,12 @@ var HarnessPlugin = async (ctx) => {
         log("warn", "Context approaching limit - consider compacting", { totalTokens: state.totalTokensEstimate });
       }
       tracker.applyDecay();
-    },
-    // Register custom tools
-    tool: {
-      "context-nav": createContextNavTool(tracker, memory, {
-        string: () => ({ type: "string" }),
-        number: () => ({ type: "number" }),
-        boolean: () => ({ type: "boolean" }),
-        enum: (values) => ({ type: "string", enum: values }),
-        optional: (schema) => ({ ...schema, optional: true })
-      })
     }
+    // Custom tools disabled for now - requires @opencode-ai/plugin package
+    // TODO: Re-enable when proper integration with official plugin package is done
+    // tool: {
+    //     'context-nav': createContextNavTool(tracker, memory, schema),
+    // },
   };
 };
 var index_default = HarnessPlugin;
