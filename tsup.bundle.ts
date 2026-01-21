@@ -8,7 +8,4 @@ export default defineConfig({
     // Bundle all dependencies
     noExternal: [/.*/],
     target: 'es2022',
-    banner: {
-        js: '#!/usr/bin/env node',
-    },
 });
