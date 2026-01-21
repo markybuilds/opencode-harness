@@ -1,17 +1,15 @@
 #!/usr/bin/env node
+"use strict";
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, {
-  get: (a2, b) => (typeof require !== "undefined" ? require : a2)[b]
-}) : x)(function(x) {
-  if (typeof require !== "undefined") return require.apply(this, arguments);
-  throw Error('Dynamic require of "' + x + '" is not supported');
-});
-var __commonJS = (cb, mod) => function __require2() {
+var __esm = (fn, res) => function __init() {
+  return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
+};
+var __commonJS = (cb, mod) => function __require() {
   return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
 };
 var __copyProps = (to, from, except, desc) => {
@@ -31,9 +29,19 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 
+// node_modules/tsup/assets/cjs_shims.js
+var getImportMetaUrl, importMetaUrl;
+var init_cjs_shims = __esm({
+  "node_modules/tsup/assets/cjs_shims.js"() {
+    getImportMetaUrl = () => typeof document === "undefined" ? new URL(`file:${__filename}`).href : document.currentScript && document.currentScript.tagName.toUpperCase() === "SCRIPT" ? document.currentScript.src : new URL("main.js", document.baseURI).href;
+    importMetaUrl = /* @__PURE__ */ getImportMetaUrl();
+  }
+});
+
 // node_modules/commander/lib/error.js
 var require_error = __commonJS({
-  "node_modules/commander/lib/error.js"(exports) {
+  "node_modules/commander/lib/error.js"(exports2) {
+    init_cjs_shims();
     var CommanderError2 = class extends Error {
       /**
        * Constructs the CommanderError class
@@ -61,14 +69,15 @@ var require_error = __commonJS({
         this.name = this.constructor.name;
       }
     };
-    exports.CommanderError = CommanderError2;
-    exports.InvalidArgumentError = InvalidArgumentError2;
+    exports2.CommanderError = CommanderError2;
+    exports2.InvalidArgumentError = InvalidArgumentError2;
   }
 });
 
 // node_modules/commander/lib/argument.js
 var require_argument = __commonJS({
-  "node_modules/commander/lib/argument.js"(exports) {
+  "node_modules/commander/lib/argument.js"(exports2) {
+    init_cjs_shims();
     var { InvalidArgumentError: InvalidArgumentError2 } = require_error();
     var Argument2 = class {
       /**
@@ -188,14 +197,15 @@ var require_argument = __commonJS({
       const nameOutput = arg.name() + (arg.variadic === true ? "..." : "");
       return arg.required ? "<" + nameOutput + ">" : "[" + nameOutput + "]";
     }
-    exports.Argument = Argument2;
-    exports.humanReadableArgName = humanReadableArgName;
+    exports2.Argument = Argument2;
+    exports2.humanReadableArgName = humanReadableArgName;
   }
 });
 
 // node_modules/commander/lib/help.js
 var require_help = __commonJS({
-  "node_modules/commander/lib/help.js"(exports) {
+  "node_modules/commander/lib/help.js"(exports2) {
+    init_cjs_shims();
     var { humanReadableArgName } = require_argument();
     var Help2 = class {
       constructor() {
@@ -757,14 +767,15 @@ ${itemIndentStr}`);
       const sgrPattern = /\x1b\[\d*(;\d*)*m/g;
       return str.replace(sgrPattern, "");
     }
-    exports.Help = Help2;
-    exports.stripColor = stripColor;
+    exports2.Help = Help2;
+    exports2.stripColor = stripColor;
   }
 });
 
 // node_modules/commander/lib/option.js
 var require_option = __commonJS({
-  "node_modules/commander/lib/option.js"(exports) {
+  "node_modules/commander/lib/option.js"(exports2) {
+    init_cjs_shims();
     var { InvalidArgumentError: InvalidArgumentError2 } = require_error();
     var Option2 = class {
       /**
@@ -1058,14 +1069,15 @@ var require_option = __commonJS({
         );
       return { shortFlag, longFlag };
     }
-    exports.Option = Option2;
-    exports.DualOptions = DualOptions;
+    exports2.Option = Option2;
+    exports2.DualOptions = DualOptions;
   }
 });
 
 // node_modules/commander/lib/suggestSimilar.js
 var require_suggestSimilar = __commonJS({
-  "node_modules/commander/lib/suggestSimilar.js"(exports) {
+  "node_modules/commander/lib/suggestSimilar.js"(exports2) {
+    init_cjs_shims();
     var maxDistance = 3;
     function editDistance(a2, b) {
       if (Math.abs(a2.length - b.length) > maxDistance)
@@ -1139,18 +1151,19 @@ var require_suggestSimilar = __commonJS({
       }
       return "";
     }
-    exports.suggestSimilar = suggestSimilar;
+    exports2.suggestSimilar = suggestSimilar;
   }
 });
 
 // node_modules/commander/lib/command.js
 var require_command = __commonJS({
-  "node_modules/commander/lib/command.js"(exports) {
-    var EventEmitter2 = __require("events").EventEmitter;
-    var childProcess = __require("child_process");
-    var path6 = __require("path");
-    var fs = __require("fs");
-    var process16 = __require("process");
+  "node_modules/commander/lib/command.js"(exports2) {
+    init_cjs_shims();
+    var EventEmitter2 = require("events").EventEmitter;
+    var childProcess = require("child_process");
+    var path6 = require("path");
+    var fs = require("fs");
+    var process16 = require("process");
     var { Argument: Argument2, humanReadableArgName } = require_argument();
     var { CommanderError: CommanderError2 } = require_error();
     var { Help: Help2, stripColor } = require_help();
@@ -3297,37 +3310,38 @@ Expecting one of '${allowedValues.join("', '")}'`);
         return true;
       return void 0;
     }
-    exports.Command = Command2;
-    exports.useColor = useColor;
+    exports2.Command = Command2;
+    exports2.useColor = useColor;
   }
 });
 
 // node_modules/commander/index.js
 var require_commander = __commonJS({
-  "node_modules/commander/index.js"(exports) {
+  "node_modules/commander/index.js"(exports2) {
+    init_cjs_shims();
     var { Argument: Argument2 } = require_argument();
     var { Command: Command2 } = require_command();
     var { CommanderError: CommanderError2, InvalidArgumentError: InvalidArgumentError2 } = require_error();
     var { Help: Help2 } = require_help();
     var { Option: Option2 } = require_option();
-    exports.program = new Command2();
-    exports.createCommand = (name) => new Command2(name);
-    exports.createOption = (flags, description) => new Option2(flags, description);
-    exports.createArgument = (name, description) => new Argument2(name, description);
-    exports.Command = Command2;
-    exports.Option = Option2;
-    exports.Argument = Argument2;
-    exports.Help = Help2;
-    exports.CommanderError = CommanderError2;
-    exports.InvalidArgumentError = InvalidArgumentError2;
-    exports.InvalidOptionArgumentError = InvalidArgumentError2;
+    exports2.program = new Command2();
+    exports2.createCommand = (name) => new Command2(name);
+    exports2.createOption = (flags, description) => new Option2(flags, description);
+    exports2.createArgument = (name, description) => new Argument2(name, description);
+    exports2.Command = Command2;
+    exports2.Option = Option2;
+    exports2.Argument = Argument2;
+    exports2.Help = Help2;
+    exports2.CommanderError = CommanderError2;
+    exports2.InvalidArgumentError = InvalidArgumentError2;
+    exports2.InvalidOptionArgumentError = InvalidArgumentError2;
   }
 });
 
 // node_modules/cli-spinners/spinners.json
 var require_spinners = __commonJS({
-  "node_modules/cli-spinners/spinners.json"(exports, module) {
-    module.exports = {
+  "node_modules/cli-spinners/spinners.json"(exports2, module2) {
+    module2.exports = {
       dots: {
         interval: 80,
         frames: [
@@ -4954,8 +4968,9 @@ var require_spinners = __commonJS({
 
 // node_modules/cli-spinners/index.js
 var require_cli_spinners = __commonJS({
-  "node_modules/cli-spinners/index.js"(exports, module) {
+  "node_modules/cli-spinners/index.js"(exports2, module2) {
     "use strict";
+    init_cjs_shims();
     var spinners = Object.assign({}, require_spinners());
     var spinnersList = Object.keys(spinners);
     Object.defineProperty(spinners, "random", {
@@ -4965,16 +4980,17 @@ var require_cli_spinners = __commonJS({
         return spinners[spinnerName];
       }
     });
-    module.exports = spinners;
+    module2.exports = spinners;
   }
 });
 
 // node_modules/isexe/windows.js
 var require_windows = __commonJS({
-  "node_modules/isexe/windows.js"(exports, module) {
-    module.exports = isexe;
+  "node_modules/isexe/windows.js"(exports2, module2) {
+    init_cjs_shims();
+    module2.exports = isexe;
     isexe.sync = sync;
-    var fs = __require("fs");
+    var fs = require("fs");
     function checkPathExt(path6, options) {
       var pathext = options.pathExt !== void 0 ? options.pathExt : process.env.PATHEXT;
       if (!pathext) {
@@ -5011,10 +5027,11 @@ var require_windows = __commonJS({
 
 // node_modules/isexe/mode.js
 var require_mode = __commonJS({
-  "node_modules/isexe/mode.js"(exports, module) {
-    module.exports = isexe;
+  "node_modules/isexe/mode.js"(exports2, module2) {
+    init_cjs_shims();
+    module2.exports = isexe;
     isexe.sync = sync;
-    var fs = __require("fs");
+    var fs = require("fs");
     function isexe(path6, options, cb) {
       fs.stat(path6, function(er, stat) {
         cb(er, er ? false : checkStat(stat, options));
@@ -5044,15 +5061,16 @@ var require_mode = __commonJS({
 
 // node_modules/isexe/index.js
 var require_isexe = __commonJS({
-  "node_modules/isexe/index.js"(exports, module) {
-    var fs = __require("fs");
+  "node_modules/isexe/index.js"(exports2, module2) {
+    init_cjs_shims();
+    var fs = require("fs");
     var core;
     if (process.platform === "win32" || global.TESTING_WINDOWS) {
       core = require_windows();
     } else {
       core = require_mode();
     }
-    module.exports = isexe;
+    module2.exports = isexe;
     isexe.sync = sync;
     function isexe(path6, options, cb) {
       if (typeof options === "function") {
@@ -5099,9 +5117,10 @@ var require_isexe = __commonJS({
 
 // node_modules/which/which.js
 var require_which = __commonJS({
-  "node_modules/which/which.js"(exports, module) {
+  "node_modules/which/which.js"(exports2, module2) {
+    init_cjs_shims();
     var isWindows = process.platform === "win32" || process.env.OSTYPE === "cygwin" || process.env.OSTYPE === "msys";
-    var path6 = __require("path");
+    var path6 = require("path");
     var COLON = isWindows ? ";" : ":";
     var isexe = require_isexe();
     var getNotFoundError = (cmd) => Object.assign(new Error(`not found: ${cmd}`), { code: "ENOENT" });
@@ -5188,15 +5207,16 @@ var require_which = __commonJS({
         return null;
       throw getNotFoundError(cmd);
     };
-    module.exports = which;
+    module2.exports = which;
     which.sync = whichSync;
   }
 });
 
 // node_modules/path-key/index.js
 var require_path_key = __commonJS({
-  "node_modules/path-key/index.js"(exports, module) {
+  "node_modules/path-key/index.js"(exports2, module2) {
     "use strict";
+    init_cjs_shims();
     var pathKey2 = (options = {}) => {
       const environment = options.env || process.env;
       const platform2 = options.platform || process.platform;
@@ -5205,16 +5225,17 @@ var require_path_key = __commonJS({
       }
       return Object.keys(environment).reverse().find((key) => key.toUpperCase() === "PATH") || "Path";
     };
-    module.exports = pathKey2;
-    module.exports.default = pathKey2;
+    module2.exports = pathKey2;
+    module2.exports.default = pathKey2;
   }
 });
 
 // node_modules/cross-spawn/lib/util/resolveCommand.js
 var require_resolveCommand = __commonJS({
-  "node_modules/cross-spawn/lib/util/resolveCommand.js"(exports, module) {
+  "node_modules/cross-spawn/lib/util/resolveCommand.js"(exports2, module2) {
     "use strict";
-    var path6 = __require("path");
+    init_cjs_shims();
+    var path6 = require("path");
     var which = require_which();
     var getPathKey = require_path_key();
     function resolveCommandAttempt(parsed, withoutPathExt) {
@@ -5248,14 +5269,15 @@ var require_resolveCommand = __commonJS({
     function resolveCommand(parsed) {
       return resolveCommandAttempt(parsed) || resolveCommandAttempt(parsed, true);
     }
-    module.exports = resolveCommand;
+    module2.exports = resolveCommand;
   }
 });
 
 // node_modules/cross-spawn/lib/util/escape.js
 var require_escape = __commonJS({
-  "node_modules/cross-spawn/lib/util/escape.js"(exports, module) {
+  "node_modules/cross-spawn/lib/util/escape.js"(exports2, module2) {
     "use strict";
+    init_cjs_shims();
     var metaCharsRegExp = /([()\][%!^"`<>&|;, *?])/g;
     function escapeCommand(arg) {
       arg = arg.replace(metaCharsRegExp, "^$1");
@@ -5272,25 +5294,27 @@ var require_escape = __commonJS({
       }
       return arg;
     }
-    module.exports.command = escapeCommand;
-    module.exports.argument = escapeArgument;
+    module2.exports.command = escapeCommand;
+    module2.exports.argument = escapeArgument;
   }
 });
 
 // node_modules/shebang-regex/index.js
 var require_shebang_regex = __commonJS({
-  "node_modules/shebang-regex/index.js"(exports, module) {
+  "node_modules/shebang-regex/index.js"(exports2, module2) {
     "use strict";
-    module.exports = /^#!(.*)/;
+    init_cjs_shims();
+    module2.exports = /^#!(.*)/;
   }
 });
 
 // node_modules/shebang-command/index.js
 var require_shebang_command = __commonJS({
-  "node_modules/shebang-command/index.js"(exports, module) {
+  "node_modules/shebang-command/index.js"(exports2, module2) {
     "use strict";
+    init_cjs_shims();
     var shebangRegex = require_shebang_regex();
-    module.exports = (string = "") => {
+    module2.exports = (string = "") => {
       const match = string.match(shebangRegex);
       if (!match) {
         return null;
@@ -5307,9 +5331,10 @@ var require_shebang_command = __commonJS({
 
 // node_modules/cross-spawn/lib/util/readShebang.js
 var require_readShebang = __commonJS({
-  "node_modules/cross-spawn/lib/util/readShebang.js"(exports, module) {
+  "node_modules/cross-spawn/lib/util/readShebang.js"(exports2, module2) {
     "use strict";
-    var fs = __require("fs");
+    init_cjs_shims();
+    var fs = require("fs");
     var shebangCommand = require_shebang_command();
     function readShebang(command) {
       const size = 150;
@@ -5323,15 +5348,16 @@ var require_readShebang = __commonJS({
       }
       return shebangCommand(buffer.toString());
     }
-    module.exports = readShebang;
+    module2.exports = readShebang;
   }
 });
 
 // node_modules/cross-spawn/lib/parse.js
 var require_parse = __commonJS({
-  "node_modules/cross-spawn/lib/parse.js"(exports, module) {
+  "node_modules/cross-spawn/lib/parse.js"(exports2, module2) {
     "use strict";
-    var path6 = __require("path");
+    init_cjs_shims();
+    var path6 = require("path");
     var resolveCommand = require_resolveCommand();
     var escape = require_escape();
     var readShebang = require_readShebang();
@@ -5385,14 +5411,15 @@ var require_parse = __commonJS({
       };
       return options.shell ? parsed : parseNonShell(parsed);
     }
-    module.exports = parse;
+    module2.exports = parse;
   }
 });
 
 // node_modules/cross-spawn/lib/enoent.js
 var require_enoent = __commonJS({
-  "node_modules/cross-spawn/lib/enoent.js"(exports, module) {
+  "node_modules/cross-spawn/lib/enoent.js"(exports2, module2) {
     "use strict";
+    init_cjs_shims();
     var isWin = process.platform === "win32";
     function notFoundError(original, syscall) {
       return Object.assign(new Error(`${syscall} ${original.command} ENOENT`), {
@@ -5430,7 +5457,7 @@ var require_enoent = __commonJS({
       }
       return null;
     }
-    module.exports = {
+    module2.exports = {
       hookChildProcess,
       verifyENOENT,
       verifyENOENTSync,
@@ -5441,9 +5468,10 @@ var require_enoent = __commonJS({
 
 // node_modules/cross-spawn/index.js
 var require_cross_spawn = __commonJS({
-  "node_modules/cross-spawn/index.js"(exports, module) {
+  "node_modules/cross-spawn/index.js"(exports2, module2) {
     "use strict";
-    var cp = __require("child_process");
+    init_cjs_shims();
+    var cp = require("child_process");
     var parse = require_parse();
     var enoent = require_enoent();
     function spawn2(command, args, options) {
@@ -5458,18 +5486,19 @@ var require_cross_spawn = __commonJS({
       result.error = result.error || enoent.verifyENOENTSync(result.status, parsed);
       return result;
     }
-    module.exports = spawn2;
-    module.exports.spawn = spawn2;
-    module.exports.sync = spawnSync2;
-    module.exports._parse = parse;
-    module.exports._enoent = enoent;
+    module2.exports = spawn2;
+    module2.exports.spawn = spawn2;
+    module2.exports.sync = spawnSync2;
+    module2.exports._parse = parse;
+    module2.exports._enoent = enoent;
   }
 });
 
 // node_modules/yaml/dist/nodes/identity.js
 var require_identity = __commonJS({
-  "node_modules/yaml/dist/nodes/identity.js"(exports) {
+  "node_modules/yaml/dist/nodes/identity.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var ALIAS = /* @__PURE__ */ Symbol.for("yaml.alias");
     var DOC = /* @__PURE__ */ Symbol.for("yaml.document");
     var MAP = /* @__PURE__ */ Symbol.for("yaml.map");
@@ -5504,29 +5533,30 @@ var require_identity = __commonJS({
       return false;
     }
     var hasAnchor = (node) => (isScalar(node) || isCollection(node)) && !!node.anchor;
-    exports.ALIAS = ALIAS;
-    exports.DOC = DOC;
-    exports.MAP = MAP;
-    exports.NODE_TYPE = NODE_TYPE;
-    exports.PAIR = PAIR;
-    exports.SCALAR = SCALAR;
-    exports.SEQ = SEQ;
-    exports.hasAnchor = hasAnchor;
-    exports.isAlias = isAlias;
-    exports.isCollection = isCollection;
-    exports.isDocument = isDocument;
-    exports.isMap = isMap;
-    exports.isNode = isNode;
-    exports.isPair = isPair;
-    exports.isScalar = isScalar;
-    exports.isSeq = isSeq;
+    exports2.ALIAS = ALIAS;
+    exports2.DOC = DOC;
+    exports2.MAP = MAP;
+    exports2.NODE_TYPE = NODE_TYPE;
+    exports2.PAIR = PAIR;
+    exports2.SCALAR = SCALAR;
+    exports2.SEQ = SEQ;
+    exports2.hasAnchor = hasAnchor;
+    exports2.isAlias = isAlias;
+    exports2.isCollection = isCollection;
+    exports2.isDocument = isDocument;
+    exports2.isMap = isMap;
+    exports2.isNode = isNode;
+    exports2.isPair = isPair;
+    exports2.isScalar = isScalar;
+    exports2.isSeq = isSeq;
   }
 });
 
 // node_modules/yaml/dist/visit.js
 var require_visit = __commonJS({
-  "node_modules/yaml/dist/visit.js"(exports) {
+  "node_modules/yaml/dist/visit.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var identity3 = require_identity();
     var BREAK = /* @__PURE__ */ Symbol("break visit");
     var SKIP = /* @__PURE__ */ Symbol("skip children");
@@ -5676,15 +5706,16 @@ var require_visit = __commonJS({
         throw new Error(`Cannot replace node with ${pt} parent`);
       }
     }
-    exports.visit = visit;
-    exports.visitAsync = visitAsync;
+    exports2.visit = visit;
+    exports2.visitAsync = visitAsync;
   }
 });
 
 // node_modules/yaml/dist/doc/directives.js
 var require_directives = __commonJS({
-  "node_modules/yaml/dist/doc/directives.js"(exports) {
+  "node_modules/yaml/dist/doc/directives.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var identity3 = require_identity();
     var visit = require_visit();
     var escapeChars = {
@@ -5848,14 +5879,15 @@ var require_directives = __commonJS({
     };
     Directives.defaultYaml = { explicit: false, version: "1.2" };
     Directives.defaultTags = { "!!": "tag:yaml.org,2002:" };
-    exports.Directives = Directives;
+    exports2.Directives = Directives;
   }
 });
 
 // node_modules/yaml/dist/doc/anchors.js
 var require_anchors = __commonJS({
-  "node_modules/yaml/dist/doc/anchors.js"(exports) {
+  "node_modules/yaml/dist/doc/anchors.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var identity3 = require_identity();
     var visit = require_visit();
     function anchorIsValid(anchor) {
@@ -5915,17 +5947,18 @@ var require_anchors = __commonJS({
         sourceObjects
       };
     }
-    exports.anchorIsValid = anchorIsValid;
-    exports.anchorNames = anchorNames;
-    exports.createNodeAnchors = createNodeAnchors;
-    exports.findNewAnchor = findNewAnchor;
+    exports2.anchorIsValid = anchorIsValid;
+    exports2.anchorNames = anchorNames;
+    exports2.createNodeAnchors = createNodeAnchors;
+    exports2.findNewAnchor = findNewAnchor;
   }
 });
 
 // node_modules/yaml/dist/doc/applyReviver.js
 var require_applyReviver = __commonJS({
-  "node_modules/yaml/dist/doc/applyReviver.js"(exports) {
+  "node_modules/yaml/dist/doc/applyReviver.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     function applyReviver(reviver, obj, key, val) {
       if (val && typeof val === "object") {
         if (Array.isArray(val)) {
@@ -5968,14 +6001,15 @@ var require_applyReviver = __commonJS({
       }
       return reviver.call(obj, key, val);
     }
-    exports.applyReviver = applyReviver;
+    exports2.applyReviver = applyReviver;
   }
 });
 
 // node_modules/yaml/dist/nodes/toJS.js
 var require_toJS = __commonJS({
-  "node_modules/yaml/dist/nodes/toJS.js"(exports) {
+  "node_modules/yaml/dist/nodes/toJS.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var identity3 = require_identity();
     function toJS(value, arg, ctx) {
       if (Array.isArray(value))
@@ -5998,14 +6032,15 @@ var require_toJS = __commonJS({
         return Number(value);
       return value;
     }
-    exports.toJS = toJS;
+    exports2.toJS = toJS;
   }
 });
 
 // node_modules/yaml/dist/nodes/Node.js
 var require_Node = __commonJS({
-  "node_modules/yaml/dist/nodes/Node.js"(exports) {
+  "node_modules/yaml/dist/nodes/Node.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var applyReviver = require_applyReviver();
     var identity3 = require_identity();
     var toJS = require_toJS();
@@ -6039,14 +6074,15 @@ var require_Node = __commonJS({
         return typeof reviver === "function" ? applyReviver.applyReviver(reviver, { "": res }, "", res) : res;
       }
     };
-    exports.NodeBase = NodeBase;
+    exports2.NodeBase = NodeBase;
   }
 });
 
 // node_modules/yaml/dist/nodes/Alias.js
 var require_Alias = __commonJS({
-  "node_modules/yaml/dist/nodes/Alias.js"(exports) {
+  "node_modules/yaml/dist/nodes/Alias.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var anchors = require_anchors();
     var visit = require_visit();
     var identity3 = require_identity();
@@ -6153,14 +6189,15 @@ var require_Alias = __commonJS({
       }
       return 1;
     }
-    exports.Alias = Alias;
+    exports2.Alias = Alias;
   }
 });
 
 // node_modules/yaml/dist/nodes/Scalar.js
 var require_Scalar = __commonJS({
-  "node_modules/yaml/dist/nodes/Scalar.js"(exports) {
+  "node_modules/yaml/dist/nodes/Scalar.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var identity3 = require_identity();
     var Node = require_Node();
     var toJS = require_toJS();
@@ -6182,15 +6219,16 @@ var require_Scalar = __commonJS({
     Scalar.PLAIN = "PLAIN";
     Scalar.QUOTE_DOUBLE = "QUOTE_DOUBLE";
     Scalar.QUOTE_SINGLE = "QUOTE_SINGLE";
-    exports.Scalar = Scalar;
-    exports.isScalarValue = isScalarValue;
+    exports2.Scalar = Scalar;
+    exports2.isScalarValue = isScalarValue;
   }
 });
 
 // node_modules/yaml/dist/doc/createNode.js
 var require_createNode = __commonJS({
-  "node_modules/yaml/dist/doc/createNode.js"(exports) {
+  "node_modules/yaml/dist/doc/createNode.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var Alias = require_Alias();
     var identity3 = require_identity();
     var Scalar = require_Scalar();
@@ -6258,14 +6296,15 @@ var require_createNode = __commonJS({
         ref.node = node;
       return node;
     }
-    exports.createNode = createNode;
+    exports2.createNode = createNode;
   }
 });
 
 // node_modules/yaml/dist/nodes/Collection.js
 var require_Collection = __commonJS({
-  "node_modules/yaml/dist/nodes/Collection.js"(exports) {
+  "node_modules/yaml/dist/nodes/Collection.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var createNode = require_createNode();
     var identity3 = require_identity();
     var Node = require_Node();
@@ -6399,16 +6438,17 @@ var require_Collection = __commonJS({
         }
       }
     };
-    exports.Collection = Collection;
-    exports.collectionFromPath = collectionFromPath;
-    exports.isEmptyPath = isEmptyPath;
+    exports2.Collection = Collection;
+    exports2.collectionFromPath = collectionFromPath;
+    exports2.isEmptyPath = isEmptyPath;
   }
 });
 
 // node_modules/yaml/dist/stringify/stringifyComment.js
 var require_stringifyComment = __commonJS({
-  "node_modules/yaml/dist/stringify/stringifyComment.js"(exports) {
+  "node_modules/yaml/dist/stringify/stringifyComment.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var stringifyComment = (str) => str.replace(/^(?!$)(?: $)?/gm, "#");
     function indentComment(comment, indent) {
       if (/^\n+$/.test(comment))
@@ -6416,16 +6456,17 @@ var require_stringifyComment = __commonJS({
       return indent ? comment.replace(/^(?! *$)/gm, indent) : comment;
     }
     var lineComment = (str, indent, comment) => str.endsWith("\n") ? indentComment(comment, indent) : comment.includes("\n") ? "\n" + indentComment(comment, indent) : (str.endsWith(" ") ? "" : " ") + comment;
-    exports.indentComment = indentComment;
-    exports.lineComment = lineComment;
-    exports.stringifyComment = stringifyComment;
+    exports2.indentComment = indentComment;
+    exports2.lineComment = lineComment;
+    exports2.stringifyComment = stringifyComment;
   }
 });
 
 // node_modules/yaml/dist/stringify/foldFlowLines.js
 var require_foldFlowLines = __commonJS({
-  "node_modules/yaml/dist/stringify/foldFlowLines.js"(exports) {
+  "node_modules/yaml/dist/stringify/foldFlowLines.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var FOLD_FLOW = "flow";
     var FOLD_BLOCK = "block";
     var FOLD_QUOTED = "quoted";
@@ -6551,17 +6592,18 @@ ${indent}${text.slice(fold + 1, end2)}`;
       }
       return end;
     }
-    exports.FOLD_BLOCK = FOLD_BLOCK;
-    exports.FOLD_FLOW = FOLD_FLOW;
-    exports.FOLD_QUOTED = FOLD_QUOTED;
-    exports.foldFlowLines = foldFlowLines;
+    exports2.FOLD_BLOCK = FOLD_BLOCK;
+    exports2.FOLD_FLOW = FOLD_FLOW;
+    exports2.FOLD_QUOTED = FOLD_QUOTED;
+    exports2.foldFlowLines = foldFlowLines;
   }
 });
 
 // node_modules/yaml/dist/stringify/stringifyString.js
 var require_stringifyString = __commonJS({
-  "node_modules/yaml/dist/stringify/stringifyString.js"(exports) {
+  "node_modules/yaml/dist/stringify/stringifyString.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var Scalar = require_Scalar();
     var foldFlowLines = require_foldFlowLines();
     var getFoldOptions = (ctx, isBlock) => ({
@@ -6837,14 +6879,15 @@ ${indent}`);
       }
       return res;
     }
-    exports.stringifyString = stringifyString;
+    exports2.stringifyString = stringifyString;
   }
 });
 
 // node_modules/yaml/dist/stringify/stringify.js
 var require_stringify = __commonJS({
-  "node_modules/yaml/dist/stringify/stringify.js"(exports) {
+  "node_modules/yaml/dist/stringify/stringify.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var anchors = require_anchors();
     var identity3 = require_identity();
     var stringifyComment = require_stringifyComment();
@@ -6959,15 +7002,16 @@ var require_stringify = __commonJS({
       return identity3.isScalar(node) || str[0] === "{" || str[0] === "[" ? `${props} ${str}` : `${props}
 ${ctx.indent}${str}`;
     }
-    exports.createStringifyContext = createStringifyContext;
-    exports.stringify = stringify;
+    exports2.createStringifyContext = createStringifyContext;
+    exports2.stringify = stringify;
   }
 });
 
 // node_modules/yaml/dist/stringify/stringifyPair.js
 var require_stringifyPair = __commonJS({
-  "node_modules/yaml/dist/stringify/stringifyPair.js"(exports) {
+  "node_modules/yaml/dist/stringify/stringifyPair.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var identity3 = require_identity();
     var Scalar = require_Scalar();
     var stringify = require_stringify();
@@ -7093,15 +7137,16 @@ ${ctx.indent}`;
       }
       return str;
     }
-    exports.stringifyPair = stringifyPair;
+    exports2.stringifyPair = stringifyPair;
   }
 });
 
 // node_modules/yaml/dist/log.js
 var require_log = __commonJS({
-  "node_modules/yaml/dist/log.js"(exports) {
+  "node_modules/yaml/dist/log.js"(exports2) {
     "use strict";
-    var node_process = __require("process");
+    init_cjs_shims();
+    var node_process = require("process");
     function debug(logLevel, ...messages) {
       if (logLevel === "debug")
         console.log(...messages);
@@ -7114,15 +7159,16 @@ var require_log = __commonJS({
           console.warn(warning);
       }
     }
-    exports.debug = debug;
-    exports.warn = warn;
+    exports2.debug = debug;
+    exports2.warn = warn;
   }
 });
 
 // node_modules/yaml/dist/schema/yaml-1.1/merge.js
 var require_merge = __commonJS({
-  "node_modules/yaml/dist/schema/yaml-1.1/merge.js"(exports) {
+  "node_modules/yaml/dist/schema/yaml-1.1/merge.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var identity3 = require_identity();
     var Scalar = require_Scalar();
     var MERGE_KEY = "<<";
@@ -7170,16 +7216,17 @@ var require_merge = __commonJS({
       }
       return map;
     }
-    exports.addMergeToJSMap = addMergeToJSMap;
-    exports.isMergeKey = isMergeKey;
-    exports.merge = merge;
+    exports2.addMergeToJSMap = addMergeToJSMap;
+    exports2.isMergeKey = isMergeKey;
+    exports2.merge = merge;
   }
 });
 
 // node_modules/yaml/dist/nodes/addPairToJSMap.js
 var require_addPairToJSMap = __commonJS({
-  "node_modules/yaml/dist/nodes/addPairToJSMap.js"(exports) {
+  "node_modules/yaml/dist/nodes/addPairToJSMap.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var log = require_log();
     var merge = require_merge();
     var stringify = require_stringify();
@@ -7236,14 +7283,15 @@ var require_addPairToJSMap = __commonJS({
       }
       return JSON.stringify(jsKey);
     }
-    exports.addPairToJSMap = addPairToJSMap;
+    exports2.addPairToJSMap = addPairToJSMap;
   }
 });
 
 // node_modules/yaml/dist/nodes/Pair.js
 var require_Pair = __commonJS({
-  "node_modules/yaml/dist/nodes/Pair.js"(exports) {
+  "node_modules/yaml/dist/nodes/Pair.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var createNode = require_createNode();
     var stringifyPair = require_stringifyPair();
     var addPairToJSMap = require_addPairToJSMap();
@@ -7275,15 +7323,16 @@ var require_Pair = __commonJS({
         return ctx?.doc ? stringifyPair.stringifyPair(this, ctx, onComment, onChompKeep) : JSON.stringify(this);
       }
     };
-    exports.Pair = Pair;
-    exports.createPair = createPair;
+    exports2.Pair = Pair;
+    exports2.createPair = createPair;
   }
 });
 
 // node_modules/yaml/dist/stringify/stringifyCollection.js
 var require_stringifyCollection = __commonJS({
-  "node_modules/yaml/dist/stringify/stringifyCollection.js"(exports) {
+  "node_modules/yaml/dist/stringify/stringifyCollection.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var identity3 = require_identity();
     var stringify = require_stringify();
     var stringifyComment = require_stringifyComment();
@@ -7420,14 +7469,15 @@ ${indent}${end}`;
         lines.push(ic.trimStart());
       }
     }
-    exports.stringifyCollection = stringifyCollection;
+    exports2.stringifyCollection = stringifyCollection;
   }
 });
 
 // node_modules/yaml/dist/nodes/YAMLMap.js
 var require_YAMLMap = __commonJS({
-  "node_modules/yaml/dist/nodes/YAMLMap.js"(exports) {
+  "node_modules/yaml/dist/nodes/YAMLMap.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var stringifyCollection = require_stringifyCollection();
     var addPairToJSMap = require_addPairToJSMap();
     var Collection = require_Collection();
@@ -7563,15 +7613,16 @@ var require_YAMLMap = __commonJS({
         });
       }
     };
-    exports.YAMLMap = YAMLMap;
-    exports.findPair = findPair;
+    exports2.YAMLMap = YAMLMap;
+    exports2.findPair = findPair;
   }
 });
 
 // node_modules/yaml/dist/schema/common/map.js
 var require_map = __commonJS({
-  "node_modules/yaml/dist/schema/common/map.js"(exports) {
+  "node_modules/yaml/dist/schema/common/map.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var identity3 = require_identity();
     var YAMLMap = require_YAMLMap();
     var map = {
@@ -7586,14 +7637,15 @@ var require_map = __commonJS({
       },
       createNode: (schema, obj, ctx) => YAMLMap.YAMLMap.from(schema, obj, ctx)
     };
-    exports.map = map;
+    exports2.map = map;
   }
 });
 
 // node_modules/yaml/dist/nodes/YAMLSeq.js
 var require_YAMLSeq = __commonJS({
-  "node_modules/yaml/dist/nodes/YAMLSeq.js"(exports) {
+  "node_modules/yaml/dist/nodes/YAMLSeq.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var createNode = require_createNode();
     var stringifyCollection = require_stringifyCollection();
     var Collection = require_Collection();
@@ -7702,14 +7754,15 @@ var require_YAMLSeq = __commonJS({
         idx = Number(idx);
       return typeof idx === "number" && Number.isInteger(idx) && idx >= 0 ? idx : null;
     }
-    exports.YAMLSeq = YAMLSeq;
+    exports2.YAMLSeq = YAMLSeq;
   }
 });
 
 // node_modules/yaml/dist/schema/common/seq.js
 var require_seq = __commonJS({
-  "node_modules/yaml/dist/schema/common/seq.js"(exports) {
+  "node_modules/yaml/dist/schema/common/seq.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var identity3 = require_identity();
     var YAMLSeq = require_YAMLSeq();
     var seq = {
@@ -7724,14 +7777,15 @@ var require_seq = __commonJS({
       },
       createNode: (schema, obj, ctx) => YAMLSeq.YAMLSeq.from(schema, obj, ctx)
     };
-    exports.seq = seq;
+    exports2.seq = seq;
   }
 });
 
 // node_modules/yaml/dist/schema/common/string.js
 var require_string = __commonJS({
-  "node_modules/yaml/dist/schema/common/string.js"(exports) {
+  "node_modules/yaml/dist/schema/common/string.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var stringifyString = require_stringifyString();
     var string = {
       identify: (value) => typeof value === "string",
@@ -7743,14 +7797,15 @@ var require_string = __commonJS({
         return stringifyString.stringifyString(item, ctx, onComment, onChompKeep);
       }
     };
-    exports.string = string;
+    exports2.string = string;
   }
 });
 
 // node_modules/yaml/dist/schema/common/null.js
 var require_null = __commonJS({
-  "node_modules/yaml/dist/schema/common/null.js"(exports) {
+  "node_modules/yaml/dist/schema/common/null.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var Scalar = require_Scalar();
     var nullTag = {
       identify: (value) => value == null,
@@ -7761,14 +7816,15 @@ var require_null = __commonJS({
       resolve: () => new Scalar.Scalar(null),
       stringify: ({ source }, ctx) => typeof source === "string" && nullTag.test.test(source) ? source : ctx.options.nullStr
     };
-    exports.nullTag = nullTag;
+    exports2.nullTag = nullTag;
   }
 });
 
 // node_modules/yaml/dist/schema/core/bool.js
 var require_bool = __commonJS({
-  "node_modules/yaml/dist/schema/core/bool.js"(exports) {
+  "node_modules/yaml/dist/schema/core/bool.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var Scalar = require_Scalar();
     var boolTag = {
       identify: (value) => typeof value === "boolean",
@@ -7785,14 +7841,15 @@ var require_bool = __commonJS({
         return value ? ctx.options.trueStr : ctx.options.falseStr;
       }
     };
-    exports.boolTag = boolTag;
+    exports2.boolTag = boolTag;
   }
 });
 
 // node_modules/yaml/dist/stringify/stringifyNumber.js
 var require_stringifyNumber = __commonJS({
-  "node_modules/yaml/dist/stringify/stringifyNumber.js"(exports) {
+  "node_modules/yaml/dist/stringify/stringifyNumber.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     function stringifyNumber({ format: format2, minFractionDigits, tag, value }) {
       if (typeof value === "bigint")
         return String(value);
@@ -7812,14 +7869,15 @@ var require_stringifyNumber = __commonJS({
       }
       return n2;
     }
-    exports.stringifyNumber = stringifyNumber;
+    exports2.stringifyNumber = stringifyNumber;
   }
 });
 
 // node_modules/yaml/dist/schema/core/float.js
 var require_float = __commonJS({
-  "node_modules/yaml/dist/schema/core/float.js"(exports) {
+  "node_modules/yaml/dist/schema/core/float.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var Scalar = require_Scalar();
     var stringifyNumber = require_stringifyNumber();
     var floatNaN = {
@@ -7856,16 +7914,17 @@ var require_float = __commonJS({
       },
       stringify: stringifyNumber.stringifyNumber
     };
-    exports.float = float;
-    exports.floatExp = floatExp;
-    exports.floatNaN = floatNaN;
+    exports2.float = float;
+    exports2.floatExp = floatExp;
+    exports2.floatNaN = floatNaN;
   }
 });
 
 // node_modules/yaml/dist/schema/core/int.js
 var require_int = __commonJS({
-  "node_modules/yaml/dist/schema/core/int.js"(exports) {
+  "node_modules/yaml/dist/schema/core/int.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var stringifyNumber = require_stringifyNumber();
     var intIdentify = (value) => typeof value === "bigint" || Number.isInteger(value);
     var intResolve = (str, offset, radix, { intAsBigInt }) => intAsBigInt ? BigInt(str) : parseInt(str.substring(offset), radix);
@@ -7901,16 +7960,17 @@ var require_int = __commonJS({
       resolve: (str, _onError, opt) => intResolve(str, 2, 16, opt),
       stringify: (node) => intStringify(node, 16, "0x")
     };
-    exports.int = int;
-    exports.intHex = intHex;
-    exports.intOct = intOct;
+    exports2.int = int;
+    exports2.intHex = intHex;
+    exports2.intOct = intOct;
   }
 });
 
 // node_modules/yaml/dist/schema/core/schema.js
 var require_schema = __commonJS({
-  "node_modules/yaml/dist/schema/core/schema.js"(exports) {
+  "node_modules/yaml/dist/schema/core/schema.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var map = require_map();
     var _null = require_null();
     var seq = require_seq();
@@ -7931,14 +7991,15 @@ var require_schema = __commonJS({
       float.floatExp,
       float.float
     ];
-    exports.schema = schema;
+    exports2.schema = schema;
   }
 });
 
 // node_modules/yaml/dist/schema/json/schema.js
 var require_schema2 = __commonJS({
-  "node_modules/yaml/dist/schema/json/schema.js"(exports) {
+  "node_modules/yaml/dist/schema/json/schema.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var Scalar = require_Scalar();
     var map = require_map();
     var seq = require_seq();
@@ -7998,15 +8059,16 @@ var require_schema2 = __commonJS({
       }
     };
     var schema = [map.map, seq.seq].concat(jsonScalars, jsonError);
-    exports.schema = schema;
+    exports2.schema = schema;
   }
 });
 
 // node_modules/yaml/dist/schema/yaml-1.1/binary.js
 var require_binary = __commonJS({
-  "node_modules/yaml/dist/schema/yaml-1.1/binary.js"(exports) {
+  "node_modules/yaml/dist/schema/yaml-1.1/binary.js"(exports2) {
     "use strict";
-    var node_buffer = __require("buffer");
+    init_cjs_shims();
+    var node_buffer = require("buffer");
     var Scalar = require_Scalar();
     var stringifyString = require_stringifyString();
     var binary = {
@@ -8064,14 +8126,15 @@ var require_binary = __commonJS({
         return stringifyString.stringifyString({ comment, type, value: str }, ctx, onComment, onChompKeep);
       }
     };
-    exports.binary = binary;
+    exports2.binary = binary;
   }
 });
 
 // node_modules/yaml/dist/schema/yaml-1.1/pairs.js
 var require_pairs = __commonJS({
-  "node_modules/yaml/dist/schema/yaml-1.1/pairs.js"(exports) {
+  "node_modules/yaml/dist/schema/yaml-1.1/pairs.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var identity3 = require_identity();
     var Pair = require_Pair();
     var Scalar = require_Scalar();
@@ -8140,16 +8203,17 @@ ${cn.comment}` : item.comment;
       resolve: resolvePairs,
       createNode: createPairs
     };
-    exports.createPairs = createPairs;
-    exports.pairs = pairs;
-    exports.resolvePairs = resolvePairs;
+    exports2.createPairs = createPairs;
+    exports2.pairs = pairs;
+    exports2.resolvePairs = resolvePairs;
   }
 });
 
 // node_modules/yaml/dist/schema/yaml-1.1/omap.js
 var require_omap = __commonJS({
-  "node_modules/yaml/dist/schema/yaml-1.1/omap.js"(exports) {
+  "node_modules/yaml/dist/schema/yaml-1.1/omap.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var identity3 = require_identity();
     var toJS = require_toJS();
     var YAMLMap = require_YAMLMap();
@@ -8219,15 +8283,16 @@ var require_omap = __commonJS({
       },
       createNode: (schema, iterable, ctx) => YAMLOMap.from(schema, iterable, ctx)
     };
-    exports.YAMLOMap = YAMLOMap;
-    exports.omap = omap;
+    exports2.YAMLOMap = YAMLOMap;
+    exports2.omap = omap;
   }
 });
 
 // node_modules/yaml/dist/schema/yaml-1.1/bool.js
 var require_bool2 = __commonJS({
-  "node_modules/yaml/dist/schema/yaml-1.1/bool.js"(exports) {
+  "node_modules/yaml/dist/schema/yaml-1.1/bool.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var Scalar = require_Scalar();
     function boolStringify({ value, source }, ctx) {
       const boolObj = value ? trueTag : falseTag;
@@ -8251,15 +8316,16 @@ var require_bool2 = __commonJS({
       resolve: () => new Scalar.Scalar(false),
       stringify: boolStringify
     };
-    exports.falseTag = falseTag;
-    exports.trueTag = trueTag;
+    exports2.falseTag = falseTag;
+    exports2.trueTag = trueTag;
   }
 });
 
 // node_modules/yaml/dist/schema/yaml-1.1/float.js
 var require_float2 = __commonJS({
-  "node_modules/yaml/dist/schema/yaml-1.1/float.js"(exports) {
+  "node_modules/yaml/dist/schema/yaml-1.1/float.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var Scalar = require_Scalar();
     var stringifyNumber = require_stringifyNumber();
     var floatNaN = {
@@ -8299,16 +8365,17 @@ var require_float2 = __commonJS({
       },
       stringify: stringifyNumber.stringifyNumber
     };
-    exports.float = float;
-    exports.floatExp = floatExp;
-    exports.floatNaN = floatNaN;
+    exports2.float = float;
+    exports2.floatExp = floatExp;
+    exports2.floatNaN = floatNaN;
   }
 });
 
 // node_modules/yaml/dist/schema/yaml-1.1/int.js
 var require_int2 = __commonJS({
-  "node_modules/yaml/dist/schema/yaml-1.1/int.js"(exports) {
+  "node_modules/yaml/dist/schema/yaml-1.1/int.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var stringifyNumber = require_stringifyNumber();
     var intIdentify = (value) => typeof value === "bigint" || Number.isInteger(value);
     function intResolve(str, offset, radix, { intAsBigInt }) {
@@ -8377,17 +8444,18 @@ var require_int2 = __commonJS({
       resolve: (str, _onError, opt) => intResolve(str, 2, 16, opt),
       stringify: (node) => intStringify(node, 16, "0x")
     };
-    exports.int = int;
-    exports.intBin = intBin;
-    exports.intHex = intHex;
-    exports.intOct = intOct;
+    exports2.int = int;
+    exports2.intBin = intBin;
+    exports2.intHex = intHex;
+    exports2.intOct = intOct;
   }
 });
 
 // node_modules/yaml/dist/schema/yaml-1.1/set.js
 var require_set = __commonJS({
-  "node_modules/yaml/dist/schema/yaml-1.1/set.js"(exports) {
+  "node_modules/yaml/dist/schema/yaml-1.1/set.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var identity3 = require_identity();
     var Pair = require_Pair();
     var YAMLMap = require_YAMLMap();
@@ -8468,15 +8536,16 @@ var require_set = __commonJS({
         return map;
       }
     };
-    exports.YAMLSet = YAMLSet;
-    exports.set = set;
+    exports2.YAMLSet = YAMLSet;
+    exports2.set = set;
   }
 });
 
 // node_modules/yaml/dist/schema/yaml-1.1/timestamp.js
 var require_timestamp = __commonJS({
-  "node_modules/yaml/dist/schema/yaml-1.1/timestamp.js"(exports) {
+  "node_modules/yaml/dist/schema/yaml-1.1/timestamp.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var stringifyNumber = require_stringifyNumber();
     function parseSexagesimal(str, asBigInt) {
       const sign = str[0];
@@ -8555,16 +8624,17 @@ var require_timestamp = __commonJS({
       },
       stringify: ({ value }) => value?.toISOString().replace(/(T00:00:00)?\.000Z$/, "") ?? ""
     };
-    exports.floatTime = floatTime;
-    exports.intTime = intTime;
-    exports.timestamp = timestamp;
+    exports2.floatTime = floatTime;
+    exports2.intTime = intTime;
+    exports2.timestamp = timestamp;
   }
 });
 
 // node_modules/yaml/dist/schema/yaml-1.1/schema.js
 var require_schema3 = __commonJS({
-  "node_modules/yaml/dist/schema/yaml-1.1/schema.js"(exports) {
+  "node_modules/yaml/dist/schema/yaml-1.1/schema.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var map = require_map();
     var _null = require_null();
     var seq = require_seq();
@@ -8601,14 +8671,15 @@ var require_schema3 = __commonJS({
       timestamp.floatTime,
       timestamp.timestamp
     ];
-    exports.schema = schema;
+    exports2.schema = schema;
   }
 });
 
 // node_modules/yaml/dist/schema/tags.js
 var require_tags = __commonJS({
-  "node_modules/yaml/dist/schema/tags.js"(exports) {
+  "node_modules/yaml/dist/schema/tags.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var map = require_map();
     var _null = require_null();
     var seq = require_seq();
@@ -8694,15 +8765,16 @@ var require_tags = __commonJS({
         return tags2;
       }, []);
     }
-    exports.coreKnownTags = coreKnownTags;
-    exports.getTags = getTags;
+    exports2.coreKnownTags = coreKnownTags;
+    exports2.getTags = getTags;
   }
 });
 
 // node_modules/yaml/dist/schema/Schema.js
 var require_Schema = __commonJS({
-  "node_modules/yaml/dist/schema/Schema.js"(exports) {
+  "node_modules/yaml/dist/schema/Schema.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var identity3 = require_identity();
     var map = require_map();
     var seq = require_seq();
@@ -8727,14 +8799,15 @@ var require_Schema = __commonJS({
         return copy;
       }
     };
-    exports.Schema = Schema;
+    exports2.Schema = Schema;
   }
 });
 
 // node_modules/yaml/dist/stringify/stringifyDocument.js
 var require_stringifyDocument = __commonJS({
-  "node_modules/yaml/dist/stringify/stringifyDocument.js"(exports) {
+  "node_modules/yaml/dist/stringify/stringifyDocument.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var identity3 = require_identity();
     var stringify = require_stringify();
     var stringifyComment = require_stringifyComment();
@@ -8807,14 +8880,15 @@ var require_stringifyDocument = __commonJS({
       }
       return lines.join("\n") + "\n";
     }
-    exports.stringifyDocument = stringifyDocument;
+    exports2.stringifyDocument = stringifyDocument;
   }
 });
 
 // node_modules/yaml/dist/doc/Document.js
 var require_Document = __commonJS({
-  "node_modules/yaml/dist/doc/Document.js"(exports) {
+  "node_modules/yaml/dist/doc/Document.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var Alias = require_Alias();
     var Collection = require_Collection();
     var identity3 = require_identity();
@@ -9116,14 +9190,15 @@ var require_Document = __commonJS({
         return true;
       throw new Error("Expected a YAML collection as document contents");
     }
-    exports.Document = Document;
+    exports2.Document = Document;
   }
 });
 
 // node_modules/yaml/dist/errors.js
 var require_errors = __commonJS({
-  "node_modules/yaml/dist/errors.js"(exports) {
+  "node_modules/yaml/dist/errors.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var YAMLError = class extends Error {
       constructor(name, pos, code, message) {
         super();
@@ -9178,17 +9253,18 @@ ${pointer}
 `;
       }
     };
-    exports.YAMLError = YAMLError;
-    exports.YAMLParseError = YAMLParseError;
-    exports.YAMLWarning = YAMLWarning;
-    exports.prettifyError = prettifyError;
+    exports2.YAMLError = YAMLError;
+    exports2.YAMLParseError = YAMLParseError;
+    exports2.YAMLWarning = YAMLWarning;
+    exports2.prettifyError = prettifyError;
   }
 });
 
 // node_modules/yaml/dist/compose/resolve-props.js
 var require_resolve_props = __commonJS({
-  "node_modules/yaml/dist/compose/resolve-props.js"(exports) {
+  "node_modules/yaml/dist/compose/resolve-props.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     function resolveProps(tokens, { flow, indicator, next, offset, onError, parentIndent, startOnNewline }) {
       let spaceBefore = false;
       let atNewline = startOnNewline;
@@ -9315,14 +9391,15 @@ var require_resolve_props = __commonJS({
         start: start ?? end
       };
     }
-    exports.resolveProps = resolveProps;
+    exports2.resolveProps = resolveProps;
   }
 });
 
 // node_modules/yaml/dist/compose/util-contains-newline.js
 var require_util_contains_newline = __commonJS({
-  "node_modules/yaml/dist/compose/util-contains-newline.js"(exports) {
+  "node_modules/yaml/dist/compose/util-contains-newline.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     function containsNewline(key) {
       if (!key)
         return null;
@@ -9357,14 +9434,15 @@ var require_util_contains_newline = __commonJS({
           return true;
       }
     }
-    exports.containsNewline = containsNewline;
+    exports2.containsNewline = containsNewline;
   }
 });
 
 // node_modules/yaml/dist/compose/util-flow-indent-check.js
 var require_util_flow_indent_check = __commonJS({
-  "node_modules/yaml/dist/compose/util-flow-indent-check.js"(exports) {
+  "node_modules/yaml/dist/compose/util-flow-indent-check.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var utilContainsNewline = require_util_contains_newline();
     function flowIndentCheck(indent, fc, onError) {
       if (fc?.type === "flow-collection") {
@@ -9375,14 +9453,15 @@ var require_util_flow_indent_check = __commonJS({
         }
       }
     }
-    exports.flowIndentCheck = flowIndentCheck;
+    exports2.flowIndentCheck = flowIndentCheck;
   }
 });
 
 // node_modules/yaml/dist/compose/util-map-includes.js
 var require_util_map_includes = __commonJS({
-  "node_modules/yaml/dist/compose/util-map-includes.js"(exports) {
+  "node_modules/yaml/dist/compose/util-map-includes.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var identity3 = require_identity();
     function mapIncludes(ctx, items, search) {
       const { uniqueKeys } = ctx.options;
@@ -9391,14 +9470,15 @@ var require_util_map_includes = __commonJS({
       const isEqual = typeof uniqueKeys === "function" ? uniqueKeys : (a2, b) => a2 === b || identity3.isScalar(a2) && identity3.isScalar(b) && a2.value === b.value;
       return items.some((pair) => isEqual(pair.key, search));
     }
-    exports.mapIncludes = mapIncludes;
+    exports2.mapIncludes = mapIncludes;
   }
 });
 
 // node_modules/yaml/dist/compose/resolve-block-map.js
 var require_resolve_block_map = __commonJS({
-  "node_modules/yaml/dist/compose/resolve-block-map.js"(exports) {
+  "node_modules/yaml/dist/compose/resolve-block-map.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var Pair = require_Pair();
     var YAMLMap = require_YAMLMap();
     var resolveProps = require_resolve_props();
@@ -9499,14 +9579,15 @@ var require_resolve_block_map = __commonJS({
       map.range = [bm.offset, offset, commentEnd ?? offset];
       return map;
     }
-    exports.resolveBlockMap = resolveBlockMap;
+    exports2.resolveBlockMap = resolveBlockMap;
   }
 });
 
 // node_modules/yaml/dist/compose/resolve-block-seq.js
 var require_resolve_block_seq = __commonJS({
-  "node_modules/yaml/dist/compose/resolve-block-seq.js"(exports) {
+  "node_modules/yaml/dist/compose/resolve-block-seq.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var YAMLSeq = require_YAMLSeq();
     var resolveProps = require_resolve_props();
     var utilFlowIndentCheck = require_util_flow_indent_check();
@@ -9550,14 +9631,15 @@ var require_resolve_block_seq = __commonJS({
       seq.range = [bs.offset, offset, commentEnd ?? offset];
       return seq;
     }
-    exports.resolveBlockSeq = resolveBlockSeq;
+    exports2.resolveBlockSeq = resolveBlockSeq;
   }
 });
 
 // node_modules/yaml/dist/compose/resolve-end.js
 var require_resolve_end = __commonJS({
-  "node_modules/yaml/dist/compose/resolve-end.js"(exports) {
+  "node_modules/yaml/dist/compose/resolve-end.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     function resolveEnd(end, offset, reqSpace, onError) {
       let comment = "";
       if (end) {
@@ -9593,14 +9675,15 @@ var require_resolve_end = __commonJS({
       }
       return { comment, offset };
     }
-    exports.resolveEnd = resolveEnd;
+    exports2.resolveEnd = resolveEnd;
   }
 });
 
 // node_modules/yaml/dist/compose/resolve-flow-collection.js
 var require_resolve_flow_collection = __commonJS({
-  "node_modules/yaml/dist/compose/resolve-flow-collection.js"(exports) {
+  "node_modules/yaml/dist/compose/resolve-flow-collection.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var identity3 = require_identity();
     var Pair = require_Pair();
     var YAMLMap = require_YAMLMap();
@@ -9787,14 +9870,15 @@ var require_resolve_flow_collection = __commonJS({
       }
       return coll;
     }
-    exports.resolveFlowCollection = resolveFlowCollection;
+    exports2.resolveFlowCollection = resolveFlowCollection;
   }
 });
 
 // node_modules/yaml/dist/compose/compose-collection.js
 var require_compose_collection = __commonJS({
-  "node_modules/yaml/dist/compose/compose-collection.js"(exports) {
+  "node_modules/yaml/dist/compose/compose-collection.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var identity3 = require_identity();
     var Scalar = require_Scalar();
     var YAMLMap = require_YAMLMap();
@@ -9852,14 +9936,15 @@ var require_compose_collection = __commonJS({
         node.format = tag.format;
       return node;
     }
-    exports.composeCollection = composeCollection;
+    exports2.composeCollection = composeCollection;
   }
 });
 
 // node_modules/yaml/dist/compose/resolve-block-scalar.js
 var require_resolve_block_scalar = __commonJS({
-  "node_modules/yaml/dist/compose/resolve-block-scalar.js"(exports) {
+  "node_modules/yaml/dist/compose/resolve-block-scalar.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var Scalar = require_Scalar();
     function resolveBlockScalar(ctx, scalar, onError) {
       const start = scalar.offset;
@@ -10035,14 +10120,15 @@ var require_resolve_block_scalar = __commonJS({
         lines.push([split[i2], split[i2 + 1]]);
       return lines;
     }
-    exports.resolveBlockScalar = resolveBlockScalar;
+    exports2.resolveBlockScalar = resolveBlockScalar;
   }
 });
 
 // node_modules/yaml/dist/compose/resolve-flow-scalar.js
 var require_resolve_flow_scalar = __commonJS({
-  "node_modules/yaml/dist/compose/resolve-flow-scalar.js"(exports) {
+  "node_modules/yaml/dist/compose/resolve-flow-scalar.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var Scalar = require_Scalar();
     var resolveEnd = require_resolve_end();
     function resolveFlowScalar(scalar, strict, onError) {
@@ -10254,14 +10340,15 @@ var require_resolve_flow_scalar = __commonJS({
       }
       return String.fromCodePoint(code);
     }
-    exports.resolveFlowScalar = resolveFlowScalar;
+    exports2.resolveFlowScalar = resolveFlowScalar;
   }
 });
 
 // node_modules/yaml/dist/compose/compose-scalar.js
 var require_compose_scalar = __commonJS({
-  "node_modules/yaml/dist/compose/compose-scalar.js"(exports) {
+  "node_modules/yaml/dist/compose/compose-scalar.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var identity3 = require_identity();
     var Scalar = require_Scalar();
     var resolveBlockScalar = require_resolve_block_scalar();
@@ -10335,14 +10422,15 @@ var require_compose_scalar = __commonJS({
       }
       return tag;
     }
-    exports.composeScalar = composeScalar;
+    exports2.composeScalar = composeScalar;
   }
 });
 
 // node_modules/yaml/dist/compose/util-empty-scalar-position.js
 var require_util_empty_scalar_position = __commonJS({
-  "node_modules/yaml/dist/compose/util-empty-scalar-position.js"(exports) {
+  "node_modules/yaml/dist/compose/util-empty-scalar-position.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     function emptyScalarPosition(offset, before, pos) {
       if (before) {
         pos ?? (pos = before.length);
@@ -10365,14 +10453,15 @@ var require_util_empty_scalar_position = __commonJS({
       }
       return offset;
     }
-    exports.emptyScalarPosition = emptyScalarPosition;
+    exports2.emptyScalarPosition = emptyScalarPosition;
   }
 });
 
 // node_modules/yaml/dist/compose/compose-node.js
 var require_compose_node = __commonJS({
-  "node_modules/yaml/dist/compose/compose-node.js"(exports) {
+  "node_modules/yaml/dist/compose/compose-node.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var Alias = require_Alias();
     var identity3 = require_identity();
     var composeCollection = require_compose_collection();
@@ -10465,15 +10554,16 @@ var require_compose_node = __commonJS({
         alias.comment = re.comment;
       return alias;
     }
-    exports.composeEmptyNode = composeEmptyNode;
-    exports.composeNode = composeNode;
+    exports2.composeEmptyNode = composeEmptyNode;
+    exports2.composeNode = composeNode;
   }
 });
 
 // node_modules/yaml/dist/compose/compose-doc.js
 var require_compose_doc = __commonJS({
-  "node_modules/yaml/dist/compose/compose-doc.js"(exports) {
+  "node_modules/yaml/dist/compose/compose-doc.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var Document = require_Document();
     var composeNode = require_compose_node();
     var resolveEnd = require_resolve_end();
@@ -10509,15 +10599,16 @@ var require_compose_doc = __commonJS({
       doc.range = [offset, contentEnd, re.offset];
       return doc;
     }
-    exports.composeDoc = composeDoc;
+    exports2.composeDoc = composeDoc;
   }
 });
 
 // node_modules/yaml/dist/compose/composer.js
 var require_composer = __commonJS({
-  "node_modules/yaml/dist/compose/composer.js"(exports) {
+  "node_modules/yaml/dist/compose/composer.js"(exports2) {
     "use strict";
-    var node_process = __require("process");
+    init_cjs_shims();
+    var node_process = require("process");
     var directives = require_directives();
     var Document = require_Document();
     var errors = require_errors();
@@ -10715,14 +10806,15 @@ ${end.comment}` : end.comment;
         }
       }
     };
-    exports.Composer = Composer;
+    exports2.Composer = Composer;
   }
 });
 
 // node_modules/yaml/dist/parse/cst-scalar.js
 var require_cst_scalar = __commonJS({
-  "node_modules/yaml/dist/parse/cst-scalar.js"(exports) {
+  "node_modules/yaml/dist/parse/cst-scalar.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var resolveBlockScalar = require_resolve_block_scalar();
     var resolveFlowScalar = require_resolve_flow_scalar();
     var errors = require_errors();
@@ -10898,16 +10990,17 @@ var require_cst_scalar = __commonJS({
         }
       }
     }
-    exports.createScalarToken = createScalarToken;
-    exports.resolveAsScalar = resolveAsScalar;
-    exports.setScalarValue = setScalarValue;
+    exports2.createScalarToken = createScalarToken;
+    exports2.resolveAsScalar = resolveAsScalar;
+    exports2.setScalarValue = setScalarValue;
   }
 });
 
 // node_modules/yaml/dist/parse/cst-stringify.js
 var require_cst_stringify = __commonJS({
-  "node_modules/yaml/dist/parse/cst-stringify.js"(exports) {
+  "node_modules/yaml/dist/parse/cst-stringify.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var stringify = (cst) => "type" in cst ? stringifyToken(cst) : stringifyItem(cst);
     function stringifyToken(token) {
       switch (token.type) {
@@ -10961,14 +11054,15 @@ var require_cst_stringify = __commonJS({
         res += stringifyToken(value);
       return res;
     }
-    exports.stringify = stringify;
+    exports2.stringify = stringify;
   }
 });
 
 // node_modules/yaml/dist/parse/cst-visit.js
 var require_cst_visit = __commonJS({
-  "node_modules/yaml/dist/parse/cst-visit.js"(exports) {
+  "node_modules/yaml/dist/parse/cst-visit.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var BREAK = /* @__PURE__ */ Symbol("break visit");
     var SKIP = /* @__PURE__ */ Symbol("skip children");
     var REMOVE = /* @__PURE__ */ Symbol("remove item");
@@ -11023,14 +11117,15 @@ var require_cst_visit = __commonJS({
       }
       return typeof ctrl === "function" ? ctrl(item, path6) : ctrl;
     }
-    exports.visit = visit;
+    exports2.visit = visit;
   }
 });
 
 // node_modules/yaml/dist/parse/cst.js
 var require_cst = __commonJS({
-  "node_modules/yaml/dist/parse/cst.js"(exports) {
+  "node_modules/yaml/dist/parse/cst.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var cstScalar = require_cst_scalar();
     var cstStringify = require_cst_stringify();
     var cstVisit = require_cst_visit();
@@ -11113,26 +11208,27 @@ var require_cst = __commonJS({
       }
       return null;
     }
-    exports.createScalarToken = cstScalar.createScalarToken;
-    exports.resolveAsScalar = cstScalar.resolveAsScalar;
-    exports.setScalarValue = cstScalar.setScalarValue;
-    exports.stringify = cstStringify.stringify;
-    exports.visit = cstVisit.visit;
-    exports.BOM = BOM;
-    exports.DOCUMENT = DOCUMENT;
-    exports.FLOW_END = FLOW_END;
-    exports.SCALAR = SCALAR;
-    exports.isCollection = isCollection;
-    exports.isScalar = isScalar;
-    exports.prettyToken = prettyToken;
-    exports.tokenType = tokenType;
+    exports2.createScalarToken = cstScalar.createScalarToken;
+    exports2.resolveAsScalar = cstScalar.resolveAsScalar;
+    exports2.setScalarValue = cstScalar.setScalarValue;
+    exports2.stringify = cstStringify.stringify;
+    exports2.visit = cstVisit.visit;
+    exports2.BOM = BOM;
+    exports2.DOCUMENT = DOCUMENT;
+    exports2.FLOW_END = FLOW_END;
+    exports2.SCALAR = SCALAR;
+    exports2.isCollection = isCollection;
+    exports2.isScalar = isScalar;
+    exports2.prettyToken = prettyToken;
+    exports2.tokenType = tokenType;
   }
 });
 
 // node_modules/yaml/dist/parse/lexer.js
 var require_lexer = __commonJS({
-  "node_modules/yaml/dist/parse/lexer.js"(exports) {
+  "node_modules/yaml/dist/parse/lexer.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var cst = require_cst();
     function isEmpty(ch) {
       switch (ch) {
@@ -11704,14 +11800,15 @@ var require_lexer = __commonJS({
         return yield* this.pushToIndex(i2, false);
       }
     };
-    exports.Lexer = Lexer;
+    exports2.Lexer = Lexer;
   }
 });
 
 // node_modules/yaml/dist/parse/line-counter.js
 var require_line_counter = __commonJS({
-  "node_modules/yaml/dist/parse/line-counter.js"(exports) {
+  "node_modules/yaml/dist/parse/line-counter.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var LineCounter = class {
       constructor() {
         this.lineStarts = [];
@@ -11735,15 +11832,16 @@ var require_line_counter = __commonJS({
         };
       }
     };
-    exports.LineCounter = LineCounter;
+    exports2.LineCounter = LineCounter;
   }
 });
 
 // node_modules/yaml/dist/parse/parser.js
 var require_parser = __commonJS({
-  "node_modules/yaml/dist/parse/parser.js"(exports) {
+  "node_modules/yaml/dist/parse/parser.js"(exports2) {
     "use strict";
-    var node_process = __require("process");
+    init_cjs_shims();
+    var node_process = require("process");
     var cst = require_cst();
     var lexer = require_lexer();
     function includesToken(list, type) {
@@ -12602,14 +12700,15 @@ var require_parser = __commonJS({
         }
       }
     };
-    exports.Parser = Parser;
+    exports2.Parser = Parser;
   }
 });
 
 // node_modules/yaml/dist/public-api.js
 var require_public_api = __commonJS({
-  "node_modules/yaml/dist/public-api.js"(exports) {
+  "node_modules/yaml/dist/public-api.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var composer = require_composer();
     var Document = require_Document();
     var errors = require_errors();
@@ -12696,17 +12795,18 @@ var require_public_api = __commonJS({
         return value.toString(options);
       return new Document.Document(value, _replacer, options).toString(options);
     }
-    exports.parse = parse;
-    exports.parseAllDocuments = parseAllDocuments;
-    exports.parseDocument = parseDocument;
-    exports.stringify = stringify;
+    exports2.parse = parse;
+    exports2.parseAllDocuments = parseAllDocuments;
+    exports2.parseDocument = parseDocument;
+    exports2.stringify = stringify;
   }
 });
 
 // node_modules/yaml/dist/index.js
 var require_dist = __commonJS({
-  "node_modules/yaml/dist/index.js"(exports) {
+  "node_modules/yaml/dist/index.js"(exports2) {
     "use strict";
+    init_cjs_shims();
     var composer = require_composer();
     var Document = require_Document();
     var Schema = require_Schema();
@@ -12723,39 +12823,43 @@ var require_dist = __commonJS({
     var parser = require_parser();
     var publicApi = require_public_api();
     var visit = require_visit();
-    exports.Composer = composer.Composer;
-    exports.Document = Document.Document;
-    exports.Schema = Schema.Schema;
-    exports.YAMLError = errors.YAMLError;
-    exports.YAMLParseError = errors.YAMLParseError;
-    exports.YAMLWarning = errors.YAMLWarning;
-    exports.Alias = Alias.Alias;
-    exports.isAlias = identity3.isAlias;
-    exports.isCollection = identity3.isCollection;
-    exports.isDocument = identity3.isDocument;
-    exports.isMap = identity3.isMap;
-    exports.isNode = identity3.isNode;
-    exports.isPair = identity3.isPair;
-    exports.isScalar = identity3.isScalar;
-    exports.isSeq = identity3.isSeq;
-    exports.Pair = Pair.Pair;
-    exports.Scalar = Scalar.Scalar;
-    exports.YAMLMap = YAMLMap.YAMLMap;
-    exports.YAMLSeq = YAMLSeq.YAMLSeq;
-    exports.CST = cst;
-    exports.Lexer = lexer.Lexer;
-    exports.LineCounter = lineCounter.LineCounter;
-    exports.Parser = parser.Parser;
-    exports.parse = publicApi.parse;
-    exports.parseAllDocuments = publicApi.parseAllDocuments;
-    exports.parseDocument = publicApi.parseDocument;
-    exports.stringify = publicApi.stringify;
-    exports.visit = visit.visit;
-    exports.visitAsync = visit.visitAsync;
+    exports2.Composer = composer.Composer;
+    exports2.Document = Document.Document;
+    exports2.Schema = Schema.Schema;
+    exports2.YAMLError = errors.YAMLError;
+    exports2.YAMLParseError = errors.YAMLParseError;
+    exports2.YAMLWarning = errors.YAMLWarning;
+    exports2.Alias = Alias.Alias;
+    exports2.isAlias = identity3.isAlias;
+    exports2.isCollection = identity3.isCollection;
+    exports2.isDocument = identity3.isDocument;
+    exports2.isMap = identity3.isMap;
+    exports2.isNode = identity3.isNode;
+    exports2.isPair = identity3.isPair;
+    exports2.isScalar = identity3.isScalar;
+    exports2.isSeq = identity3.isSeq;
+    exports2.Pair = Pair.Pair;
+    exports2.Scalar = Scalar.Scalar;
+    exports2.YAMLMap = YAMLMap.YAMLMap;
+    exports2.YAMLSeq = YAMLSeq.YAMLSeq;
+    exports2.CST = cst;
+    exports2.Lexer = lexer.Lexer;
+    exports2.LineCounter = lineCounter.LineCounter;
+    exports2.Parser = parser.Parser;
+    exports2.parse = publicApi.parse;
+    exports2.parseAllDocuments = publicApi.parseAllDocuments;
+    exports2.parseDocument = publicApi.parseDocument;
+    exports2.stringify = publicApi.stringify;
+    exports2.visit = visit.visit;
+    exports2.visitAsync = visit.visitAsync;
   }
 });
 
+// packages/cli/src/index.ts
+init_cjs_shims();
+
 // node_modules/commander/esm.mjs
+init_cjs_shims();
 var import_index = __toESM(require_commander(), 1);
 var {
   program,
@@ -12772,7 +12876,11 @@ var {
   Help
 } = import_index.default;
 
+// node_modules/chalk/source/index.js
+init_cjs_shims();
+
 // node_modules/chalk/source/vendor/ansi-styles/index.js
+init_cjs_shims();
 var ANSI_BACKGROUND_OFFSET = 10;
 var wrapAnsi16 = (offset = 0) => (code) => `\x1B[${code + offset}m`;
 var wrapAnsi256 = (offset = 0) => (code) => `\x1B[${38 + offset};5;${code}m`;
@@ -12959,16 +13067,17 @@ var ansiStyles = assembleStyles();
 var ansi_styles_default = ansiStyles;
 
 // node_modules/chalk/source/vendor/supports-color/index.js
-import process2 from "process";
-import os from "os";
-import tty from "tty";
-function hasFlag(flag, argv = globalThis.Deno ? globalThis.Deno.args : process2.argv) {
+init_cjs_shims();
+var import_node_process = __toESM(require("process"), 1);
+var import_node_os = __toESM(require("os"), 1);
+var import_node_tty = __toESM(require("tty"), 1);
+function hasFlag(flag, argv = globalThis.Deno ? globalThis.Deno.args : import_node_process.default.argv) {
   const prefix = flag.startsWith("-") ? "" : flag.length === 1 ? "-" : "--";
   const position = argv.indexOf(prefix + flag);
   const terminatorPosition = argv.indexOf("--");
   return position !== -1 && (terminatorPosition === -1 || position < terminatorPosition);
 }
-var { env } = process2;
+var { env } = import_node_process.default;
 var flagForceColor;
 if (hasFlag("no-color") || hasFlag("no-colors") || hasFlag("color=false") || hasFlag("color=never")) {
   flagForceColor = 0;
@@ -13024,8 +13133,8 @@ function _supportsColor(haveStream, { streamIsTTY, sniffFlags = true } = {}) {
   if (env.TERM === "dumb") {
     return min;
   }
-  if (process2.platform === "win32") {
-    const osRelease = os.release().split(".");
+  if (import_node_process.default.platform === "win32") {
+    const osRelease = import_node_os.default.release().split(".");
     if (Number(osRelease[0]) >= 10 && Number(osRelease[2]) >= 10586) {
       return Number(osRelease[2]) >= 14931 ? 3 : 2;
     }
@@ -13085,12 +13194,13 @@ function createSupportsColor(stream, options = {}) {
   return translateLevel(level);
 }
 var supportsColor = {
-  stdout: createSupportsColor({ isTTY: tty.isatty(1) }),
-  stderr: createSupportsColor({ isTTY: tty.isatty(2) })
+  stdout: createSupportsColor({ isTTY: import_node_tty.default.isatty(1) }),
+  stderr: createSupportsColor({ isTTY: import_node_tty.default.isatty(2) })
 };
 var supports_color_default = supportsColor;
 
 // node_modules/chalk/source/utilities.js
+init_cjs_shims();
 function stringReplaceAll(string, substring, replacer) {
   let index = string.indexOf(substring);
   if (index === -1) {
@@ -13268,21 +13378,29 @@ var chalkStderr = createChalk({ level: stderrColor ? stderrColor.level : 0 });
 var source_default = chalk;
 
 // packages/cli/src/commands/init.ts
-import { mkdir, writeFile } from "fs/promises";
-import { join, dirname } from "path";
-import { existsSync } from "fs";
-import { fileURLToPath } from "url";
+init_cjs_shims();
+var import_promises = require("fs/promises");
+var import_path = require("path");
+var import_fs = require("fs");
+var import_url = require("url");
 
 // node_modules/ora/index.js
-import process9 from "process";
+init_cjs_shims();
+var import_node_process7 = __toESM(require("process"), 1);
 
 // node_modules/cli-cursor/index.js
-import process5 from "process";
+init_cjs_shims();
+var import_node_process3 = __toESM(require("process"), 1);
 
 // node_modules/restore-cursor/index.js
-import process4 from "process";
+init_cjs_shims();
+var import_node_process2 = __toESM(require("process"), 1);
+
+// node_modules/onetime/index.js
+init_cjs_shims();
 
 // node_modules/mimic-function/index.js
+init_cjs_shims();
 var copyProperty = (to, from, property, ignoreNonConfigurable) => {
   if (property === "length" || property === "prototype") {
     return;
@@ -13359,7 +13477,11 @@ onetime.callCount = (function_) => {
 };
 var onetime_default = onetime;
 
+// node_modules/signal-exit/dist/mjs/index.js
+init_cjs_shims();
+
 // node_modules/signal-exit/dist/mjs/signals.js
+init_cjs_shims();
 var signals = [];
 signals.push("SIGHUP", "SIGINT", "SIGTERM");
 if (process.platform !== "win32") {
@@ -13611,7 +13733,7 @@ var {
 } = signalExitWrap(processOk(process3) ? new SignalExit(process3) : new SignalExitFallback());
 
 // node_modules/restore-cursor/index.js
-var terminal = process4.stderr.isTTY ? process4.stderr : process4.stdout.isTTY ? process4.stdout : void 0;
+var terminal = import_node_process2.default.stderr.isTTY ? import_node_process2.default.stderr : import_node_process2.default.stdout.isTTY ? import_node_process2.default.stdout : void 0;
 var restoreCursor = terminal ? onetime_default(() => {
   onExit(() => {
     terminal.write("\x1B[?25h");
@@ -13623,14 +13745,14 @@ var restore_cursor_default = restoreCursor;
 // node_modules/cli-cursor/index.js
 var isHidden = false;
 var cliCursor = {};
-cliCursor.show = (writableStream = process5.stderr) => {
+cliCursor.show = (writableStream = import_node_process3.default.stderr) => {
   if (!writableStream.isTTY) {
     return;
   }
   isHidden = false;
   writableStream.write("\x1B[?25h");
 };
-cliCursor.hide = (writableStream = process5.stderr) => {
+cliCursor.hide = (writableStream = import_node_process3.default.stderr) => {
   if (!writableStream.isTTY) {
     return;
   }
@@ -13653,13 +13775,17 @@ var cli_cursor_default = cliCursor;
 // node_modules/ora/index.js
 var import_cli_spinners = __toESM(require_cli_spinners(), 1);
 
+// node_modules/log-symbols/index.js
+init_cjs_shims();
+
 // node_modules/log-symbols/node_modules/is-unicode-supported/index.js
-import process6 from "process";
+init_cjs_shims();
+var import_node_process4 = __toESM(require("process"), 1);
 function isUnicodeSupported() {
-  if (process6.platform !== "win32") {
-    return process6.env.TERM !== "linux";
+  if (import_node_process4.default.platform !== "win32") {
+    return import_node_process4.default.env.TERM !== "linux";
   }
-  return Boolean(process6.env.CI) || Boolean(process6.env.WT_SESSION) || Boolean(process6.env.TERMINUS_SUBLIME) || process6.env.ConEmuTask === "{cmd::Cmder}" || process6.env.TERM_PROGRAM === "Terminus-Sublime" || process6.env.TERM_PROGRAM === "vscode" || process6.env.TERM === "xterm-256color" || process6.env.TERM === "alacritty" || process6.env.TERMINAL_EMULATOR === "JetBrains-JediTerm";
+  return Boolean(import_node_process4.default.env.CI) || Boolean(import_node_process4.default.env.WT_SESSION) || Boolean(import_node_process4.default.env.TERMINUS_SUBLIME) || import_node_process4.default.env.ConEmuTask === "{cmd::Cmder}" || import_node_process4.default.env.TERM_PROGRAM === "Terminus-Sublime" || import_node_process4.default.env.TERM_PROGRAM === "vscode" || import_node_process4.default.env.TERM === "xterm-256color" || import_node_process4.default.env.TERM === "alacritty" || import_node_process4.default.env.TERMINAL_EMULATOR === "JetBrains-JediTerm";
 }
 
 // node_modules/log-symbols/index.js
@@ -13678,7 +13804,11 @@ var fallback = {
 var logSymbols = isUnicodeSupported() ? main : fallback;
 var log_symbols_default = logSymbols;
 
+// node_modules/strip-ansi/index.js
+init_cjs_shims();
+
 // node_modules/ansi-regex/index.js
+init_cjs_shims();
 function ansiRegex({ onlyFirst = false } = {}) {
   const ST = "(?:\\u0007|\\u001B\\u005C|\\u009C)";
   const osc = `(?:\\u001B\\][\\s\\S]*?${ST})`;
@@ -13696,7 +13826,14 @@ function stripAnsi(string) {
   return string.replace(regex, "");
 }
 
+// node_modules/string-width/index.js
+init_cjs_shims();
+
+// node_modules/get-east-asian-width/index.js
+init_cjs_shims();
+
 // node_modules/get-east-asian-width/lookup.js
+init_cjs_shims();
 function isAmbiguous(x) {
   return x === 161 || x === 164 || x === 167 || x === 168 || x === 170 || x === 173 || x === 174 || x >= 176 && x <= 180 || x >= 182 && x <= 186 || x >= 188 && x <= 191 || x === 198 || x === 208 || x === 215 || x === 216 || x >= 222 && x <= 225 || x === 230 || x >= 232 && x <= 234 || x === 236 || x === 237 || x === 240 || x === 242 || x === 243 || x >= 247 && x <= 250 || x === 252 || x === 254 || x === 257 || x === 273 || x === 275 || x === 283 || x === 294 || x === 295 || x === 299 || x >= 305 && x <= 307 || x === 312 || x >= 319 && x <= 322 || x === 324 || x >= 328 && x <= 331 || x === 333 || x === 338 || x === 339 || x === 358 || x === 359 || x === 363 || x === 462 || x === 464 || x === 466 || x === 468 || x === 470 || x === 472 || x === 474 || x === 476 || x === 593 || x === 609 || x === 708 || x === 711 || x >= 713 && x <= 715 || x === 717 || x === 720 || x >= 728 && x <= 731 || x === 733 || x === 735 || x >= 768 && x <= 879 || x >= 913 && x <= 929 || x >= 931 && x <= 937 || x >= 945 && x <= 961 || x >= 963 && x <= 969 || x === 1025 || x >= 1040 && x <= 1103 || x === 1105 || x === 8208 || x >= 8211 && x <= 8214 || x === 8216 || x === 8217 || x === 8220 || x === 8221 || x >= 8224 && x <= 8226 || x >= 8228 && x <= 8231 || x === 8240 || x === 8242 || x === 8243 || x === 8245 || x === 8251 || x === 8254 || x === 8308 || x === 8319 || x >= 8321 && x <= 8324 || x === 8364 || x === 8451 || x === 8453 || x === 8457 || x === 8467 || x === 8470 || x === 8481 || x === 8482 || x === 8486 || x === 8491 || x === 8531 || x === 8532 || x >= 8539 && x <= 8542 || x >= 8544 && x <= 8555 || x >= 8560 && x <= 8569 || x === 8585 || x >= 8592 && x <= 8601 || x === 8632 || x === 8633 || x === 8658 || x === 8660 || x === 8679 || x === 8704 || x === 8706 || x === 8707 || x === 8711 || x === 8712 || x === 8715 || x === 8719 || x === 8721 || x === 8725 || x === 8730 || x >= 8733 && x <= 8736 || x === 8739 || x === 8741 || x >= 8743 && x <= 8748 || x === 8750 || x >= 8756 && x <= 8759 || x === 8764 || x === 8765 || x === 8776 || x === 8780 || x === 8786 || x === 8800 || x === 8801 || x >= 8804 && x <= 8807 || x === 8810 || x === 8811 || x === 8814 || x === 8815 || x === 8834 || x === 8835 || x === 8838 || x === 8839 || x === 8853 || x === 8857 || x === 8869 || x === 8895 || x === 8978 || x >= 9312 && x <= 9449 || x >= 9451 && x <= 9547 || x >= 9552 && x <= 9587 || x >= 9600 && x <= 9615 || x >= 9618 && x <= 9621 || x === 9632 || x === 9633 || x >= 9635 && x <= 9641 || x === 9650 || x === 9651 || x === 9654 || x === 9655 || x === 9660 || x === 9661 || x === 9664 || x === 9665 || x >= 9670 && x <= 9672 || x === 9675 || x >= 9678 && x <= 9681 || x >= 9698 && x <= 9701 || x === 9711 || x === 9733 || x === 9734 || x === 9737 || x === 9742 || x === 9743 || x === 9756 || x === 9758 || x === 9792 || x === 9794 || x === 9824 || x === 9825 || x >= 9827 && x <= 9829 || x >= 9831 && x <= 9834 || x === 9836 || x === 9837 || x === 9839 || x === 9886 || x === 9887 || x === 9919 || x >= 9926 && x <= 9933 || x >= 9935 && x <= 9939 || x >= 9941 && x <= 9953 || x === 9955 || x === 9960 || x === 9961 || x >= 9963 && x <= 9969 || x === 9972 || x >= 9974 && x <= 9977 || x === 9979 || x === 9980 || x === 9982 || x === 9983 || x === 10045 || x >= 10102 && x <= 10111 || x >= 11094 && x <= 11097 || x >= 12872 && x <= 12879 || x >= 57344 && x <= 63743 || x >= 65024 && x <= 65039 || x === 65533 || x >= 127232 && x <= 127242 || x >= 127248 && x <= 127277 || x >= 127280 && x <= 127337 || x >= 127344 && x <= 127373 || x === 127375 || x === 127376 || x >= 127387 && x <= 127404 || x >= 917760 && x <= 917999 || x >= 983040 && x <= 1048573 || x >= 1048576 && x <= 1114109;
 }
@@ -13722,13 +13859,14 @@ function eastAsianWidth(codePoint, { ambiguousAsWide = false } = {}) {
 }
 
 // node_modules/emoji-regex/index.mjs
+init_cjs_shims();
 var emoji_regex_default = () => {
   return /[#*0-9]\uFE0F?\u20E3|[\xA9\xAE\u203C\u2049\u2122\u2139\u2194-\u2199\u21A9\u21AA\u231A\u231B\u2328\u23CF\u23ED-\u23EF\u23F1\u23F2\u23F8-\u23FA\u24C2\u25AA\u25AB\u25B6\u25C0\u25FB\u25FC\u25FE\u2600-\u2604\u260E\u2611\u2614\u2615\u2618\u2620\u2622\u2623\u2626\u262A\u262E\u262F\u2638-\u263A\u2640\u2642\u2648-\u2653\u265F\u2660\u2663\u2665\u2666\u2668\u267B\u267E\u267F\u2692\u2694-\u2697\u2699\u269B\u269C\u26A0\u26A7\u26AA\u26B0\u26B1\u26BD\u26BE\u26C4\u26C8\u26CF\u26D1\u26E9\u26F0-\u26F5\u26F7\u26F8\u26FA\u2702\u2708\u2709\u270F\u2712\u2714\u2716\u271D\u2721\u2733\u2734\u2744\u2747\u2757\u2763\u27A1\u2934\u2935\u2B05-\u2B07\u2B1B\u2B1C\u2B55\u3030\u303D\u3297\u3299]\uFE0F?|[\u261D\u270C\u270D](?:\uD83C[\uDFFB-\uDFFF]|\uFE0F)?|[\u270A\u270B](?:\uD83C[\uDFFB-\uDFFF])?|[\u23E9-\u23EC\u23F0\u23F3\u25FD\u2693\u26A1\u26AB\u26C5\u26CE\u26D4\u26EA\u26FD\u2705\u2728\u274C\u274E\u2753-\u2755\u2795-\u2797\u27B0\u27BF\u2B50]|\u26D3\uFE0F?(?:\u200D\uD83D\uDCA5)?|\u26F9(?:\uD83C[\uDFFB-\uDFFF]|\uFE0F)?(?:\u200D[\u2640\u2642]\uFE0F?)?|\u2764\uFE0F?(?:\u200D(?:\uD83D\uDD25|\uD83E\uDE79))?|\uD83C(?:[\uDC04\uDD70\uDD71\uDD7E\uDD7F\uDE02\uDE37\uDF21\uDF24-\uDF2C\uDF36\uDF7D\uDF96\uDF97\uDF99-\uDF9B\uDF9E\uDF9F\uDFCD\uDFCE\uDFD4-\uDFDF\uDFF5\uDFF7]\uFE0F?|[\uDF85\uDFC2\uDFC7](?:\uD83C[\uDFFB-\uDFFF])?|[\uDFC4\uDFCA](?:\uD83C[\uDFFB-\uDFFF])?(?:\u200D[\u2640\u2642]\uFE0F?)?|[\uDFCB\uDFCC](?:\uD83C[\uDFFB-\uDFFF]|\uFE0F)?(?:\u200D[\u2640\u2642]\uFE0F?)?|[\uDCCF\uDD8E\uDD91-\uDD9A\uDE01\uDE1A\uDE2F\uDE32-\uDE36\uDE38-\uDE3A\uDE50\uDE51\uDF00-\uDF20\uDF2D-\uDF35\uDF37-\uDF43\uDF45-\uDF4A\uDF4C-\uDF7C\uDF7E-\uDF84\uDF86-\uDF93\uDFA0-\uDFC1\uDFC5\uDFC6\uDFC8\uDFC9\uDFCF-\uDFD3\uDFE0-\uDFF0\uDFF8-\uDFFF]|\uDDE6\uD83C[\uDDE8-\uDDEC\uDDEE\uDDF1\uDDF2\uDDF4\uDDF6-\uDDFA\uDDFC\uDDFD\uDDFF]|\uDDE7\uD83C[\uDDE6\uDDE7\uDDE9-\uDDEF\uDDF1-\uDDF4\uDDF6-\uDDF9\uDDFB\uDDFC\uDDFE\uDDFF]|\uDDE8\uD83C[\uDDE6\uDDE8\uDDE9\uDDEB-\uDDEE\uDDF0-\uDDF7\uDDFA-\uDDFF]|\uDDE9\uD83C[\uDDEA\uDDEC\uDDEF\uDDF0\uDDF2\uDDF4\uDDFF]|\uDDEA\uD83C[\uDDE6\uDDE8\uDDEA\uDDEC\uDDED\uDDF7-\uDDFA]|\uDDEB\uD83C[\uDDEE-\uDDF0\uDDF2\uDDF4\uDDF7]|\uDDEC\uD83C[\uDDE6\uDDE7\uDDE9-\uDDEE\uDDF1-\uDDF3\uDDF5-\uDDFA\uDDFC\uDDFE]|\uDDED\uD83C[\uDDF0\uDDF2\uDDF3\uDDF7\uDDF9\uDDFA]|\uDDEE\uD83C[\uDDE8-\uDDEA\uDDF1-\uDDF4\uDDF6-\uDDF9]|\uDDEF\uD83C[\uDDEA\uDDF2\uDDF4\uDDF5]|\uDDF0\uD83C[\uDDEA\uDDEC-\uDDEE\uDDF2\uDDF3\uDDF5\uDDF7\uDDFC\uDDFE\uDDFF]|\uDDF1\uD83C[\uDDE6-\uDDE8\uDDEE\uDDF0\uDDF7-\uDDFB\uDDFE]|\uDDF2\uD83C[\uDDE6\uDDE8-\uDDED\uDDF0-\uDDFF]|\uDDF3\uD83C[\uDDE6\uDDE8\uDDEA-\uDDEC\uDDEE\uDDF1\uDDF4\uDDF5\uDDF7\uDDFA\uDDFF]|\uDDF4\uD83C\uDDF2|\uDDF5\uD83C[\uDDE6\uDDEA-\uDDED\uDDF0-\uDDF3\uDDF7-\uDDF9\uDDFC\uDDFE]|\uDDF6\uD83C\uDDE6|\uDDF7\uD83C[\uDDEA\uDDF4\uDDF8\uDDFA\uDDFC]|\uDDF8\uD83C[\uDDE6-\uDDEA\uDDEC-\uDDF4\uDDF7-\uDDF9\uDDFB\uDDFD-\uDDFF]|\uDDF9\uD83C[\uDDE6\uDDE8\uDDE9\uDDEB-\uDDED\uDDEF-\uDDF4\uDDF7\uDDF9\uDDFB\uDDFC\uDDFF]|\uDDFA\uD83C[\uDDE6\uDDEC\uDDF2\uDDF3\uDDF8\uDDFE\uDDFF]|\uDDFB\uD83C[\uDDE6\uDDE8\uDDEA\uDDEC\uDDEE\uDDF3\uDDFA]|\uDDFC\uD83C[\uDDEB\uDDF8]|\uDDFD\uD83C\uDDF0|\uDDFE\uD83C[\uDDEA\uDDF9]|\uDDFF\uD83C[\uDDE6\uDDF2\uDDFC]|\uDF44(?:\u200D\uD83D\uDFEB)?|\uDF4B(?:\u200D\uD83D\uDFE9)?|\uDFC3(?:\uD83C[\uDFFB-\uDFFF])?(?:\u200D(?:[\u2640\u2642]\uFE0F?(?:\u200D\u27A1\uFE0F?)?|\u27A1\uFE0F?))?|\uDFF3\uFE0F?(?:\u200D(?:\u26A7\uFE0F?|\uD83C\uDF08))?|\uDFF4(?:\u200D\u2620\uFE0F?|\uDB40\uDC67\uDB40\uDC62\uDB40(?:\uDC65\uDB40\uDC6E\uDB40\uDC67|\uDC73\uDB40\uDC63\uDB40\uDC74|\uDC77\uDB40\uDC6C\uDB40\uDC73)\uDB40\uDC7F)?)|\uD83D(?:[\uDC3F\uDCFD\uDD49\uDD4A\uDD6F\uDD70\uDD73\uDD76-\uDD79\uDD87\uDD8A-\uDD8D\uDDA5\uDDA8\uDDB1\uDDB2\uDDBC\uDDC2-\uDDC4\uDDD1-\uDDD3\uDDDC-\uDDDE\uDDE1\uDDE3\uDDE8\uDDEF\uDDF3\uDDFA\uDECB\uDECD-\uDECF\uDEE0-\uDEE5\uDEE9\uDEF0\uDEF3]\uFE0F?|[\uDC42\uDC43\uDC46-\uDC50\uDC66\uDC67\uDC6B-\uDC6D\uDC72\uDC74-\uDC76\uDC78\uDC7C\uDC83\uDC85\uDC8F\uDC91\uDCAA\uDD7A\uDD95\uDD96\uDE4C\uDE4F\uDEC0\uDECC](?:\uD83C[\uDFFB-\uDFFF])?|[\uDC6E-\uDC71\uDC73\uDC77\uDC81\uDC82\uDC86\uDC87\uDE45-\uDE47\uDE4B\uDE4D\uDE4E\uDEA3\uDEB4\uDEB5](?:\uD83C[\uDFFB-\uDFFF])?(?:\u200D[\u2640\u2642]\uFE0F?)?|[\uDD74\uDD90](?:\uD83C[\uDFFB-\uDFFF]|\uFE0F)?|[\uDC00-\uDC07\uDC09-\uDC14\uDC16-\uDC25\uDC27-\uDC3A\uDC3C-\uDC3E\uDC40\uDC44\uDC45\uDC51-\uDC65\uDC6A\uDC79-\uDC7B\uDC7D-\uDC80\uDC84\uDC88-\uDC8E\uDC90\uDC92-\uDCA9\uDCAB-\uDCFC\uDCFF-\uDD3D\uDD4B-\uDD4E\uDD50-\uDD67\uDDA4\uDDFB-\uDE2D\uDE2F-\uDE34\uDE37-\uDE41\uDE43\uDE44\uDE48-\uDE4A\uDE80-\uDEA2\uDEA4-\uDEB3\uDEB7-\uDEBF\uDEC1-\uDEC5\uDED0-\uDED2\uDED5-\uDED8\uDEDC-\uDEDF\uDEEB\uDEEC\uDEF4-\uDEFC\uDFE0-\uDFEB\uDFF0]|\uDC08(?:\u200D\u2B1B)?|\uDC15(?:\u200D\uD83E\uDDBA)?|\uDC26(?:\u200D(?:\u2B1B|\uD83D\uDD25))?|\uDC3B(?:\u200D\u2744\uFE0F?)?|\uDC41\uFE0F?(?:\u200D\uD83D\uDDE8\uFE0F?)?|\uDC68(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D\uD83D(?:\uDC8B\u200D\uD83D)?\uDC68|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D(?:[\uDC68\uDC69]\u200D\uD83D(?:\uDC66(?:\u200D\uD83D\uDC66)?|\uDC67(?:\u200D\uD83D[\uDC66\uDC67])?)|[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uDC66(?:\u200D\uD83D\uDC66)?|\uDC67(?:\u200D\uD83D[\uDC66\uDC67])?)|\uD83E(?:[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3]))|\uD83C(?:\uDFFB(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D\uD83D(?:\uDC8B\u200D\uD83D)?\uDC68\uD83C[\uDFFB-\uDFFF]|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D(?:[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uDC30\u200D\uD83D\uDC68\uD83C[\uDFFC-\uDFFF])|\uD83E(?:[\uDD1D\uDEEF]\u200D\uD83D\uDC68\uD83C[\uDFFC-\uDFFF]|[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3])))?|\uDFFC(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D\uD83D(?:\uDC8B\u200D\uD83D)?\uDC68\uD83C[\uDFFB-\uDFFF]|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D(?:[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uDC30\u200D\uD83D\uDC68\uD83C[\uDFFB\uDFFD-\uDFFF])|\uD83E(?:[\uDD1D\uDEEF]\u200D\uD83D\uDC68\uD83C[\uDFFB\uDFFD-\uDFFF]|[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3])))?|\uDFFD(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D\uD83D(?:\uDC8B\u200D\uD83D)?\uDC68\uD83C[\uDFFB-\uDFFF]|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D(?:[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uDC30\u200D\uD83D\uDC68\uD83C[\uDFFB\uDFFC\uDFFE\uDFFF])|\uD83E(?:[\uDD1D\uDEEF]\u200D\uD83D\uDC68\uD83C[\uDFFB\uDFFC\uDFFE\uDFFF]|[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3])))?|\uDFFE(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D\uD83D(?:\uDC8B\u200D\uD83D)?\uDC68\uD83C[\uDFFB-\uDFFF]|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D(?:[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uDC30\u200D\uD83D\uDC68\uD83C[\uDFFB-\uDFFD\uDFFF])|\uD83E(?:[\uDD1D\uDEEF]\u200D\uD83D\uDC68\uD83C[\uDFFB-\uDFFD\uDFFF]|[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3])))?|\uDFFF(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D\uD83D(?:\uDC8B\u200D\uD83D)?\uDC68\uD83C[\uDFFB-\uDFFF]|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D(?:[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uDC30\u200D\uD83D\uDC68\uD83C[\uDFFB-\uDFFE])|\uD83E(?:[\uDD1D\uDEEF]\u200D\uD83D\uDC68\uD83C[\uDFFB-\uDFFE]|[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3])))?))?|\uDC69(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D\uD83D(?:\uDC8B\u200D\uD83D)?[\uDC68\uDC69]|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D(?:[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uDC66(?:\u200D\uD83D\uDC66)?|\uDC67(?:\u200D\uD83D[\uDC66\uDC67])?|\uDC69\u200D\uD83D(?:\uDC66(?:\u200D\uD83D\uDC66)?|\uDC67(?:\u200D\uD83D[\uDC66\uDC67])?))|\uD83E(?:[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3]))|\uD83C(?:\uDFFB(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D\uD83D(?:[\uDC68\uDC69]|\uDC8B\u200D\uD83D[\uDC68\uDC69])\uD83C[\uDFFB-\uDFFF]|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D(?:[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uDC30\u200D\uD83D\uDC69\uD83C[\uDFFC-\uDFFF])|\uD83E(?:[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3]|\uDD1D\u200D\uD83D[\uDC68\uDC69]\uD83C[\uDFFC-\uDFFF]|\uDEEF\u200D\uD83D\uDC69\uD83C[\uDFFC-\uDFFF])))?|\uDFFC(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D\uD83D(?:[\uDC68\uDC69]|\uDC8B\u200D\uD83D[\uDC68\uDC69])\uD83C[\uDFFB-\uDFFF]|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D(?:[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uDC30\u200D\uD83D\uDC69\uD83C[\uDFFB\uDFFD-\uDFFF])|\uD83E(?:[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3]|\uDD1D\u200D\uD83D[\uDC68\uDC69]\uD83C[\uDFFB\uDFFD-\uDFFF]|\uDEEF\u200D\uD83D\uDC69\uD83C[\uDFFB\uDFFD-\uDFFF])))?|\uDFFD(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D\uD83D(?:[\uDC68\uDC69]|\uDC8B\u200D\uD83D[\uDC68\uDC69])\uD83C[\uDFFB-\uDFFF]|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D(?:[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uDC30\u200D\uD83D\uDC69\uD83C[\uDFFB\uDFFC\uDFFE\uDFFF])|\uD83E(?:[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3]|\uDD1D\u200D\uD83D[\uDC68\uDC69]\uD83C[\uDFFB\uDFFC\uDFFE\uDFFF]|\uDEEF\u200D\uD83D\uDC69\uD83C[\uDFFB\uDFFC\uDFFE\uDFFF])))?|\uDFFE(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D\uD83D(?:[\uDC68\uDC69]|\uDC8B\u200D\uD83D[\uDC68\uDC69])\uD83C[\uDFFB-\uDFFF]|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D(?:[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uDC30\u200D\uD83D\uDC69\uD83C[\uDFFB-\uDFFD\uDFFF])|\uD83E(?:[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3]|\uDD1D\u200D\uD83D[\uDC68\uDC69]\uD83C[\uDFFB-\uDFFD\uDFFF]|\uDEEF\u200D\uD83D\uDC69\uD83C[\uDFFB-\uDFFD\uDFFF])))?|\uDFFF(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D\uD83D(?:[\uDC68\uDC69]|\uDC8B\u200D\uD83D[\uDC68\uDC69])\uD83C[\uDFFB-\uDFFF]|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D(?:[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uDC30\u200D\uD83D\uDC69\uD83C[\uDFFB-\uDFFE])|\uD83E(?:[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3]|\uDD1D\u200D\uD83D[\uDC68\uDC69]\uD83C[\uDFFB-\uDFFE]|\uDEEF\u200D\uD83D\uDC69\uD83C[\uDFFB-\uDFFE])))?))?|\uDD75(?:\uD83C[\uDFFB-\uDFFF]|\uFE0F)?(?:\u200D[\u2640\u2642]\uFE0F?)?|\uDE2E(?:\u200D\uD83D\uDCA8)?|\uDE35(?:\u200D\uD83D\uDCAB)?|\uDE36(?:\u200D\uD83C\uDF2B\uFE0F?)?|\uDE42(?:\u200D[\u2194\u2195]\uFE0F?)?|\uDEB6(?:\uD83C[\uDFFB-\uDFFF])?(?:\u200D(?:[\u2640\u2642]\uFE0F?(?:\u200D\u27A1\uFE0F?)?|\u27A1\uFE0F?))?)|\uD83E(?:[\uDD0C\uDD0F\uDD18-\uDD1F\uDD30-\uDD34\uDD36\uDD77\uDDB5\uDDB6\uDDBB\uDDD2\uDDD3\uDDD5\uDEC3-\uDEC5\uDEF0\uDEF2-\uDEF8](?:\uD83C[\uDFFB-\uDFFF])?|[\uDD26\uDD35\uDD37-\uDD39\uDD3C-\uDD3E\uDDB8\uDDB9\uDDCD\uDDCF\uDDD4\uDDD6-\uDDDD](?:\uD83C[\uDFFB-\uDFFF])?(?:\u200D[\u2640\u2642]\uFE0F?)?|[\uDDDE\uDDDF](?:\u200D[\u2640\u2642]\uFE0F?)?|[\uDD0D\uDD0E\uDD10-\uDD17\uDD20-\uDD25\uDD27-\uDD2F\uDD3A\uDD3F-\uDD45\uDD47-\uDD76\uDD78-\uDDB4\uDDB7\uDDBA\uDDBC-\uDDCC\uDDD0\uDDE0-\uDDFF\uDE70-\uDE7C\uDE80-\uDE8A\uDE8E-\uDEC2\uDEC6\uDEC8\uDECD-\uDEDC\uDEDF-\uDEEA\uDEEF]|\uDDCE(?:\uD83C[\uDFFB-\uDFFF])?(?:\u200D(?:[\u2640\u2642]\uFE0F?(?:\u200D\u27A1\uFE0F?)?|\u27A1\uFE0F?))?|\uDDD1(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\uD83C[\uDF3E\uDF73\uDF7C\uDF84\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E(?:[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3\uDE70]|\uDD1D\u200D\uD83E\uDDD1|\uDDD1\u200D\uD83E\uDDD2(?:\u200D\uD83E\uDDD2)?|\uDDD2(?:\u200D\uD83E\uDDD2)?))|\uD83C(?:\uDFFB(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D(?:\uD83D\uDC8B\u200D)?\uD83E\uDDD1\uD83C[\uDFFC-\uDFFF]|\uD83C[\uDF3E\uDF73\uDF7C\uDF84\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D(?:[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uDC30\u200D\uD83E\uDDD1\uD83C[\uDFFC-\uDFFF])|\uD83E(?:[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3\uDE70]|\uDD1D\u200D\uD83E\uDDD1\uD83C[\uDFFB-\uDFFF]|\uDEEF\u200D\uD83E\uDDD1\uD83C[\uDFFC-\uDFFF])))?|\uDFFC(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D(?:\uD83D\uDC8B\u200D)?\uD83E\uDDD1\uD83C[\uDFFB\uDFFD-\uDFFF]|\uD83C[\uDF3E\uDF73\uDF7C\uDF84\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D(?:[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uDC30\u200D\uD83E\uDDD1\uD83C[\uDFFB\uDFFD-\uDFFF])|\uD83E(?:[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3\uDE70]|\uDD1D\u200D\uD83E\uDDD1\uD83C[\uDFFB-\uDFFF]|\uDEEF\u200D\uD83E\uDDD1\uD83C[\uDFFB\uDFFD-\uDFFF])))?|\uDFFD(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D(?:\uD83D\uDC8B\u200D)?\uD83E\uDDD1\uD83C[\uDFFB\uDFFC\uDFFE\uDFFF]|\uD83C[\uDF3E\uDF73\uDF7C\uDF84\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D(?:[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uDC30\u200D\uD83E\uDDD1\uD83C[\uDFFB\uDFFC\uDFFE\uDFFF])|\uD83E(?:[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3\uDE70]|\uDD1D\u200D\uD83E\uDDD1\uD83C[\uDFFB-\uDFFF]|\uDEEF\u200D\uD83E\uDDD1\uD83C[\uDFFB\uDFFC\uDFFE\uDFFF])))?|\uDFFE(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D(?:\uD83D\uDC8B\u200D)?\uD83E\uDDD1\uD83C[\uDFFB-\uDFFD\uDFFF]|\uD83C[\uDF3E\uDF73\uDF7C\uDF84\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D(?:[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uDC30\u200D\uD83E\uDDD1\uD83C[\uDFFB-\uDFFD\uDFFF])|\uD83E(?:[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3\uDE70]|\uDD1D\u200D\uD83E\uDDD1\uD83C[\uDFFB-\uDFFF]|\uDEEF\u200D\uD83E\uDDD1\uD83C[\uDFFB-\uDFFD\uDFFF])))?|\uDFFF(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D(?:\uD83D\uDC8B\u200D)?\uD83E\uDDD1\uD83C[\uDFFB-\uDFFE]|\uD83C[\uDF3E\uDF73\uDF7C\uDF84\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D(?:[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uDC30\u200D\uD83E\uDDD1\uD83C[\uDFFB-\uDFFE])|\uD83E(?:[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3\uDE70]|\uDD1D\u200D\uD83E\uDDD1\uD83C[\uDFFB-\uDFFF]|\uDEEF\u200D\uD83E\uDDD1\uD83C[\uDFFB-\uDFFE])))?))?|\uDEF1(?:\uD83C(?:\uDFFB(?:\u200D\uD83E\uDEF2\uD83C[\uDFFC-\uDFFF])?|\uDFFC(?:\u200D\uD83E\uDEF2\uD83C[\uDFFB\uDFFD-\uDFFF])?|\uDFFD(?:\u200D\uD83E\uDEF2\uD83C[\uDFFB\uDFFC\uDFFE\uDFFF])?|\uDFFE(?:\u200D\uD83E\uDEF2\uD83C[\uDFFB-\uDFFD\uDFFF])?|\uDFFF(?:\u200D\uD83E\uDEF2\uD83C[\uDFFB-\uDFFE])?))?)/g;
 };
 
 // node_modules/string-width/index.js
 var segmenter = new Intl.Segmenter();
-var defaultIgnorableCodePointRegex = /^\p{Default_Ignorable_Code_Point}$/u;
+var defaultIgnorableCodePointRegex = new RegExp("^\\p{Default_Ignorable_Code_Point}$", "u");
 function stringWidth(string, options = {}) {
   if (typeof string !== "string" || string.length === 0) {
     return 0;
@@ -13775,6 +13913,7 @@ function stringWidth(string, options = {}) {
 }
 
 // node_modules/is-interactive/index.js
+init_cjs_shims();
 function isInteractive({ stream = process.stdout } = {}) {
   return Boolean(
     stream && stream.isTTY && process.env.TERM !== "dumb" && !("CI" in process.env)
@@ -13782,18 +13921,20 @@ function isInteractive({ stream = process.stdout } = {}) {
 }
 
 // node_modules/is-unicode-supported/index.js
-import process7 from "process";
+init_cjs_shims();
+var import_node_process5 = __toESM(require("process"), 1);
 function isUnicodeSupported2() {
-  const { env: env2 } = process7;
+  const { env: env2 } = import_node_process5.default;
   const { TERM, TERM_PROGRAM } = env2;
-  if (process7.platform !== "win32") {
+  if (import_node_process5.default.platform !== "win32") {
     return TERM !== "linux";
   }
   return Boolean(env2.WT_SESSION) || Boolean(env2.TERMINUS_SUBLIME) || env2.ConEmuTask === "{cmd::Cmder}" || TERM_PROGRAM === "Terminus-Sublime" || TERM_PROGRAM === "vscode" || TERM === "xterm-256color" || TERM === "alacritty" || TERM === "rxvt-unicode" || TERM === "rxvt-unicode-256color" || env2.TERMINAL_EMULATOR === "JetBrains-JediTerm";
 }
 
 // node_modules/stdin-discarder/index.js
-import process8 from "process";
+init_cjs_shims();
+var import_node_process6 = __toESM(require("process"), 1);
 var ASCII_ETX_CODE = 3;
 var StdinDiscarder = class {
   #activeCount = 0;
@@ -13813,24 +13954,24 @@ var StdinDiscarder = class {
     }
   }
   #realStart() {
-    if (process8.platform === "win32" || !process8.stdin.isTTY) {
+    if (import_node_process6.default.platform === "win32" || !import_node_process6.default.stdin.isTTY) {
       return;
     }
-    process8.stdin.setRawMode(true);
-    process8.stdin.on("data", this.#handleInput);
-    process8.stdin.resume();
+    import_node_process6.default.stdin.setRawMode(true);
+    import_node_process6.default.stdin.on("data", this.#handleInput);
+    import_node_process6.default.stdin.resume();
   }
   #realStop() {
-    if (!process8.stdin.isTTY) {
+    if (!import_node_process6.default.stdin.isTTY) {
       return;
     }
-    process8.stdin.off("data", this.#handleInput);
-    process8.stdin.pause();
-    process8.stdin.setRawMode(false);
+    import_node_process6.default.stdin.off("data", this.#handleInput);
+    import_node_process6.default.stdin.pause();
+    import_node_process6.default.stdin.setRawMode(false);
   }
   #handleInput(chunk) {
     if (chunk[0] === ASCII_ETX_CODE) {
-      process8.emit("SIGINT");
+      import_node_process6.default.emit("SIGINT");
     }
   }
 };
@@ -13865,7 +14006,7 @@ var Ora = class {
     }
     this.#options = {
       color: "cyan",
-      stream: process9.stderr,
+      stream: import_node_process7.default.stderr,
       discardStdin: true,
       hideCursor: true,
       ...options
@@ -13880,7 +14021,7 @@ var Ora = class {
     this.prefixText = this.#options.prefixText;
     this.suffixText = this.#options.suffixText;
     this.indent = this.#options.indent;
-    if (process9.env.NODE_ENV === "test") {
+    if (import_node_process7.default.env.NODE_ENV === "test") {
       this._stream = this.#stream;
       this._isEnabled = this.#isEnabled;
       Object.defineProperty(this, "_linesToClear", {
@@ -14070,7 +14211,7 @@ var Ora = class {
     if (this.#options.hideCursor) {
       cli_cursor_default.hide(this.#stream);
     }
-    if (this.#options.discardStdin && process9.stdin.isTTY) {
+    if (this.#options.discardStdin && import_node_process7.default.stdin.isTTY) {
       this.#isDiscardingStdin = true;
       stdin_discarder_default.start();
     }
@@ -14089,7 +14230,7 @@ var Ora = class {
     if (this.#options.hideCursor) {
       cli_cursor_default.show(this.#stream);
     }
-    if (this.#options.discardStdin && process9.stdin.isTTY && this.#isDiscardingStdin) {
+    if (this.#options.discardStdin && import_node_process7.default.stdin.isTTY && this.#isDiscardingStdin) {
       stdin_discarder_default.stop();
       this.#isDiscardingStdin = false;
     }
@@ -14130,6 +14271,7 @@ function ora(options) {
 }
 
 // packages/shared/dist/index.js
+init_cjs_shims();
 var DEFAULT_CONFIG = {
   version: 1,
   memory: {
@@ -14160,38 +14302,38 @@ async function initCommand(options) {
   const spinner = ora("Initializing OpenCode Harness...").start();
   const cwd = process.cwd();
   try {
-    const harnessDir = join(cwd, ".opencode", ".harness");
-    const configPath = join(harnessDir, "config.json");
-    if (existsSync(configPath) && !options.force) {
+    const harnessDir = (0, import_path.join)(cwd, ".opencode", ".harness");
+    const configPath = (0, import_path.join)(harnessDir, "config.json");
+    if ((0, import_fs.existsSync)(configPath) && !options.force) {
       spinner.warn("Harness already initialized. Use --force to reinitialize.");
       return;
     }
     spinner.text = "Creating directories...";
-    await mkdir(harnessDir, { recursive: true });
-    await mkdir(join(cwd, ".opencode", "agents"), { recursive: true });
-    await mkdir(join(cwd, ".opencode", "commands"), { recursive: true });
-    await mkdir(join(cwd, ".opencode", "plugins"), { recursive: true });
+    await (0, import_promises.mkdir)(harnessDir, { recursive: true });
+    await (0, import_promises.mkdir)((0, import_path.join)(cwd, ".opencode", "agents"), { recursive: true });
+    await (0, import_promises.mkdir)((0, import_path.join)(cwd, ".opencode", "commands"), { recursive: true });
+    await (0, import_promises.mkdir)((0, import_path.join)(cwd, ".opencode", "plugins"), { recursive: true });
     spinner.text = "Writing configuration...";
     const config = { ...DEFAULT_CONFIG };
-    await writeFile(configPath, JSON.stringify(config, null, 2));
-    const opencodeConfigPath = join(cwd, "opencode.json");
-    if (!existsSync(opencodeConfigPath)) {
+    await (0, import_promises.writeFile)(configPath, JSON.stringify(config, null, 2));
+    const opencodeConfigPath = (0, import_path.join)(cwd, "opencode.json");
+    if (!(0, import_fs.existsSync)(opencodeConfigPath)) {
       spinner.text = "Creating opencode.json...";
       let pluginPath = "@opencode-harness/plugin";
       try {
-        const __filename = fileURLToPath(import.meta.url);
-        const __dirname = dirname(__filename);
+        const __filename2 = (0, import_url.fileURLToPath)(importMetaUrl);
+        const __dirname = (0, import_path.dirname)(__filename2);
         const normalizedPath = __dirname.replace(/\\/g, "/");
         if (normalizedPath.includes("packages/cli")) {
           const rootDir = normalizedPath.split("packages/cli")[0];
-          const localPluginPath = join(rootDir, "packages", "plugin").replace(/\\/g, "/");
-          if (existsSync(localPluginPath)) {
+          const localPluginPath = (0, import_path.join)(rootDir, "packages", "plugin").replace(/\\/g, "/");
+          if ((0, import_fs.existsSync)(localPluginPath)) {
             pluginPath = `file://${localPluginPath}`;
           }
         } else if (normalizedPath.endsWith("/dist")) {
-          const rootDir = dirname(normalizedPath);
-          const localPluginPath = join(rootDir, "packages", "plugin").replace(/\\/g, "/");
-          if (existsSync(localPluginPath)) {
+          const rootDir = (0, import_path.dirname)(normalizedPath);
+          const localPluginPath = (0, import_path.join)(rootDir, "packages", "plugin").replace(/\\/g, "/");
+          if ((0, import_fs.existsSync)(localPluginPath)) {
             pluginPath = `file://${localPluginPath}`;
           }
         }
@@ -14206,7 +14348,7 @@ async function initCommand(options) {
         },
         instructions: ["AGENTS.md"]
       };
-      await writeFile(opencodeConfigPath, JSON.stringify(opencodeConfig, null, 2));
+      await (0, import_promises.writeFile)(opencodeConfigPath, JSON.stringify(opencodeConfig, null, 2));
     }
     const orchestratorAgent = `---
 description: Primary orchestrator agent with harness awareness
@@ -14238,7 +14380,7 @@ Be mindful of context usage:
 - Use summaries instead of full file contents when possible
 - Request compaction when context is getting full
 `;
-    await writeFile(join(cwd, ".opencode", "agents", "orchestrator.md"), orchestratorAgent);
+    await (0, import_promises.writeFile)((0, import_path.join)(cwd, ".opencode", "agents", "orchestrator.md"), orchestratorAgent);
     const harnessCommand = `---
 description: Start autonomous harness mode
 agent: build
@@ -14260,7 +14402,7 @@ $ARGUMENTS
 
 Begin the task now.
 `;
-    await writeFile(join(cwd, ".opencode", "commands", "harness.md"), harnessCommand);
+    await (0, import_promises.writeFile)((0, import_path.join)(cwd, ".opencode", "commands", "harness.md"), harnessCommand);
     const compactCommand = `---
 description: Compact context using RLM strategy
 agent: build
@@ -14278,7 +14420,7 @@ If compaction is needed:
 
 Use \`context-nav important\` to see what should be preserved.
 `;
-    await writeFile(join(cwd, ".opencode", "commands", "compact.md"), compactCommand);
+    await (0, import_promises.writeFile)((0, import_path.join)(cwd, ".opencode", "commands", "compact.md"), compactCommand);
     spinner.succeed(source_default.green("OpenCode Harness initialized!"));
     console.log("");
     console.log(source_default.gray("Created:"));
@@ -14297,7 +14439,17 @@ Use \`context-nav important\` to see what should be preserved.
   }
 }
 
+// packages/cli/src/commands/run.ts
+init_cjs_shims();
+
+// node_modules/execa/index.js
+init_cjs_shims();
+
+// node_modules/execa/lib/methods/create.js
+init_cjs_shims();
+
 // node_modules/is-plain-obj/index.js
+init_cjs_shims();
 function isPlainObject(value) {
   if (typeof value !== "object" || value === null) {
     return false;
@@ -14306,8 +14458,12 @@ function isPlainObject(value) {
   return (prototype === null || prototype === Object.prototype || Object.getPrototypeOf(prototype) === null) && !(Symbol.toStringTag in value) && !(Symbol.iterator in value);
 }
 
+// node_modules/execa/lib/methods/parameters.js
+init_cjs_shims();
+
 // node_modules/execa/lib/arguments/file-url.js
-import { fileURLToPath as fileURLToPath2 } from "url";
+init_cjs_shims();
+var import_node_url = require("url");
 var safeNormalizeFileUrl = (file, name) => {
   const fileString = normalizeFileUrl(normalizeDenoExecPath(file));
   if (typeof fileString !== "string") {
@@ -14317,7 +14473,7 @@ var safeNormalizeFileUrl = (file, name) => {
 };
 var normalizeDenoExecPath = (file) => isDenoExecPath(file) ? file.toString() : file;
 var isDenoExecPath = (file) => typeof file !== "string" && file && Object.getPrototypeOf(file) === String.prototype;
-var normalizeFileUrl = (file) => file instanceof URL ? fileURLToPath2(file) : file;
+var normalizeFileUrl = (file) => file instanceof URL ? (0, import_node_url.fileURLToPath)(file) : file;
 
 // node_modules/execa/lib/methods/parameters.js
 var normalizeParameters = (rawFile, rawArguments = [], rawOptions = {}) => {
@@ -14341,10 +14497,12 @@ var normalizeParameters = (rawFile, rawArguments = [], rawOptions = {}) => {
 };
 
 // node_modules/execa/lib/methods/template.js
-import { ChildProcess } from "child_process";
+init_cjs_shims();
+var import_node_child_process = require("child_process");
 
 // node_modules/execa/lib/utils/uint-array.js
-import { StringDecoder } from "string_decoder";
+init_cjs_shims();
+var import_node_string_decoder = require("string_decoder");
 var { toString: objectToString } = Object.prototype;
 var isArrayBuffer = (value) => objectToString.call(value) === "[object ArrayBuffer]";
 var isUint8Array = (value) => objectToString.call(value) === "[object Uint8Array]";
@@ -14361,7 +14519,7 @@ var uint8ArraysToStrings = (uint8ArraysOrStrings, encoding) => {
   if (encoding === "utf8" && uint8ArraysOrStrings.every((uint8ArrayOrString) => typeof uint8ArrayOrString === "string")) {
     return uint8ArraysOrStrings;
   }
-  const decoder = new StringDecoder(encoding);
+  const decoder = new import_node_string_decoder.StringDecoder(encoding);
   const strings = uint8ArraysOrStrings.map((uint8ArrayOrString) => typeof uint8ArrayOrString === "string" ? stringToUint8Array(uint8ArrayOrString) : uint8ArrayOrString).map((uint8Array) => decoder.write(uint8Array));
   const finalString = decoder.end();
   return finalString === "" ? strings : [...strings, finalString];
@@ -14472,7 +14630,7 @@ var parseExpression = (expression) => {
   if (isPlainObject(expression) && ("stdout" in expression || "isMaxBuffer" in expression)) {
     return getSubprocessResult(expression);
   }
-  if (expression instanceof ChildProcess || Object.prototype.toString.call(expression) === "[object Promise]") {
+  if (expression instanceof import_node_child_process.ChildProcess || Object.prototype.toString.call(expression) === "[object Promise]") {
     throw new TypeError("Unexpected subprocess in template expression. Please use ${await subprocess} instead of ${subprocess}.");
   }
   throw new TypeError(`Unexpected "${typeOfExpression}" in template expression`);
@@ -14491,15 +14649,27 @@ var getSubprocessResult = ({ stdout }) => {
 };
 
 // node_modules/execa/lib/methods/main-sync.js
-import { spawnSync } from "child_process";
+init_cjs_shims();
+var import_node_child_process3 = require("child_process");
+
+// node_modules/execa/lib/arguments/command.js
+init_cjs_shims();
+
+// node_modules/execa/lib/verbose/start.js
+init_cjs_shims();
+
+// node_modules/execa/lib/verbose/values.js
+init_cjs_shims();
 
 // node_modules/execa/lib/arguments/specific.js
-import { debuglog } from "util";
+init_cjs_shims();
+var import_node_util = require("util");
 
 // node_modules/execa/lib/utils/standard-stream.js
-import process10 from "process";
+init_cjs_shims();
+var import_node_process8 = __toESM(require("process"), 1);
 var isStandardStream = (stream) => STANDARD_STREAMS.includes(stream);
-var STANDARD_STREAMS = [process10.stdin, process10.stdout, process10.stderr];
+var STANDARD_STREAMS = [import_node_process8.default.stdin, import_node_process8.default.stdout, import_node_process8.default.stderr];
 var STANDARD_STREAMS_ALIASES = ["stdin", "stdout", "stderr"];
 var getStreamName = (fdNumber) => STANDARD_STREAMS_ALIASES[fdNumber] ?? `stdio[${fdNumber}]`;
 
@@ -14562,7 +14732,7 @@ var parseFd = (fdName) => {
 };
 var FD_REGEXP = /^fd(\d+)$/;
 var addDefaultValue = (optionArray, optionName) => optionArray.map((optionValue) => optionValue === void 0 ? DEFAULT_OPTIONS[optionName] : optionValue);
-var verboseDefault = debuglog("execa").enabled ? "full" : "none";
+var verboseDefault = (0, import_node_util.debuglog)("execa").enabled ? "full" : "none";
 var DEFAULT_OPTIONS = {
   lines: false,
   buffer: true,
@@ -14586,18 +14756,20 @@ var isVerboseFunction = (fdVerbose) => typeof fdVerbose === "function";
 var VERBOSE_VALUES = ["none", "short", "full"];
 
 // node_modules/execa/lib/verbose/log.js
-import { inspect } from "util";
+init_cjs_shims();
+var import_node_util3 = require("util");
 
 // node_modules/execa/lib/arguments/escape.js
-import { platform } from "process";
-import { stripVTControlCharacters } from "util";
+init_cjs_shims();
+var import_node_process9 = require("process");
+var import_node_util2 = require("util");
 var joinCommand = (filePath, rawArguments) => {
   const fileAndArguments = [filePath, ...rawArguments];
   const command = fileAndArguments.join(" ");
   const escapedCommand = fileAndArguments.map((fileAndArgument) => quoteString(escapeControlCharacters(fileAndArgument))).join(" ");
   return { command, escapedCommand };
 };
-var escapeLines = (lines) => stripVTControlCharacters(lines).split("\n").map((line) => escapeControlCharacters(line)).join("\n");
+var escapeLines = (lines) => (0, import_node_util2.stripVTControlCharacters)(lines).split("\n").map((line) => escapeControlCharacters(line)).join("\n");
 var escapeControlCharacters = (line) => line.replaceAll(SPECIAL_CHAR_REGEXP, (character) => escapeControlCharacter(character));
 var escapeControlCharacter = (character) => {
   const commonEscape = COMMON_ESCAPES[character];
@@ -14629,11 +14801,15 @@ var quoteString = (escapedArgument) => {
   if (NO_ESCAPE_REGEXP.test(escapedArgument)) {
     return escapedArgument;
   }
-  return platform === "win32" ? `"${escapedArgument.replaceAll('"', '""')}"` : `'${escapedArgument.replaceAll("'", "'\\''")}'`;
+  return import_node_process9.platform === "win32" ? `"${escapedArgument.replaceAll('"', '""')}"` : `'${escapedArgument.replaceAll("'", "'\\''")}'`;
 };
 var NO_ESCAPE_REGEXP = /^[\w./-]+$/;
 
+// node_modules/execa/lib/verbose/default.js
+init_cjs_shims();
+
 // node_modules/figures/index.js
+init_cjs_shims();
 var common = {
   circleQuestionMark: "(?)",
   questionMarkPrefix: "(?)",
@@ -14910,8 +15086,9 @@ var figures_default = figures;
 var replacements = Object.entries(specialMainSymbols);
 
 // node_modules/yoctocolors/base.js
-import tty2 from "tty";
-var hasColors = tty2?.WriteStream?.prototype?.hasColors?.() ?? false;
+init_cjs_shims();
+var import_node_tty2 = __toESM(require("tty"), 1);
+var hasColors = import_node_tty2.default?.WriteStream?.prototype?.hasColors?.() ?? false;
 var format = (open, close) => {
   if (!hasColors) {
     return (input) => input;
@@ -15019,6 +15196,7 @@ var COLORS = {
 };
 
 // node_modules/execa/lib/verbose/custom.js
+init_cjs_shims();
 var applyVerboseOnLines = (printedLines, verboseInfo, fdNumber) => {
   const verboseFunction = getVerboseFunction(verboseInfo, fdNumber);
   return printedLines.map(({ verboseLine, verboseObject }) => applyVerboseFunction(verboseLine, verboseObject, verboseFunction)).filter((printedLine) => printedLine !== void 0).map((printedLine) => appendNewline(printedLine)).join("");
@@ -15063,7 +15241,7 @@ var getPrintedLine = (verboseObject) => {
   return { verboseLine, verboseObject };
 };
 var serializeVerboseMessage = (message) => {
-  const messageString = typeof message === "string" ? message : inspect(message);
+  const messageString = typeof message === "string" ? message : (0, import_node_util3.inspect)(message);
   const escapedMessage = escapeLines(messageString);
   return escapedMessage.replaceAll("	", " ".repeat(TAB_SIZE));
 };
@@ -15082,6 +15260,7 @@ var logCommand = (escapedCommand, verboseInfo) => {
 };
 
 // node_modules/execa/lib/verbose/info.js
+init_cjs_shims();
 var getVerboseInfo = (verbose, escapedCommand, rawOptions) => {
   validateVerbose(verbose);
   const commandId = getCommandId(verbose);
@@ -15110,9 +15289,10 @@ var validateVerbose = (verbose) => {
 };
 
 // node_modules/execa/lib/return/duration.js
-import { hrtime } from "process";
-var getStartTime = () => hrtime.bigint();
-var getDurationMs = (startTime) => Number(hrtime.bigint() - startTime) / 1e6;
+init_cjs_shims();
+var import_node_process10 = require("process");
+var getStartTime = () => import_node_process10.hrtime.bigint();
+var getDurationMs = (startTime) => Number(import_node_process10.hrtime.bigint() - startTime) / 1e6;
 
 // node_modules/execa/lib/arguments/command.js
 var handleCommand = (filePath, rawArguments, rawOptions) => {
@@ -15130,15 +15310,18 @@ var handleCommand = (filePath, rawArguments, rawOptions) => {
 };
 
 // node_modules/execa/lib/arguments/options.js
+init_cjs_shims();
+var import_node_path5 = __toESM(require("path"), 1);
+var import_node_process14 = __toESM(require("process"), 1);
 var import_cross_spawn = __toESM(require_cross_spawn(), 1);
-import path5 from "path";
-import process13 from "process";
 
 // node_modules/npm-run-path/index.js
-import process11 from "process";
-import path2 from "path";
+init_cjs_shims();
+var import_node_process11 = __toESM(require("process"), 1);
+var import_node_path2 = __toESM(require("path"), 1);
 
 // node_modules/npm-run-path/node_modules/path-key/index.js
+init_cjs_shims();
 function pathKey(options = {}) {
   const {
     env: env2 = process.env,
@@ -15151,23 +15334,24 @@ function pathKey(options = {}) {
 }
 
 // node_modules/unicorn-magic/node.js
-import { promisify } from "util";
-import { execFile as execFileCallback, execFileSync as execFileSyncOriginal } from "child_process";
-import path from "path";
-import { fileURLToPath as fileURLToPath3 } from "url";
-var execFileOriginal = promisify(execFileCallback);
+init_cjs_shims();
+var import_node_util4 = require("util");
+var import_node_child_process2 = require("child_process");
+var import_node_path = __toESM(require("path"), 1);
+var import_node_url2 = require("url");
+var execFileOriginal = (0, import_node_util4.promisify)(import_node_child_process2.execFile);
 function toPath(urlOrPath) {
-  return urlOrPath instanceof URL ? fileURLToPath3(urlOrPath) : urlOrPath;
+  return urlOrPath instanceof URL ? (0, import_node_url2.fileURLToPath)(urlOrPath) : urlOrPath;
 }
 function traversePathUp(startPath) {
   return {
     *[Symbol.iterator]() {
-      let currentPath = path.resolve(toPath(startPath));
+      let currentPath = import_node_path.default.resolve(toPath(startPath));
       let previousPath;
       while (previousPath !== currentPath) {
         yield currentPath;
         previousPath = currentPath;
-        currentPath = path.resolve(currentPath, "..");
+        currentPath = import_node_path.default.resolve(currentPath, "..");
       }
     }
   };
@@ -15176,38 +15360,38 @@ var TEN_MEGABYTES_IN_BYTES = 10 * 1024 * 1024;
 
 // node_modules/npm-run-path/index.js
 var npmRunPath = ({
-  cwd = process11.cwd(),
-  path: pathOption = process11.env[pathKey()],
+  cwd = import_node_process11.default.cwd(),
+  path: pathOption = import_node_process11.default.env[pathKey()],
   preferLocal = true,
-  execPath: execPath2 = process11.execPath,
+  execPath: execPath2 = import_node_process11.default.execPath,
   addExecPath = true
 } = {}) => {
-  const cwdPath = path2.resolve(toPath(cwd));
+  const cwdPath = import_node_path2.default.resolve(toPath(cwd));
   const result = [];
-  const pathParts = pathOption.split(path2.delimiter);
+  const pathParts = pathOption.split(import_node_path2.default.delimiter);
   if (preferLocal) {
     applyPreferLocal(result, pathParts, cwdPath);
   }
   if (addExecPath) {
     applyExecPath(result, pathParts, execPath2, cwdPath);
   }
-  return pathOption === "" || pathOption === path2.delimiter ? `${result.join(path2.delimiter)}${pathOption}` : [...result, pathOption].join(path2.delimiter);
+  return pathOption === "" || pathOption === import_node_path2.default.delimiter ? `${result.join(import_node_path2.default.delimiter)}${pathOption}` : [...result, pathOption].join(import_node_path2.default.delimiter);
 };
 var applyPreferLocal = (result, pathParts, cwdPath) => {
   for (const directory of traversePathUp(cwdPath)) {
-    const pathPart = path2.join(directory, "node_modules/.bin");
+    const pathPart = import_node_path2.default.join(directory, "node_modules/.bin");
     if (!pathParts.includes(pathPart)) {
       result.push(pathPart);
     }
   }
 };
 var applyExecPath = (result, pathParts, execPath2, cwdPath) => {
-  const pathPart = path2.resolve(cwdPath, toPath(execPath2), "..");
+  const pathPart = import_node_path2.default.resolve(cwdPath, toPath(execPath2), "..");
   if (!pathParts.includes(pathPart)) {
     result.push(pathPart);
   }
 };
-var npmRunPathEnv = ({ env: env2 = process11.env, ...options } = {}) => {
+var npmRunPathEnv = ({ env: env2 = import_node_process11.default.env, ...options } = {}) => {
   env2 = { ...env2 };
   const pathName = pathKey({ env: env2 });
   options.path = env2[pathName];
@@ -15216,9 +15400,11 @@ var npmRunPathEnv = ({ env: env2 = process11.env, ...options } = {}) => {
 };
 
 // node_modules/execa/lib/terminate/kill.js
-import { setTimeout } from "timers/promises";
+init_cjs_shims();
+var import_promises2 = require("timers/promises");
 
 // node_modules/execa/lib/return/final-error.js
+init_cjs_shims();
 var getFinalError = (originalError, message, isSync) => {
   const ErrorClass = isSync ? ExecaSyncError : ExecaError;
   const options = originalError instanceof DiscardedError ? {} : { cause: originalError };
@@ -15251,12 +15437,15 @@ var ExecaSyncError = class extends Error {
 setErrorName(ExecaSyncError, ExecaSyncError.name);
 
 // node_modules/execa/lib/terminate/signal.js
-import { constants as constants3 } from "os";
+init_cjs_shims();
+var import_node_os4 = require("os");
 
 // node_modules/human-signals/build/src/main.js
-import { constants as constants2 } from "os";
+init_cjs_shims();
+var import_node_os3 = require("os");
 
 // node_modules/human-signals/build/src/realtime.js
+init_cjs_shims();
 var getRealtimeSignals = () => {
   const length = SIGRTMAX - SIGRTMIN + 1;
   return Array.from({ length }, getRealtimeSignal);
@@ -15272,9 +15461,11 @@ var SIGRTMIN = 34;
 var SIGRTMAX = 64;
 
 // node_modules/human-signals/build/src/signals.js
-import { constants } from "os";
+init_cjs_shims();
+var import_node_os2 = require("os");
 
 // node_modules/human-signals/build/src/core.js
+init_cjs_shims();
 var SIGNALS = [
   {
     name: "SIGHUP",
@@ -15563,7 +15754,7 @@ var normalizeSignal = ({
 }) => {
   const {
     signals: { [name]: constantSignal }
-  } = constants;
+  } = import_node_os2.constants;
   const supported = constantSignal !== void 0;
   const number = supported ? constantSignal : defaultNumber;
   return { name, number, description, supported, action, forced, standard };
@@ -15612,7 +15803,7 @@ var getSignalByNumber = (number, signals2) => {
   };
 };
 var findSignalByNumber = (number, signals2) => {
-  const signal = signals2.find(({ name }) => constants2.signals[name] === number);
+  const signal = signals2.find(({ name }) => import_node_os3.constants.signals[name] === number);
   if (signal !== void 0) {
     return signal;
   }
@@ -15646,13 +15837,13 @@ var normalizeSignalInteger = (signalInteger, optionName) => {
   throw new TypeError(`Invalid ${optionName} ${signalInteger}: this signal integer does not exist.
 ${getAvailableSignals()}`);
 };
-var getSignalsIntegerToName = () => new Map(Object.entries(constants3.signals).reverse().map(([signalName, signalInteger]) => [signalInteger, signalName]));
+var getSignalsIntegerToName = () => new Map(Object.entries(import_node_os4.constants.signals).reverse().map(([signalName, signalInteger]) => [signalInteger, signalName]));
 var signalsIntegerToName = getSignalsIntegerToName();
 var normalizeSignalName = (signalName, optionName) => {
-  if (signalName in constants3.signals) {
+  if (signalName in import_node_os4.constants.signals) {
     return signalName;
   }
-  if (signalName.toUpperCase() in constants3.signals) {
+  if (signalName.toUpperCase() in import_node_os4.constants.signals) {
     throw new TypeError(`Invalid ${optionName} '${signalName}': please rename it to '${signalName.toUpperCase()}'.`);
   }
   throw new TypeError(`Invalid ${optionName} '${signalName}': this signal name does not exist.
@@ -15660,8 +15851,8 @@ ${getAvailableSignals()}`);
 };
 var getAvailableSignals = () => `Available signal names: ${getAvailableSignalNames()}.
 Available signal numbers: ${getAvailableSignalIntegers()}.`;
-var getAvailableSignalNames = () => Object.keys(constants3.signals).sort().map((signalName) => `'${signalName}'`).join(", ");
-var getAvailableSignalIntegers = () => [...new Set(Object.values(constants3.signals).sort((signalInteger, signalIntegerTwo) => signalInteger - signalIntegerTwo))].join(", ");
+var getAvailableSignalNames = () => Object.keys(import_node_os4.constants.signals).sort().map((signalName) => `'${signalName}'`).join(", ");
+var getAvailableSignalIntegers = () => [...new Set(Object.values(import_node_os4.constants.signals).sort((signalInteger, signalIntegerTwo) => signalInteger - signalIntegerTwo))].join(", ");
 var getSignalDescription = (signal) => signalsByName[signal].description;
 
 // node_modules/execa/lib/terminate/kill.js
@@ -15723,7 +15914,7 @@ var killOnTimeout = async ({ kill, forceKillAfterDelay, context, controllerSigna
     return;
   }
   try {
-    await setTimeout(forceKillAfterDelay, void 0, { signal: controllerSignal });
+    await (0, import_promises2.setTimeout)(forceKillAfterDelay, void 0, { signal: controllerSignal });
     if (kill("SIGKILL")) {
       context.isForcefullyTerminated ??= true;
     }
@@ -15731,11 +15922,15 @@ var killOnTimeout = async ({ kill, forceKillAfterDelay, context, controllerSigna
   }
 };
 
+// node_modules/execa/lib/terminate/cancel.js
+init_cjs_shims();
+
 // node_modules/execa/lib/utils/abort-signal.js
-import { once } from "events";
+init_cjs_shims();
+var import_node_events = require("events");
 var onAbortedSignal = async (mainSignal, stopSignal) => {
   if (!mainSignal.aborted) {
-    await once(mainSignal, "abort", { signal: stopSignal });
+    await (0, import_node_events.once)(mainSignal, "abort", { signal: stopSignal });
   }
 };
 
@@ -15753,13 +15948,19 @@ var terminateOnCancel = async (subprocess, cancelSignal, context, { signal }) =>
   throw cancelSignal.reason;
 };
 
+// node_modules/execa/lib/terminate/graceful.js
+init_cjs_shims();
+
 // node_modules/execa/lib/ipc/graceful.js
-import { scheduler as scheduler2 } from "timers/promises";
+init_cjs_shims();
+var import_promises4 = require("timers/promises");
 
 // node_modules/execa/lib/ipc/send.js
-import { promisify as promisify2 } from "util";
+init_cjs_shims();
+var import_node_util5 = require("util");
 
 // node_modules/execa/lib/ipc/validation.js
+init_cjs_shims();
 var validateIpcMethod = ({ methodName, isSubprocess, ipc, isConnected: isConnected2 }) => {
   validateIpcOption(methodName, isSubprocess, ipc);
   validateConnection(methodName, isSubprocess, isConnected2);
@@ -15831,7 +16032,11 @@ var disconnect = (anyProcess) => {
   }
 };
 
+// node_modules/execa/lib/ipc/outgoing.js
+init_cjs_shims();
+
 // node_modules/execa/lib/utils/deferred.js
+init_cjs_shims();
 var createDeferred = () => {
   const methods = {};
   const promise = new Promise((resolve, reject) => {
@@ -15841,6 +16046,7 @@ var createDeferred = () => {
 };
 
 // node_modules/execa/lib/arguments/fd-options.js
+init_cjs_shims();
 var getToStream = (destination, to = "stdin") => {
   const isWritable = true;
   const { options, fileDescriptors } = SUBPROCESS_OPTIONS.get(destination);
@@ -15921,29 +16127,34 @@ var serializeOptionValue = (value) => {
 };
 
 // node_modules/execa/lib/ipc/strict.js
-import { once as once3 } from "events";
+init_cjs_shims();
+var import_node_events5 = require("events");
 
 // node_modules/execa/lib/utils/max-listeners.js
-import { addAbortListener } from "events";
+init_cjs_shims();
+var import_node_events2 = require("events");
 var incrementMaxListeners = (eventEmitter, maxListenersIncrement, signal) => {
   const maxListeners = eventEmitter.getMaxListeners();
   if (maxListeners === 0 || maxListeners === Number.POSITIVE_INFINITY) {
     return;
   }
   eventEmitter.setMaxListeners(maxListeners + maxListenersIncrement);
-  addAbortListener(signal, () => {
+  (0, import_node_events2.addAbortListener)(signal, () => {
     eventEmitter.setMaxListeners(eventEmitter.getMaxListeners() - maxListenersIncrement);
   });
 };
 
 // node_modules/execa/lib/ipc/forward.js
-import { EventEmitter } from "events";
+init_cjs_shims();
+var import_node_events4 = require("events");
 
 // node_modules/execa/lib/ipc/incoming.js
-import { once as once2 } from "events";
-import { scheduler } from "timers/promises";
+init_cjs_shims();
+var import_node_events3 = require("events");
+var import_promises3 = require("timers/promises");
 
 // node_modules/execa/lib/ipc/reference.js
+init_cjs_shims();
 var addReference = (channel, reference) => {
   if (reference) {
     addReferenceCount(channel);
@@ -15988,7 +16199,7 @@ var onMessage = async ({ anyProcess, channel, isSubprocess, ipcEmitter }, wrappe
   }
   while (incomingMessages.length > 0) {
     await waitForOutgoingMessages(anyProcess, ipcEmitter, wrappedMessage);
-    await scheduler.yield();
+    await import_promises3.scheduler.yield();
     const message = await handleStrictRequest({
       wrappedMessage: incomingMessages[0],
       anyProcess,
@@ -16005,7 +16216,7 @@ var onDisconnect = async ({ anyProcess, channel, isSubprocess, ipcEmitter, bound
   abortOnDisconnect();
   const incomingMessages = INCOMING_MESSAGES.get(anyProcess);
   while (incomingMessages?.length > 0) {
-    await once2(ipcEmitter, "message:done");
+    await (0, import_node_events3.once)(ipcEmitter, "message:done");
   }
   anyProcess.removeListener("message", boundOnMessage);
   redoAddedReferences(channel, isSubprocess);
@@ -16019,7 +16230,7 @@ var getIpcEmitter = (anyProcess, channel, isSubprocess) => {
   if (IPC_EMITTERS.has(anyProcess)) {
     return IPC_EMITTERS.get(anyProcess);
   }
-  const ipcEmitter = new EventEmitter();
+  const ipcEmitter = new import_node_events4.EventEmitter();
   ipcEmitter.connected = true;
   IPC_EMITTERS.set(anyProcess, ipcEmitter);
   forwardEvents({
@@ -16130,7 +16341,7 @@ var waitForStrictResponse = async (wrappedMessage, anyProcess, isSubprocess) => 
 var STRICT_RESPONSES = {};
 var throwOnDisconnect = async (anyProcess, isSubprocess, { signal }) => {
   incrementMaxListeners(anyProcess, 1, signal);
-  await once3(anyProcess, "disconnect", { signal });
+  await (0, import_node_events5.once)(anyProcess, "disconnect", { signal });
   throwOnStrictDisconnect(isSubprocess);
 };
 var REQUEST_TYPE = "execa:ipc:request";
@@ -16227,7 +16438,7 @@ var getSendMethod = (anyProcess) => {
   if (PROCESS_SEND_METHODS.has(anyProcess)) {
     return PROCESS_SEND_METHODS.get(anyProcess);
   }
-  const sendMethod = promisify2(anyProcess.send.bind(anyProcess));
+  const sendMethod = (0, import_node_util5.promisify)(anyProcess.send.bind(anyProcess));
   PROCESS_SEND_METHODS.set(anyProcess, sendMethod);
   return sendMethod;
 };
@@ -16268,7 +16479,7 @@ var startIpc = async ({ anyProcess, channel, isSubprocess, ipc }) => {
     return;
   }
   getIpcEmitter(anyProcess, channel, isSubprocess);
-  await scheduler2.yield();
+  await import_promises4.scheduler.yield();
 };
 var cancelListening = false;
 var handleAbort = (wrappedMessage) => {
@@ -16341,7 +16552,8 @@ var getReason = ({ reason }) => {
 };
 
 // node_modules/execa/lib/terminate/timeout.js
-import { setTimeout as setTimeout2 } from "timers/promises";
+init_cjs_shims();
+var import_promises5 = require("timers/promises");
 var validateTimeout = ({ timeout }) => {
   if (timeout !== void 0 && (!Number.isFinite(timeout) || timeout < 0)) {
     throw new TypeError(`Expected the \`timeout\` option to be a non-negative integer, got \`${timeout}\` (${typeof timeout})`);
@@ -16349,15 +16561,16 @@ var validateTimeout = ({ timeout }) => {
 };
 var throwOnTimeout = (subprocess, timeout, context, controller) => timeout === 0 || timeout === void 0 ? [] : [killAfterTimeout(subprocess, timeout, context, controller)];
 var killAfterTimeout = async (subprocess, timeout, context, { signal }) => {
-  await setTimeout2(timeout, void 0, { signal });
+  await (0, import_promises5.setTimeout)(timeout, void 0, { signal });
   context.terminationReason ??= "timeout";
   subprocess.kill();
   throw new DiscardedError();
 };
 
 // node_modules/execa/lib/methods/node.js
-import { execPath, execArgv } from "process";
-import path3 from "path";
+init_cjs_shims();
+var import_node_process12 = require("process");
+var import_node_path3 = __toESM(require("path"), 1);
 var mapNode = ({ options }) => {
   if (options.node === false) {
     throw new TypeError('The "node" option cannot be false with `execaNode()`.');
@@ -16366,8 +16579,8 @@ var mapNode = ({ options }) => {
 };
 var handleNodeOption = (file, commandArguments, {
   node: shouldHandleNode = false,
-  nodePath = execPath,
-  nodeOptions = execArgv.filter((nodeOption) => !nodeOption.startsWith("--inspect")),
+  nodePath = import_node_process12.execPath,
+  nodeOptions = import_node_process12.execArgv.filter((nodeOption) => !nodeOption.startsWith("--inspect")),
   cwd,
   execPath: formerNodePath,
   ...options
@@ -16376,7 +16589,7 @@ var handleNodeOption = (file, commandArguments, {
     throw new TypeError('The "execPath" option has been removed. Please use the "nodePath" option instead.');
   }
   const normalizedNodePath = safeNormalizeFileUrl(nodePath, 'The "nodePath" option');
-  const resolvedNodePath = path3.resolve(cwd, normalizedNodePath);
+  const resolvedNodePath = import_node_path3.default.resolve(cwd, normalizedNodePath);
   const newOptions = {
     ...options,
     nodePath: resolvedNodePath,
@@ -16386,7 +16599,7 @@ var handleNodeOption = (file, commandArguments, {
   if (!shouldHandleNode) {
     return [file, commandArguments, newOptions];
   }
-  if (path3.basename(file, ".exe") === "node") {
+  if (import_node_path3.default.basename(file, ".exe") === "node") {
     throw new TypeError('When the "node" option is true, the first argument does not need to be "node".');
   }
   return [
@@ -16397,7 +16610,8 @@ var handleNodeOption = (file, commandArguments, {
 };
 
 // node_modules/execa/lib/ipc/ipc-input.js
-import { serialize } from "v8";
+init_cjs_shims();
+var import_node_v8 = require("v8");
 var validateIpcInputOption = ({ ipcInput, ipc, serialization }) => {
   if (ipcInput === void 0) {
     return;
@@ -16409,7 +16623,7 @@ var validateIpcInputOption = ({ ipcInput, ipc, serialization }) => {
 };
 var validateAdvancedInput = (ipcInput) => {
   try {
-    serialize(ipcInput);
+    (0, import_node_v8.serialize)(ipcInput);
   } catch (error) {
     throw new Error("The `ipcInput` option is not serializable with a structured clone.", { cause: error });
   }
@@ -16433,6 +16647,7 @@ var sendIpcInput = async (subprocess, ipcInput) => {
 };
 
 // node_modules/execa/lib/arguments/encoding-option.js
+init_cjs_shims();
 var validateEncoding = ({ encoding }) => {
   if (ENCODINGS.has(encoding)) {
     return;
@@ -16475,16 +16690,17 @@ var ENCODING_ALIASES = {
 var serializeEncoding = (encoding) => typeof encoding === "string" ? `"${encoding}"` : String(encoding);
 
 // node_modules/execa/lib/arguments/cwd.js
-import { statSync } from "fs";
-import path4 from "path";
-import process12 from "process";
+init_cjs_shims();
+var import_node_fs = require("fs");
+var import_node_path4 = __toESM(require("path"), 1);
+var import_node_process13 = __toESM(require("process"), 1);
 var normalizeCwd = (cwd = getDefaultCwd()) => {
   const cwdString = safeNormalizeFileUrl(cwd, 'The "cwd" option');
-  return path4.resolve(cwdString);
+  return import_node_path4.default.resolve(cwdString);
 };
 var getDefaultCwd = () => {
   try {
-    return process12.cwd();
+    return import_node_process13.default.cwd();
   } catch (error) {
     error.message = `The current directory does not exist.
 ${error.message}`;
@@ -16497,7 +16713,7 @@ var fixCwdError = (originalMessage, cwd) => {
   }
   let cwdStat;
   try {
-    cwdStat = statSync(cwd);
+    cwdStat = (0, import_node_fs.statSync)(cwd);
   } catch (error) {
     return `The "cwd" option is invalid: ${cwd}.
 ${error.message}
@@ -16527,7 +16743,7 @@ var normalizeOptions = (filePath, rawArguments, rawOptions) => {
   options.killSignal = normalizeKillSignal(options.killSignal);
   options.forceKillAfterDelay = normalizeForceKillAfterDelay(options.forceKillAfterDelay);
   options.lines = options.lines.map((lines, fdNumber) => lines && !BINARY_ENCODINGS.has(options.encoding) && options.buffer[fdNumber]);
-  if (process13.platform === "win32" && path5.basename(file, ".exe") === "cmd") {
+  if (import_node_process14.default.platform === "win32" && import_node_path5.default.basename(file, ".exe") === "cmd") {
     commandArguments.unshift("/q");
   }
   return { file, commandArguments, options };
@@ -16568,7 +16784,7 @@ var addDefaultOptions = ({
   serialization
 });
 var getEnv = ({ env: envOption, extendEnv, preferLocal, node, localDirectory, nodePath }) => {
-  const env2 = extendEnv ? { ...process13.env, ...envOption } : envOption;
+  const env2 = extendEnv ? { ...import_node_process14.default.env, ...envOption } : envOption;
   if (preferLocal || node) {
     return npmRunPathEnv({
       env: env2,
@@ -16582,12 +16798,18 @@ var getEnv = ({ env: envOption, extendEnv, preferLocal, node, localDirectory, no
 };
 
 // node_modules/execa/lib/arguments/shell.js
+init_cjs_shims();
 var concatenateShell = (file, commandArguments, options) => options.shell && commandArguments.length > 0 ? [[file, ...commandArguments].join(" "), [], options] : [file, commandArguments, options];
 
+// node_modules/execa/lib/return/result.js
+init_cjs_shims();
+
 // node_modules/execa/lib/return/message.js
-import { inspect as inspect2 } from "util";
+init_cjs_shims();
+var import_node_util6 = require("util");
 
 // node_modules/strip-final-newline/index.js
+init_cjs_shims();
 function stripFinalNewline(input) {
   if (typeof input === "string") {
     return stripFinalNewlineString(input);
@@ -16604,11 +16826,19 @@ var LF_BINARY = LF.codePointAt(0);
 var CR = "\r";
 var CR_BINARY = CR.codePointAt(0);
 
+// node_modules/execa/lib/io/max-buffer.js
+init_cjs_shims();
+
 // node_modules/get-stream/source/index.js
-import { on } from "events";
-import { finished } from "stream/promises";
+init_cjs_shims();
+var import_node_events6 = require("events");
+var import_promises6 = require("stream/promises");
+
+// node_modules/get-stream/source/stream.js
+init_cjs_shims();
 
 // node_modules/is-stream/index.js
+init_cjs_shims();
 function isStream(stream, { checkOpen = true } = {}) {
   return stream !== null && typeof stream === "object" && (stream.writable || stream.readable || !checkOpen || stream.writable === void 0 && stream.readable === void 0) && typeof stream.pipe === "function";
 }
@@ -16622,7 +16852,11 @@ function isDuplexStream(stream, options) {
   return isWritableStream(stream, options) && isReadableStream(stream, options);
 }
 
+// node_modules/@sec-ant/readable-stream/dist/ponyfill/index.js
+init_cjs_shims();
+
 // node_modules/@sec-ant/readable-stream/dist/ponyfill/asyncIterator.js
+init_cjs_shims();
 var a = Object.getPrototypeOf(
   Object.getPrototypeOf(
     /* istanbul ignore next */
@@ -16710,6 +16944,9 @@ function h({ preventCancel: r = false } = {}) {
   return s[n] = t, s;
 }
 
+// node_modules/@sec-ant/readable-stream/dist/ponyfill/fromAnyIterable.js
+init_cjs_shims();
+
 // node_modules/get-stream/source/stream.js
 var getAsyncIterable = (stream) => {
   if (isReadableStream(stream, { checkOpen: false }) && nodeImports.on !== void 0) {
@@ -16758,7 +16995,14 @@ var handleStreamEnd = async (stream, controller, state) => {
 };
 var nodeImports = {};
 
+// node_modules/get-stream/source/exports.js
+init_cjs_shims();
+
+// node_modules/get-stream/source/array.js
+init_cjs_shims();
+
 // node_modules/get-stream/source/contents.js
+init_cjs_shims();
 var getStreamContents = async (stream, { init, convertChunk, getSize, truncateChunk, addChunk, getFinalChunk, finalize }, { maxBuffer = Number.POSITIVE_INFINITY } = {}) => {
   const asyncIterable = getAsyncIterable(stream);
   const state = init();
@@ -16854,6 +17098,7 @@ var MaxBufferError = class extends Error {
 };
 
 // node_modules/get-stream/source/utils.js
+init_cjs_shims();
 var identity2 = (value) => value;
 var noop = () => void 0;
 var getContentsProperty = ({ contents }) => contents;
@@ -16890,6 +17135,7 @@ var arrayMethods = {
 };
 
 // node_modules/get-stream/source/array-buffer.js
+init_cjs_shims();
 async function getStreamAsArrayBuffer(stream, options) {
   return getStreamContents(stream, arrayBufferMethods, options);
 }
@@ -16943,6 +17189,7 @@ var arrayBufferMethods = {
 };
 
 // node_modules/get-stream/source/string.js
+init_cjs_shims();
 async function getStreamAsString(stream, options) {
   return getStreamContents(stream, stringMethods, options);
 }
@@ -16972,7 +17219,7 @@ var stringMethods = {
 };
 
 // node_modules/get-stream/source/index.js
-Object.assign(nodeImports, { on, finished });
+Object.assign(nodeImports, { on: import_node_events6.on, finished: import_promises6.finished });
 
 // node_modules/execa/lib/io/max-buffer.js
 var handleMaxBuffer = ({ error, stream, readableObjectMode, lines, encoding, fdNumber }) => {
@@ -17139,7 +17386,7 @@ var getOriginalMessage = (originalError, cwd) => {
   const escapedOriginalMessage = escapeLines(fixCwdError(originalMessage, cwd));
   return escapedOriginalMessage === "" ? void 0 : escapedOriginalMessage;
 };
-var serializeIpcMessage = (ipcMessage) => typeof ipcMessage === "string" ? ipcMessage : inspect2(ipcMessage);
+var serializeIpcMessage = (ipcMessage) => typeof ipcMessage === "string" ? ipcMessage : (0, import_node_util6.inspect)(ipcMessage);
 var serializeMessagePart = (messagePart) => Array.isArray(messagePart) ? messagePart.map((messageItem) => stripFinalNewline(serializeMessageItem(messageItem))).filter(Boolean).join("\n") : serializeMessageItem(messagePart);
 var serializeMessageItem = (messageItem) => {
   if (typeof messageItem === "string") {
@@ -17324,7 +17571,17 @@ var normalizeExitPayload = (rawExitCode, rawSignal) => {
   return { exitCode, signal, signalDescription };
 };
 
+// node_modules/execa/lib/return/reject.js
+init_cjs_shims();
+
+// node_modules/execa/lib/verbose/complete.js
+init_cjs_shims();
+
+// node_modules/pretty-ms/index.js
+init_cjs_shims();
+
 // node_modules/parse-ms/index.js
+init_cjs_shims();
 var toZeroIfInfinity = (value) => Number.isFinite(value) ? value : 0;
 function parseNumber(milliseconds) {
   return {
@@ -17463,6 +17720,7 @@ function prettyMilliseconds(milliseconds, options) {
 }
 
 // node_modules/execa/lib/verbose/error.js
+init_cjs_shims();
 var logError = (result, verboseInfo) => {
   if (result.failed) {
     verboseLog({
@@ -17502,9 +17760,17 @@ var handleResult = (result, verboseInfo, { reject }) => {
 };
 
 // node_modules/execa/lib/stdio/handle-sync.js
-import { readFileSync as readFileSync2 } from "fs";
+init_cjs_shims();
+var import_node_fs3 = require("fs");
+
+// node_modules/execa/lib/stdio/handle.js
+init_cjs_shims();
+
+// node_modules/execa/lib/transform/normalize.js
+init_cjs_shims();
 
 // node_modules/execa/lib/stdio/type.js
+init_cjs_shims();
 var getStdioItemType = (value, optionName) => {
   if (isAsyncGenerator(value)) {
     return "asyncGenerator";
@@ -17631,6 +17897,7 @@ var TYPE_TO_MESSAGE = {
 };
 
 // node_modules/execa/lib/transform/object-mode.js
+init_cjs_shims();
 var getTransformObjectModes = (objectMode, index, newTransforms, direction) => direction === "output" ? getOutputObjectModes(objectMode, index, newTransforms) : getInputObjectModes(objectMode, index, newTransforms);
 var getOutputObjectModes = (objectMode, index, newTransforms) => {
   const writableObjectMode = index !== 0 && newTransforms[index - 1].value.readableObjectMode;
@@ -17745,7 +18012,8 @@ var normalizeGenerator = ({ stdioItem, stdioItem: { value }, index, newTransform
 var sortTransforms = (newTransforms, direction) => direction === "input" ? newTransforms.reverse() : newTransforms;
 
 // node_modules/execa/lib/stdio/direction.js
-import process14 from "process";
+init_cjs_shims();
+var import_node_process15 = __toESM(require("process"), 1);
 var getStreamDirection = (stdioItems, fdNumber, optionName) => {
   const directions = stdioItems.map((stdioItem) => getStdioItemDirection(stdioItem, fdNumber));
   if (directions.includes("input") && directions.includes("output")) {
@@ -17785,16 +18053,20 @@ var guessStreamDirection = {
   }
 };
 var getStandardStreamDirection = (value) => {
-  if ([0, process14.stdin].includes(value)) {
+  if ([0, import_node_process15.default.stdin].includes(value)) {
     return "input";
   }
-  if ([1, 2, process14.stdout, process14.stderr].includes(value)) {
+  if ([1, 2, import_node_process15.default.stdout, import_node_process15.default.stderr].includes(value)) {
     return "output";
   }
 };
 var DEFAULT_DIRECTION = "output";
 
+// node_modules/execa/lib/stdio/stdio-option.js
+init_cjs_shims();
+
 // node_modules/execa/lib/ipc/array.js
+init_cjs_shims();
 var normalizeIpcStdioArray = (stdioArray, ipc) => ipc && !stdioArray.includes("ipc") ? [...stdioArray, "ipc"] : stdioArray;
 
 // node_modules/execa/lib/stdio/stdio-option.js
@@ -17832,8 +18104,9 @@ var normalizeStdioSync = (stdioArray, buffer, verboseInfo) => stdioArray.map((st
 var isOutputPipeOnly = (stdioOption) => stdioOption === "pipe" || Array.isArray(stdioOption) && stdioOption.every((item) => item === "pipe");
 
 // node_modules/execa/lib/stdio/native.js
-import { readFileSync } from "fs";
-import tty3 from "tty";
+init_cjs_shims();
+var import_node_fs2 = require("fs");
+var import_node_tty3 = __toESM(require("tty"), 1);
 var handleNativeStream = ({ stdioItem, stdioItem: { type }, isStdioArray, fdNumber, direction, isSync }) => {
   if (!isStdioArray || type !== "native") {
     return stdioItem;
@@ -17863,10 +18136,10 @@ var getTargetFd = ({ value, optionName, fdNumber, direction }) => {
   if (direction === "output") {
     return { type: "fileNumber", value: targetFdNumber, optionName };
   }
-  if (tty3.isatty(targetFdNumber)) {
+  if (import_node_tty3.default.isatty(targetFdNumber)) {
     throw new TypeError(`The \`${optionName}: ${serializeOptionValue(value)}\` option is invalid: it cannot be a TTY with synchronous methods.`);
   }
-  return { type: "uint8Array", value: bufferToUint8Array(readFileSync(targetFdNumber)), optionName };
+  return { type: "uint8Array", value: bufferToUint8Array((0, import_node_fs2.readFileSync)(targetFdNumber)), optionName };
 };
 var getTargetFdNumber = (value, fdNumber) => {
   if (value === "inherit") {
@@ -17901,6 +18174,7 @@ var getStandardStream = (fdNumber, value, optionName) => {
 };
 
 // node_modules/execa/lib/stdio/input-option.js
+init_cjs_shims();
 var handleInputOptions = ({ input, inputFile }, fdNumber) => fdNumber === 0 ? [
   ...handleInputOption(input),
   ...handleInputFileOption(inputFile)
@@ -17937,6 +18211,7 @@ var getInputFileType = (inputFile) => {
 };
 
 // node_modules/execa/lib/stdio/duplicate.js
+init_cjs_shims();
 var filterDuplicates = (stdioItems) => stdioItems.filter((stdioItemOne, indexOne) => stdioItems.every((stdioItemTwo, indexTwo) => stdioItemOne.value !== stdioItemTwo.value || indexOne >= indexTwo || stdioItemOne.type === "generator" || stdioItemOne.type === "asyncGenerator"));
 var getDuplicateStream = ({ stdioItem: { type, value, optionName }, direction, fileDescriptors, isSync }) => {
   const otherStdioItems = getOtherStdioItems(fileDescriptors, type);
@@ -18199,8 +18474,8 @@ var addProperties = {
 var addPropertiesSync = {
   input: {
     ...addProperties,
-    fileUrl: ({ value }) => ({ contents: [bufferToUint8Array(readFileSync2(value))] }),
-    filePath: ({ value: { file } }) => ({ contents: [bufferToUint8Array(readFileSync2(file))] }),
+    fileUrl: ({ value }) => ({ contents: [bufferToUint8Array((0, import_node_fs3.readFileSync)(value))] }),
+    filePath: ({ value: { file } }) => ({ contents: [bufferToUint8Array((0, import_node_fs3.readFileSync)(file))] }),
     fileNumber: forbiddenIfSync,
     iterable: ({ value }) => ({ contents: [...value] }),
     string: ({ value }) => ({ contents: [value] }),
@@ -18218,13 +18493,19 @@ var addPropertiesSync = {
 };
 
 // node_modules/execa/lib/io/strip-newline.js
+init_cjs_shims();
 var stripNewline = (value, { stripFinalNewline: stripFinalNewline2 }, fdNumber) => getStripFinalNewline(stripFinalNewline2, fdNumber) && value !== void 0 && !Array.isArray(value) ? stripFinalNewline(value) : value;
 var getStripFinalNewline = (stripFinalNewline2, fdNumber) => fdNumber === "all" ? stripFinalNewline2[1] || stripFinalNewline2[2] : stripFinalNewline2[fdNumber];
 
+// node_modules/execa/lib/io/input-sync.js
+init_cjs_shims();
+
 // node_modules/execa/lib/transform/generator.js
-import { Transform, getDefaultHighWaterMark } from "stream";
+init_cjs_shims();
+var import_node_stream = require("stream");
 
 // node_modules/execa/lib/transform/split.js
+init_cjs_shims();
 var getSplitLinesGenerator = (binary, preserveNewlines, skipped, state) => binary || skipped ? void 0 : initializeSplitLines(preserveNewlines, state);
 var splitLinesSync = (chunk, preserveNewlines, objectMode) => objectMode ? chunk.flatMap((item) => splitLinesItemSync(item, preserveNewlines)) : splitLinesItemSync(chunk, preserveNewlines);
 var splitLinesItemSync = (chunk, preserveNewlines) => {
@@ -18305,10 +18586,11 @@ var linesUint8ArrayInfo = {
 };
 
 // node_modules/execa/lib/transform/validate.js
-import { Buffer as Buffer2 } from "buffer";
+init_cjs_shims();
+var import_node_buffer = require("buffer");
 var getValidateTransformInput = (writableObjectMode, optionName) => writableObjectMode ? void 0 : validateStringTransformInput.bind(void 0, optionName);
 var validateStringTransformInput = function* (optionName, chunk) {
-  if (typeof chunk !== "string" && !isUint8Array(chunk) && !Buffer2.isBuffer(chunk)) {
+  if (typeof chunk !== "string" && !isUint8Array(chunk) && !import_node_buffer.Buffer.isBuffer(chunk)) {
     throw new TypeError(`The \`${optionName}\` option's transform must use "objectMode: true" to receive as input: ${typeof chunk}.`);
   }
   yield chunk;
@@ -18334,8 +18616,9 @@ Instead, \`yield\` should either be called with a value, or not be called at all
 };
 
 // node_modules/execa/lib/transform/encoding-transform.js
-import { Buffer as Buffer3 } from "buffer";
-import { StringDecoder as StringDecoder2 } from "string_decoder";
+init_cjs_shims();
+var import_node_buffer2 = require("buffer");
+var import_node_string_decoder2 = require("string_decoder");
 var getEncodingTransformGenerator = (binary, encoding, skipped) => {
   if (skipped) {
     return;
@@ -18343,14 +18626,14 @@ var getEncodingTransformGenerator = (binary, encoding, skipped) => {
   if (binary) {
     return { transform: encodingUint8ArrayGenerator.bind(void 0, new TextEncoder()) };
   }
-  const stringDecoder = new StringDecoder2(encoding);
+  const stringDecoder = new import_node_string_decoder2.StringDecoder(encoding);
   return {
     transform: encodingStringGenerator.bind(void 0, stringDecoder),
     final: encodingStringFinal.bind(void 0, stringDecoder)
   };
 };
 var encodingUint8ArrayGenerator = function* (textEncoder3, chunk) {
-  if (Buffer3.isBuffer(chunk)) {
+  if (import_node_buffer2.Buffer.isBuffer(chunk)) {
     yield bufferToUint8Array(chunk);
   } else if (typeof chunk === "string") {
     yield textEncoder3.encode(chunk);
@@ -18369,8 +18652,9 @@ var encodingStringFinal = function* (stringDecoder) {
 };
 
 // node_modules/execa/lib/transform/run-async.js
-import { callbackify } from "util";
-var pushChunks = callbackify(async (getChunks, state, getChunksArguments, transformStream) => {
+init_cjs_shims();
+var import_node_util7 = require("util");
+var pushChunks = (0, import_node_util7.callbackify)(async (getChunks, state, getChunksArguments, transformStream) => {
   state.currentIterable = getChunks(...getChunksArguments);
   try {
     for await (const chunk of state.currentIterable) {
@@ -18403,7 +18687,7 @@ var generatorFinalChunks = async function* (final, index, generators) {
     yield* transformChunk(finalChunk, generators, index + 1);
   }
 };
-var destroyTransform = callbackify(async ({ currentIterable }, error) => {
+var destroyTransform = (0, import_node_util7.callbackify)(async ({ currentIterable }, error) => {
   if (currentIterable !== void 0) {
     await (error ? currentIterable.throw(error) : currentIterable.return());
     return;
@@ -18417,6 +18701,7 @@ var identityGenerator = function* (chunk) {
 };
 
 // node_modules/execa/lib/transform/run-sync.js
+init_cjs_shims();
 var pushChunksSync = (getChunksSync, getChunksArguments, transformStream, done) => {
   try {
     for (const chunk of getChunksSync(...getChunksArguments)) {
@@ -18471,11 +18756,11 @@ var generatorToStream = ({
   const transformMethod = transformAsync ? pushChunks.bind(void 0, transformChunk, state) : pushChunksSync.bind(void 0, transformChunkSync);
   const finalMethod = transformAsync || finalAsync ? pushChunks.bind(void 0, finalChunks, state) : pushChunksSync.bind(void 0, finalChunksSync);
   const destroyMethod = transformAsync || finalAsync ? destroyTransform.bind(void 0, state) : void 0;
-  const stream = new Transform({
+  const stream = new import_node_stream.Transform({
     writableObjectMode,
-    writableHighWaterMark: getDefaultHighWaterMark(writableObjectMode),
+    writableHighWaterMark: (0, import_node_stream.getDefaultHighWaterMark)(writableObjectMode),
     readableObjectMode,
-    readableHighWaterMark: getDefaultHighWaterMark(readableObjectMode),
+    readableHighWaterMark: (0, import_node_stream.getDefaultHighWaterMark)(readableObjectMode),
     transform(chunk, encoding2, done) {
       transformMethod([chunk, generators, 0], this, done);
     },
@@ -18546,9 +18831,11 @@ var validateSerializable = (newContents) => {
 };
 
 // node_modules/execa/lib/io/output-sync.js
-import { writeFileSync, appendFileSync } from "fs";
+init_cjs_shims();
+var import_node_fs4 = require("fs");
 
 // node_modules/execa/lib/verbose/output.js
+init_cjs_shims();
 var shouldLogOutput = ({ stdioItems, encoding, verboseInfo, fdNumber }) => fdNumber !== "all" && isFullVerbose(verboseInfo, fdNumber) && !BINARY_ENCODINGS.has(encoding) && fdUsesVerbose(fdNumber) && (stdioItems.some(({ type, value }) => type === "native" && PIPED_STDIO_VALUES.has(value)) || stdioItems.every(({ type }) => TRANSFORM_TYPES.has(type)));
 var fdUsesVerbose = (fdNumber) => fdNumber === 1 || fdNumber === 2;
 var PIPED_STDIO_VALUES = /* @__PURE__ */ new Set(["pipe", "overlapped"]);
@@ -18670,15 +18957,16 @@ var writeToFiles = (serializedResult, stdioItems, outputFiles) => {
   for (const { path: path6, append } of stdioItems.filter(({ type }) => FILE_TYPES.has(type))) {
     const pathString = typeof path6 === "string" ? path6 : path6.toString();
     if (append || outputFiles.has(pathString)) {
-      appendFileSync(path6, serializedResult);
+      (0, import_node_fs4.appendFileSync)(path6, serializedResult);
     } else {
       outputFiles.add(pathString);
-      writeFileSync(path6, serializedResult);
+      (0, import_node_fs4.writeFileSync)(path6, serializedResult);
     }
   }
 };
 
 // node_modules/execa/lib/resolve/all-sync.js
+init_cjs_shims();
 var getAllSync = ([, stdout, stderr], options) => {
   if (!options.all) {
     return;
@@ -18701,8 +18989,12 @@ var getAllSync = ([, stdout, stderr], options) => {
   return `${stdout}${stderr}`;
 };
 
+// node_modules/execa/lib/resolve/exit-sync.js
+init_cjs_shims();
+
 // node_modules/execa/lib/resolve/exit-async.js
-import { once as once4 } from "events";
+init_cjs_shims();
+var import_node_events7 = require("events");
 var waitForExit = async (subprocess, context) => {
   const [exitCode, signal] = await waitForExitOrError(subprocess);
   context.isForcefullyTerminated ??= false;
@@ -18710,8 +19002,8 @@ var waitForExit = async (subprocess, context) => {
 };
 var waitForExitOrError = async (subprocess) => {
   const [spawnPayload, exitPayload] = await Promise.allSettled([
-    once4(subprocess, "spawn"),
-    once4(subprocess, "exit")
+    (0, import_node_events7.once)(subprocess, "spawn"),
+    (0, import_node_events7.once)(subprocess, "exit")
   ]);
   if (spawnPayload.status === "rejected") {
     return [];
@@ -18720,7 +19012,7 @@ var waitForExitOrError = async (subprocess) => {
 };
 var waitForSubprocessExit = async (subprocess) => {
   try {
-    return await once4(subprocess, "exit");
+    return await (0, import_node_events7.once)(subprocess, "exit");
   } catch {
     return waitForSubprocessExit(subprocess);
   }
@@ -18846,7 +19138,7 @@ var runSubprocessSync = ({ file, commandArguments, options, command, escapedComm
   try {
     addInputOptionsSync(fileDescriptors, options);
     const normalizedOptions = normalizeSpawnSyncOptions(options);
-    return spawnSync(...concatenateShell(file, commandArguments, normalizedOptions));
+    return (0, import_node_child_process3.spawnSync)(...concatenateShell(file, commandArguments, normalizedOptions));
   } catch (error) {
     return makeEarlyError({
       error,
@@ -18888,14 +19180,17 @@ var getSyncResult = ({ error, exitCode, signal, timedOut, isMaxBuffer, stdio, al
 });
 
 // node_modules/execa/lib/methods/main-async.js
-import { setMaxListeners } from "events";
-import { spawn } from "child_process";
+init_cjs_shims();
+var import_node_events14 = require("events");
+var import_node_child_process5 = require("child_process");
 
 // node_modules/execa/lib/ipc/methods.js
-import process15 from "process";
+init_cjs_shims();
+var import_node_process16 = __toESM(require("process"), 1);
 
 // node_modules/execa/lib/ipc/get-one.js
-import { once as once5, on as on2 } from "events";
+init_cjs_shims();
+var import_node_events8 = require("events");
 var getOneMessage = ({ anyProcess, channel, isSubprocess, ipc }, { reference = true, filter } = {}) => {
   validateIpcMethod({
     methodName: "getOneMessage",
@@ -18931,26 +19226,27 @@ var getOneMessageAsync = async ({ anyProcess, channel, isSubprocess, filter, ref
 };
 var getMessage = async (ipcEmitter, filter, { signal }) => {
   if (filter === void 0) {
-    const [message] = await once5(ipcEmitter, "message", { signal });
+    const [message] = await (0, import_node_events8.once)(ipcEmitter, "message", { signal });
     return message;
   }
-  for await (const [message] of on2(ipcEmitter, "message", { signal })) {
+  for await (const [message] of (0, import_node_events8.on)(ipcEmitter, "message", { signal })) {
     if (filter(message)) {
       return message;
     }
   }
 };
 var throwOnDisconnect2 = async (ipcEmitter, isSubprocess, { signal }) => {
-  await once5(ipcEmitter, "disconnect", { signal });
+  await (0, import_node_events8.once)(ipcEmitter, "disconnect", { signal });
   throwOnEarlyDisconnect(isSubprocess);
 };
 var throwOnStrictError = async (ipcEmitter, isSubprocess, { signal }) => {
-  const [error] = await once5(ipcEmitter, "strict:error", { signal });
+  const [error] = await (0, import_node_events8.once)(ipcEmitter, "strict:error", { signal });
   throw getStrictResponseError(error, isSubprocess);
 };
 
 // node_modules/execa/lib/ipc/get-each.js
-import { once as once6, on as on3 } from "events";
+init_cjs_shims();
+var import_node_events9 = require("events");
 var getEachMessage = ({ anyProcess, channel, isSubprocess, ipc }, { reference = true } = {}) => loopOnMessages({
   anyProcess,
   channel,
@@ -18990,14 +19286,14 @@ var loopOnMessages = ({ anyProcess, channel, isSubprocess, ipc, shouldAwait, ref
 };
 var stopOnDisconnect = async (anyProcess, ipcEmitter, controller) => {
   try {
-    await once6(ipcEmitter, "disconnect", { signal: controller.signal });
+    await (0, import_node_events9.once)(ipcEmitter, "disconnect", { signal: controller.signal });
     controller.abort();
   } catch {
   }
 };
 var abortOnStrictError = async ({ ipcEmitter, isSubprocess, controller, state }) => {
   try {
-    const [error] = await once6(ipcEmitter, "strict:error", { signal: controller.signal });
+    const [error] = await (0, import_node_events9.once)(ipcEmitter, "strict:error", { signal: controller.signal });
     state.error = getStrictResponseError(error, isSubprocess);
     controller.abort();
   } catch {
@@ -19005,7 +19301,7 @@ var abortOnStrictError = async ({ ipcEmitter, isSubprocess, controller, state })
 };
 var iterateOnMessages = async function* ({ anyProcess, channel, ipcEmitter, isSubprocess, shouldAwait, controller, state, reference }) {
   try {
-    for await (const [message] of on3(ipcEmitter, "message", { signal: controller.signal })) {
+    for await (const [message] of (0, import_node_events9.on)(ipcEmitter, "message", { signal: controller.signal })) {
       throwIfStrictError(state);
       yield message;
     }
@@ -19033,9 +19329,9 @@ var addIpcMethods = (subprocess, { ipc }) => {
   Object.assign(subprocess, getIpcMethods(subprocess, false, ipc));
 };
 var getIpcExport = () => {
-  const anyProcess = process15;
+  const anyProcess = import_node_process16.default;
   const isSubprocess = true;
-  const ipc = process15.channel !== void 0;
+  const ipc = import_node_process16.default.channel !== void 0;
   return {
     ...getIpcMethods(anyProcess, isSubprocess, ipc),
     getCancelSignal: getCancelSignal.bind(void 0, {
@@ -19068,16 +19364,12 @@ var getIpcMethods = (anyProcess, isSubprocess, ipc) => ({
 });
 
 // node_modules/execa/lib/return/early-error.js
-import { ChildProcess as ChildProcess2 } from "child_process";
-import {
-  PassThrough,
-  Readable,
-  Writable,
-  Duplex
-} from "stream";
+init_cjs_shims();
+var import_node_child_process4 = require("child_process");
+var import_node_stream2 = require("stream");
 var handleEarlyError = ({ error, command, escapedCommand, fileDescriptors, options, startTime, verboseInfo }) => {
   cleanupCustomStreams(fileDescriptors);
-  const subprocess = new ChildProcess2();
+  const subprocess = new import_node_child_process4.ChildProcess();
   createDummyStreams(subprocess, fileDescriptors);
   Object.assign(subprocess, { readable, writable, duplex });
   const earlyError = makeEarlyError({
@@ -19108,23 +19400,24 @@ var createDummyStreams = (subprocess, fileDescriptors) => {
   });
 };
 var createDummyStream = () => {
-  const stream = new PassThrough();
+  const stream = new import_node_stream2.PassThrough();
   stream.end();
   return stream;
 };
-var readable = () => new Readable({ read() {
+var readable = () => new import_node_stream2.Readable({ read() {
 } });
-var writable = () => new Writable({ write() {
+var writable = () => new import_node_stream2.Writable({ write() {
 } });
-var duplex = () => new Duplex({ read() {
+var duplex = () => new import_node_stream2.Duplex({ read() {
 }, write() {
 } });
 var handleDummyPromise = async (error, verboseInfo, options) => handleResult(error, verboseInfo, options);
 
 // node_modules/execa/lib/stdio/handle-async.js
-import { createReadStream, createWriteStream } from "fs";
-import { Buffer as Buffer4 } from "buffer";
-import { Readable as Readable2, Writable as Writable2, Duplex as Duplex2 } from "stream";
+init_cjs_shims();
+var import_node_fs5 = require("fs");
+var import_node_buffer3 = require("buffer");
+var import_node_stream3 = require("stream");
 var handleStdioAsync = (options, verboseInfo) => handleStdio(addPropertiesAsync, options, verboseInfo, false);
 var forbiddenIfAsync = ({ type, optionName }) => {
   throw new TypeError(`The \`${optionName}\` option cannot be ${TYPE_TO_MESSAGE[type]}.`);
@@ -19136,7 +19429,7 @@ var addProperties2 = {
   nodeStream: ({ value }) => ({ stream: value }),
   webTransform({ value: { transform, writableObjectMode, readableObjectMode } }) {
     const objectMode = writableObjectMode || readableObjectMode;
-    const stream = Duplex2.fromWeb(transform, { objectMode });
+    const stream = import_node_stream3.Duplex.fromWeb(transform, { objectMode });
     return { stream };
   },
   duplex: ({ value: { transform } }) => ({ stream: transform }),
@@ -19146,19 +19439,19 @@ var addProperties2 = {
 var addPropertiesAsync = {
   input: {
     ...addProperties2,
-    fileUrl: ({ value }) => ({ stream: createReadStream(value) }),
-    filePath: ({ value: { file } }) => ({ stream: createReadStream(file) }),
-    webStream: ({ value }) => ({ stream: Readable2.fromWeb(value) }),
-    iterable: ({ value }) => ({ stream: Readable2.from(value) }),
-    asyncIterable: ({ value }) => ({ stream: Readable2.from(value) }),
-    string: ({ value }) => ({ stream: Readable2.from(value) }),
-    uint8Array: ({ value }) => ({ stream: Readable2.from(Buffer4.from(value)) })
+    fileUrl: ({ value }) => ({ stream: (0, import_node_fs5.createReadStream)(value) }),
+    filePath: ({ value: { file } }) => ({ stream: (0, import_node_fs5.createReadStream)(file) }),
+    webStream: ({ value }) => ({ stream: import_node_stream3.Readable.fromWeb(value) }),
+    iterable: ({ value }) => ({ stream: import_node_stream3.Readable.from(value) }),
+    asyncIterable: ({ value }) => ({ stream: import_node_stream3.Readable.from(value) }),
+    string: ({ value }) => ({ stream: import_node_stream3.Readable.from(value) }),
+    uint8Array: ({ value }) => ({ stream: import_node_stream3.Readable.from(import_node_buffer3.Buffer.from(value)) })
   },
   output: {
     ...addProperties2,
-    fileUrl: ({ value }) => ({ stream: createWriteStream(value) }),
-    filePath: ({ value: { file, append } }) => ({ stream: createWriteStream(file, append ? { flags: "a" } : {}) }),
-    webStream: ({ value }) => ({ stream: Writable2.fromWeb(value) }),
+    fileUrl: ({ value }) => ({ stream: (0, import_node_fs5.createWriteStream)(value) }),
+    filePath: ({ value: { file, append } }) => ({ stream: (0, import_node_fs5.createWriteStream)(file, append ? { flags: "a" } : {}) }),
+    webStream: ({ value }) => ({ stream: import_node_stream3.Writable.fromWeb(value) }),
     iterable: forbiddenIfAsync,
     asyncIterable: forbiddenIfAsync,
     string: forbiddenIfAsync,
@@ -19166,10 +19459,14 @@ var addPropertiesAsync = {
   }
 };
 
+// node_modules/execa/lib/io/output-async.js
+init_cjs_shims();
+
 // node_modules/@sindresorhus/merge-streams/index.js
-import { on as on4, once as once7 } from "events";
-import { PassThrough as PassThroughStream, getDefaultHighWaterMark as getDefaultHighWaterMark2 } from "stream";
-import { finished as finished2 } from "stream/promises";
+init_cjs_shims();
+var import_node_events10 = require("events");
+var import_node_stream4 = require("stream");
+var import_promises7 = require("stream/promises");
 function mergeStreams(streams) {
   if (!Array.isArray(streams)) {
     throw new TypeError(`Expected an array, got \`${typeof streams}\`.`);
@@ -19191,12 +19488,12 @@ function mergeStreams(streams) {
 }
 var getHighWaterMark = (streams, objectMode) => {
   if (streams.length === 0) {
-    return getDefaultHighWaterMark2(objectMode);
+    return (0, import_node_stream4.getDefaultHighWaterMark)(objectMode);
   }
   const highWaterMarks = streams.filter(({ readableObjectMode }) => readableObjectMode === objectMode).map(({ readableHighWaterMark }) => readableHighWaterMark);
   return Math.max(...highWaterMarks);
 };
-var MergedStream = class extends PassThroughStream {
+var MergedStream = class extends import_node_stream4.PassThrough {
   #streams = /* @__PURE__ */ new Set([]);
   #ended = /* @__PURE__ */ new Set([]);
   #aborted = /* @__PURE__ */ new Set([]);
@@ -19252,14 +19549,14 @@ var onMergedStreamFinished = async (passThroughStream, streams, unpipeEvent) => 
 };
 var onMergedStreamEnd = async (passThroughStream, { signal }) => {
   try {
-    await finished2(passThroughStream, { signal, cleanup: true });
+    await (0, import_promises7.finished)(passThroughStream, { signal, cleanup: true });
   } catch (error) {
     errorOrAbortStream(passThroughStream, error);
     throw error;
   }
 };
 var onInputStreamsUnpipe = async (passThroughStream, streams, unpipeEvent, { signal }) => {
-  for await (const [unpipedStream] of on4(passThroughStream, "unpipe", { signal })) {
+  for await (const [unpipedStream] of (0, import_node_events10.on)(passThroughStream, "unpipe", { signal })) {
     if (streams.has(unpipedStream)) {
       unpipedStream.emit(unpipeEvent);
     }
@@ -19319,7 +19616,7 @@ var afterMergedStreamFinished = async (onFinished, stream, { signal }) => {
 };
 var onInputStreamEnd = async ({ passThroughStream, stream, streams, ended, aborted: aborted2, controller: { signal } }) => {
   try {
-    await finished2(stream, {
+    await (0, import_promises7.finished)(stream, {
       signal,
       cleanup: true,
       readable: true,
@@ -19340,9 +19637,9 @@ var onInputStreamEnd = async ({ passThroughStream, stream, streams, ended, abort
   }
 };
 var onInputStreamUnpipe = async ({ stream, streams, ended, aborted: aborted2, unpipeEvent, controller: { signal } }) => {
-  await once7(stream, unpipeEvent, { signal });
+  await (0, import_node_events10.once)(stream, unpipeEvent, { signal });
   if (!stream.readable) {
-    return once7(signal, "abort", { signal });
+    return (0, import_node_events10.once)(signal, "abort", { signal });
   }
   streams.delete(stream);
   ended.delete(stream);
@@ -19384,7 +19681,8 @@ var PASSTHROUGH_LISTENERS_COUNT = 2;
 var PASSTHROUGH_LISTENERS_PER_STREAM = 1;
 
 // node_modules/execa/lib/io/pipeline.js
-import { finished as finished3 } from "stream/promises";
+init_cjs_shims();
+var import_promises8 = require("stream/promises");
 var pipeStreams = (source, destination) => {
   source.pipe(destination);
   onSourceFinish(source, destination);
@@ -19395,7 +19693,7 @@ var onSourceFinish = async (source, destination) => {
     return;
   }
   try {
-    await finished3(source, { cleanup: true, readable: true, writable: false });
+    await (0, import_promises8.finished)(source, { cleanup: true, readable: true, writable: false });
   } catch {
   }
   endDestinationStream(destination);
@@ -19410,7 +19708,7 @@ var onDestinationFinish = async (source, destination) => {
     return;
   }
   try {
-    await finished3(destination, { cleanup: true, readable: false, writable: true });
+    await (0, import_promises8.finished)(destination, { cleanup: true, readable: false, writable: true });
   } catch {
   }
   abortSourceStream(source);
@@ -19474,7 +19772,8 @@ var setStandardStreamMaxListeners = (stream, { signal }) => {
 var MAX_LISTENERS_INCREMENT = 2;
 
 // node_modules/execa/lib/terminate/cleanup.js
-import { addAbortListener as addAbortListener2 } from "events";
+init_cjs_shims();
+var import_node_events11 = require("events");
 var cleanupOnExit = (subprocess, { cleanup, detached }, { signal }) => {
   if (!cleanup || detached) {
     return;
@@ -19482,12 +19781,16 @@ var cleanupOnExit = (subprocess, { cleanup, detached }, { signal }) => {
   const removeExitHandler = onExit(() => {
     subprocess.kill();
   });
-  addAbortListener2(signal, () => {
+  (0, import_node_events11.addAbortListener)(signal, () => {
     removeExitHandler();
   });
 };
 
+// node_modules/execa/lib/pipe/setup.js
+init_cjs_shims();
+
 // node_modules/execa/lib/pipe/pipe-arguments.js
+init_cjs_shims();
 var normalizePipeArguments = ({ source, sourcePromise, boundOptions, createNested }, ...pipeArguments) => {
   const startTime = getStartTime();
   const {
@@ -19561,6 +19864,7 @@ var getSourceStream = (source, from) => {
 };
 
 // node_modules/execa/lib/pipe/throw.js
+init_cjs_shims();
 var handlePipeArgumentsError = ({
   sourceStream,
   sourceError,
@@ -19610,6 +19914,7 @@ var createNonCommandError = ({ error, fileDescriptors, sourceOptions, startTime 
 var PIPE_COMMAND_MESSAGE = "source.pipe(destination)";
 
 // node_modules/execa/lib/pipe/sequence.js
+init_cjs_shims();
 var waitForBothSubprocesses = async (subprocessPromises) => {
   const [
     { status: sourceStatus, reason: sourceReason, value: sourceResult = sourceReason },
@@ -19628,7 +19933,8 @@ var waitForBothSubprocesses = async (subprocessPromises) => {
 };
 
 // node_modules/execa/lib/pipe/streaming.js
-import { finished as finished4 } from "stream/promises";
+init_cjs_shims();
+var import_promises9 = require("stream/promises");
 var pipeSubprocessStream = (sourceStream, destinationStream, maxListenersController) => {
   const mergedStream = MERGED_STREAMS.has(destinationStream) ? pipeMoreSubprocessStream(sourceStream, destinationStream) : pipeFirstSubprocessStream(sourceStream, destinationStream);
   incrementMaxListeners(sourceStream, SOURCE_LISTENERS_PER_PIPE, maxListenersController.signal);
@@ -19649,7 +19955,7 @@ var pipeMoreSubprocessStream = (sourceStream, destinationStream) => {
 };
 var cleanupMergedStreamsMap = async (destinationStream) => {
   try {
-    await finished4(destinationStream, { cleanup: true, readable: false, writable: true });
+    await (0, import_promises9.finished)(destinationStream, { cleanup: true, readable: false, writable: true });
   } catch {
   }
   MERGED_STREAMS.delete(destinationStream);
@@ -19659,10 +19965,11 @@ var SOURCE_LISTENERS_PER_PIPE = 2;
 var DESTINATION_LISTENERS_PER_PIPE = 1;
 
 // node_modules/execa/lib/pipe/abort.js
-import { aborted } from "util";
+init_cjs_shims();
+var import_node_util8 = require("util");
 var unpipeOnAbort = (unpipeSignal, unpipeContext) => unpipeSignal === void 0 ? [] : [unpipeOnSignalAbort(unpipeSignal, unpipeContext)];
 var unpipeOnSignalAbort = async (unpipeSignal, { sourceStream, mergedStream, fileDescriptors, sourceOptions, startTime }) => {
-  await aborted(unpipeSignal, sourceStream);
+  await (0, import_node_util8.aborted)(unpipeSignal, sourceStream);
   await mergedStream.remove(sourceStream);
   const error = new Error("Pipe canceled by `unpipeSignal` option.");
   throw createNonCommandError({
@@ -19732,12 +20039,20 @@ var handlePipePromise = async ({
 };
 var getSubprocessPromises = (sourcePromise, destination) => Promise.allSettled([sourcePromise, destination]);
 
+// node_modules/execa/lib/resolve/all-async.js
+init_cjs_shims();
+
+// node_modules/execa/lib/resolve/stdio.js
+init_cjs_shims();
+
 // node_modules/execa/lib/io/contents.js
-import { setImmediate } from "timers/promises";
+init_cjs_shims();
+var import_promises10 = require("timers/promises");
 
 // node_modules/execa/lib/io/iterate.js
-import { on as on5 } from "events";
-import { getDefaultHighWaterMark as getDefaultHighWaterMark3 } from "stream";
+init_cjs_shims();
+var import_node_events12 = require("events");
+var import_node_stream5 = require("stream");
 var iterateOnSubprocessStream = ({ subprocessStdout, subprocess, binary, shouldEncode, encoding, preserveNewlines }) => {
   const controller = new AbortController();
   stopReadingOnExit(subprocess, controller);
@@ -19783,7 +20098,7 @@ var stopReadingOnStreamEnd = async (onStreamEnd, controller, stream) => {
   }
 };
 var iterateOnStream = ({ stream, controller, binary, shouldEncode, encoding, shouldSplit, preserveNewlines }) => {
-  const onStdoutChunk = on5(stream, "data", {
+  const onStdoutChunk = (0, import_node_events12.on)(stream, "data", {
     signal: controller.signal,
     highWaterMark: HIGH_WATER_MARK,
     // Backward compatibility with older name for this option
@@ -19801,7 +20116,7 @@ var iterateOnStream = ({ stream, controller, binary, shouldEncode, encoding, sho
     preserveNewlines
   });
 };
-var DEFAULT_OBJECT_HIGH_WATER_MARK = getDefaultHighWaterMark3(true);
+var DEFAULT_OBJECT_HIGH_WATER_MARK = (0, import_node_stream5.getDefaultHighWaterMark)(true);
 var HIGH_WATER_MARK = DEFAULT_OBJECT_HIGH_WATER_MARK;
 var iterateOnData = async function* ({ onStdoutChunk, controller, binary, shouldEncode, encoding, shouldSplit, preserveNewlines }) {
   const generators = getGenerators({
@@ -19885,7 +20200,7 @@ var logOutputAsync = async ({ stream, onStreamEnd, fdNumber, encoding, allMixed,
   await logLines(linesIterable, stream, fdNumber, verboseInfo);
 };
 var resumeStream = async (stream) => {
-  await setImmediate();
+  await (0, import_promises10.setImmediate)();
   if (stream.readableFlowing === null) {
     stream.resume();
   }
@@ -19920,14 +20235,15 @@ var getBufferedData = async (streamPromise) => {
 var handleBufferedData = ({ bufferedData }) => isArrayBuffer(bufferedData) ? new Uint8Array(bufferedData) : bufferedData;
 
 // node_modules/execa/lib/resolve/wait-stream.js
-import { finished as finished5 } from "stream/promises";
+init_cjs_shims();
+var import_promises11 = require("stream/promises");
 var waitForStream = async (stream, fdNumber, streamInfo, { isSameDirection, stopOnExit = false } = {}) => {
   const state = handleStdinDestroy(stream, streamInfo);
   const abortController = new AbortController();
   try {
     await Promise.race([
       ...stopOnExit ? [streamInfo.exitPromise] : [],
-      finished5(stream, { cleanup: true, signal: abortController.signal })
+      (0, import_promises11.finished)(stream, { cleanup: true, signal: abortController.signal })
     ]);
   } catch (error) {
     if (!state.stdinCleanedUp) {
@@ -20042,9 +20358,14 @@ var getAllStream = ({ stdout, stderr, all }, [, bufferStdout, bufferStderr]) => 
 var getAllMixed = ({ all, stdout, stderr }) => all && stdout && stderr && stdout.readableObjectMode !== stderr.readableObjectMode;
 
 // node_modules/execa/lib/resolve/wait-subprocess.js
-import { once as once8 } from "events";
+init_cjs_shims();
+var import_node_events13 = require("events");
+
+// node_modules/execa/lib/ipc/buffer-messages.js
+init_cjs_shims();
 
 // node_modules/execa/lib/verbose/ipc.js
+init_cjs_shims();
 var shouldLogIpc = (verboseInfo) => isFullVerbose(verboseInfo, "ipc");
 var logIpcOutput = (message, verboseInfo) => {
   const verboseMessage = serializeVerboseMessage(message);
@@ -20206,11 +20527,15 @@ var waitForCustomStreamsEnd = (fileDescriptors, streamInfo) => fileDescriptors.f
   stopOnExit: type === "native"
 })));
 var throwOnSubprocessError = async (subprocess, { signal }) => {
-  const [error] = await once8(subprocess, "error", { signal });
+  const [error] = await (0, import_node_events13.once)(subprocess, "error", { signal });
   throw error;
 };
 
+// node_modules/execa/lib/convert/add.js
+init_cjs_shims();
+
 // node_modules/execa/lib/convert/concurrent.js
+init_cjs_shims();
 var initializeConcurrentStreams = () => ({
   readableDestroy: /* @__PURE__ */ new WeakMap(),
   writableFinal: /* @__PURE__ */ new WeakMap(),
@@ -20237,11 +20562,13 @@ var waitForConcurrentStreams = async ({ resolve, promises }, subprocess) => {
 };
 
 // node_modules/execa/lib/convert/readable.js
-import { Readable as Readable3 } from "stream";
-import { callbackify as callbackify2 } from "util";
+init_cjs_shims();
+var import_node_stream6 = require("stream");
+var import_node_util9 = require("util");
 
 // node_modules/execa/lib/convert/shared.js
-import { finished as finished6 } from "stream/promises";
+init_cjs_shims();
+var import_promises12 = require("stream/promises");
 var safeWaitForSubprocessStdin = async (subprocessStdin) => {
   if (subprocessStdin === void 0) {
     return;
@@ -20261,10 +20588,10 @@ var safeWaitForSubprocessStdout = async (subprocessStdout) => {
   }
 };
 var waitForSubprocessStdin = async (subprocessStdin) => {
-  await finished6(subprocessStdin, { cleanup: true, readable: false, writable: true });
+  await (0, import_promises12.finished)(subprocessStdin, { cleanup: true, readable: false, writable: true });
 };
 var waitForSubprocessStdout = async (subprocessStdout) => {
-  await finished6(subprocessStdout, { cleanup: true, readable: true, writable: false });
+  await (0, import_promises12.finished)(subprocessStdout, { cleanup: true, readable: true, writable: false });
 };
 var waitForSubprocess = async (subprocess, error) => {
   await subprocess;
@@ -20292,9 +20619,9 @@ var createReadable = ({ subprocess, concurrentStreams, encoding }, { from, binar
     encoding,
     preserveNewlines
   });
-  const readable2 = new Readable3({
+  const readable2 = new import_node_stream6.Readable({
     read,
-    destroy: callbackify2(onReadableDestroy.bind(void 0, { subprocessStdout, subprocess, waitReadableDestroy })),
+    destroy: (0, import_node_util9.callbackify)(onReadableDestroy.bind(void 0, { subprocessStdout, subprocess, waitReadableDestroy })),
     highWaterMark: readableHighWaterMark,
     objectMode: readableObjectMode,
     encoding: readableEncoding
@@ -20366,13 +20693,14 @@ var destroyOtherReadable = (stream, error) => {
 };
 
 // node_modules/execa/lib/convert/writable.js
-import { Writable as Writable3 } from "stream";
-import { callbackify as callbackify3 } from "util";
+init_cjs_shims();
+var import_node_stream7 = require("stream");
+var import_node_util10 = require("util");
 var createWritable = ({ subprocess, concurrentStreams }, { to } = {}) => {
   const { subprocessStdin, waitWritableFinal, waitWritableDestroy } = getSubprocessStdin(subprocess, to, concurrentStreams);
-  const writable2 = new Writable3({
+  const writable2 = new import_node_stream7.Writable({
     ...getWritableMethods(subprocessStdin, subprocess, waitWritableFinal),
-    destroy: callbackify3(onWritableDestroy.bind(void 0, {
+    destroy: (0, import_node_util10.callbackify)(onWritableDestroy.bind(void 0, {
       subprocessStdin,
       subprocess,
       waitWritableFinal,
@@ -20392,7 +20720,7 @@ var getSubprocessStdin = (subprocess, to, concurrentStreams) => {
 };
 var getWritableMethods = (subprocessStdin, subprocess, waitWritableFinal) => ({
   write: onWrite.bind(void 0, subprocessStdin),
-  final: callbackify3(onWritableFinal.bind(void 0, subprocessStdin, subprocess, waitWritableFinal))
+  final: (0, import_node_util10.callbackify)(onWritableFinal.bind(void 0, subprocessStdin, subprocess, waitWritableFinal))
 });
 var onWrite = (subprocessStdin, chunk, encoding, done) => {
   if (subprocessStdin.write(chunk, encoding)) {
@@ -20432,8 +20760,9 @@ var destroyOtherWritable = (stream, error) => {
 };
 
 // node_modules/execa/lib/convert/duplex.js
-import { Duplex as Duplex3 } from "stream";
-import { callbackify as callbackify4 } from "util";
+init_cjs_shims();
+var import_node_stream8 = require("stream");
+var import_node_util11 = require("util");
 var createDuplex = ({ subprocess, concurrentStreams, encoding }, { from, to, binary: binaryOption = true, preserveNewlines = true } = {}) => {
   const binary = binaryOption || BINARY_ENCODINGS.has(encoding);
   const { subprocessStdout, waitReadableDestroy } = getSubprocessStdout(subprocess, from, concurrentStreams);
@@ -20446,10 +20775,10 @@ var createDuplex = ({ subprocess, concurrentStreams, encoding }, { from, to, bin
     encoding,
     preserveNewlines
   });
-  const duplex2 = new Duplex3({
+  const duplex2 = new import_node_stream8.Duplex({
     read,
     ...getWritableMethods(subprocessStdin, subprocess, waitWritableFinal),
-    destroy: callbackify4(onDuplexDestroy.bind(void 0, {
+    destroy: (0, import_node_util11.callbackify)(onDuplexDestroy.bind(void 0, {
       subprocessStdout,
       subprocessStdin,
       subprocess,
@@ -20486,6 +20815,7 @@ var onDuplexDestroy = async ({ subprocessStdout, subprocessStdin, subprocess, wa
 };
 
 // node_modules/execa/lib/convert/iterable.js
+init_cjs_shims();
 var createIterable = (subprocess, encoding, {
   from,
   binary: binaryOption = false,
@@ -20525,6 +20855,7 @@ var addConvertedStreams = (subprocess, { encoding }) => {
 };
 
 // node_modules/execa/lib/methods/promise.js
+init_cjs_shims();
 var mergePromise = (subprocess, promise) => {
   for (const [property, descriptor] of descriptors) {
     const value = descriptor.value.bind(promise);
@@ -20586,7 +20917,7 @@ var handleAsyncOptions = ({ timeout, signal, ...options }) => {
 var spawnSubprocessAsync = ({ file, commandArguments, options, startTime, verboseInfo, command, escapedCommand, fileDescriptors }) => {
   let subprocess;
   try {
-    subprocess = spawn(...concatenateShell(file, commandArguments, options));
+    subprocess = (0, import_node_child_process5.spawn)(...concatenateShell(file, commandArguments, options));
   } catch (error) {
     return handleEarlyError({
       error,
@@ -20599,7 +20930,7 @@ var spawnSubprocessAsync = ({ file, commandArguments, options, startTime, verbos
     });
   }
   const controller = new AbortController();
-  setMaxListeners(Number.POSITIVE_INFINITY, controller.signal);
+  (0, import_node_events14.setMaxListeners)(Number.POSITIVE_INFINITY, controller.signal);
   const originalStreams = [...subprocess.stdio];
   pipeOutputAsync(subprocess, fileDescriptors, controller);
   cleanupOnExit(subprocess, options, controller);
@@ -20694,6 +21025,7 @@ var getAsyncResult = ({ errorInfo, exitCode, signal, stdio, all, ipcOutput, cont
 });
 
 // node_modules/execa/lib/methods/bind.js
+init_cjs_shims();
 var mergeOptions = (boundOptions, options) => {
   const newOptions = Object.fromEntries(
     Object.entries(options).map(([optionName, optionValue]) => [
@@ -20758,6 +21090,7 @@ var parseArguments = ({ mapArguments, firstArgument, nextArguments, deepOptions,
 };
 
 // node_modules/execa/lib/methods/command.js
+init_cjs_shims();
 var mapCommandAsync = ({ file, commandArguments }) => parseCommand(file, commandArguments);
 var mapCommandSync = ({ file, commandArguments }) => ({ ...parseCommand(file, commandArguments), isSync: true });
 var parseCommand = (command, unusedArguments) => {
@@ -20789,6 +21122,7 @@ var parseCommandString = (command) => {
 var SPACES_REGEXP = / +/g;
 
 // node_modules/execa/lib/methods/script.js
+init_cjs_shims();
 var setScriptSync = (boundExeca, createNested, boundOptions) => {
   boundExeca.sync = createNested(mapScriptSync, boundOptions);
   boundExeca.s = boundExeca.sync;
@@ -20814,11 +21148,11 @@ var {
 } = getIpcExport();
 
 // packages/cli/src/commands/run.ts
-import { existsSync as existsSync2 } from "fs";
-import { join as join2 } from "path";
+var import_fs2 = require("fs");
+var import_path2 = require("path");
 async function runCommand(task, options) {
   const cwd = process.cwd();
-  if (!existsSync2(join2(cwd, ".opencode", ".harness", "config.json"))) {
+  if (!(0, import_fs2.existsSync)((0, import_path2.join)(cwd, ".opencode", ".harness", "config.json"))) {
     console.log(source_default.yellow("\u26A0\uFE0F  Harness not initialized. Run ") + source_default.cyan("oc-harness init") + source_default.yellow(" first."));
     return;
   }
@@ -20924,13 +21258,14 @@ function buildPrompt(task, iteration, runTests, runLint) {
 }
 
 // packages/cli/src/commands/prd.ts
-import { readFile } from "fs/promises";
-import { existsSync as existsSync3 } from "fs";
-import { join as join3 } from "path";
+init_cjs_shims();
+var import_promises13 = require("fs/promises");
+var import_fs3 = require("fs");
+var import_path3 = require("path");
 var import_yaml = __toESM(require_dist(), 1);
 async function prdCommand(file, options) {
   const cwd = process.cwd();
-  if (!existsSync3(join3(cwd, ".opencode", ".harness", "config.json"))) {
+  if (!(0, import_fs3.existsSync)((0, import_path3.join)(cwd, ".opencode", ".harness", "config.json"))) {
     console.log(source_default.yellow("\u26A0\uFE0F  Harness not initialized. Run ") + source_default.cyan("oc-harness init") + source_default.yellow(" first."));
     return;
   }
@@ -20946,7 +21281,7 @@ async function prdCommand(file, options) {
   console.log("");
   const spinner = ora("Parsing PRD file...").start();
   try {
-    const content = await readFile(prdPath, "utf-8");
+    const content = await (0, import_promises13.readFile)(prdPath, "utf-8");
     const taskList = parsePrdFile(prdPath, content);
     spinner.succeed(`Found ${taskList.tasks.length} tasks in ${prdPath}`);
     console.log("");
@@ -20979,8 +21314,8 @@ async function prdCommand(file, options) {
 function findPrdFile(cwd) {
   const candidates = ["PRD.md", "prd.md", "tasks.md", "TASKS.md", "tasks.yaml", "tasks.yml"];
   for (const candidate of candidates) {
-    const path6 = join3(cwd, candidate);
-    if (existsSync3(path6)) {
+    const path6 = (0, import_path3.join)(cwd, candidate);
+    if ((0, import_fs3.existsSync)(path6)) {
       return path6;
     }
   }
@@ -21097,9 +21432,10 @@ function slugify(text) {
 }
 
 // packages/cli/src/commands/status.ts
-import { readFile as readFile2 } from "fs/promises";
-import { existsSync as existsSync4 } from "fs";
-import { join as join4 } from "path";
+init_cjs_shims();
+var import_promises14 = require("fs/promises");
+var import_fs4 = require("fs");
+var import_path4 = require("path");
 async function statusCommand() {
   const cwd = process.cwd();
   console.log("");
@@ -21107,10 +21443,10 @@ async function statusCommand() {
   console.log(source_default.cyan("\u2551") + source_default.bold.white("  OpenCode Harness - Status                ") + source_default.cyan("\u2551"));
   console.log(source_default.cyan("\u255A\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255D"));
   console.log("");
-  const harnessDir = join4(cwd, ".opencode", ".harness");
-  const configPath = join4(harnessDir, "config.json");
-  const memoryPath = join4(harnessDir, "memory.json");
-  if (!existsSync4(configPath)) {
+  const harnessDir = (0, import_path4.join)(cwd, ".opencode", ".harness");
+  const configPath = (0, import_path4.join)(harnessDir, "config.json");
+  const memoryPath = (0, import_path4.join)(harnessDir, "memory.json");
+  if (!(0, import_fs4.existsSync)(configPath)) {
     console.log(source_default.yellow("\u26A0\uFE0F  Harness not initialized in this project"));
     console.log(source_default.gray("   Run ") + source_default.cyan("oc-harness init") + source_default.gray(" to initialize"));
     return;
@@ -21118,7 +21454,7 @@ async function statusCommand() {
   console.log(source_default.green("\u2713 Harness initialized"));
   console.log("");
   try {
-    const configContent = await readFile2(configPath, "utf-8");
+    const configContent = await (0, import_promises14.readFile)(configPath, "utf-8");
     const config = JSON.parse(configContent);
     console.log(source_default.bold("Configuration:"));
     console.log(source_default.gray("  Memory Enabled: ") + source_default.white(config.memory.enabled ? "Yes" : "No"));
@@ -21130,9 +21466,9 @@ async function statusCommand() {
   } catch {
     console.log(source_default.yellow("\u26A0\uFE0F  Could not read config"));
   }
-  if (existsSync4(memoryPath)) {
+  if ((0, import_fs4.existsSync)(memoryPath)) {
     try {
-      const memoryContent = await readFile2(memoryPath, "utf-8");
+      const memoryContent = await (0, import_promises14.readFile)(memoryPath, "utf-8");
       const memory = JSON.parse(memoryContent);
       const lastUpdated = new Date(memory.lastUpdated).toLocaleString();
       const entryCount = memory.entries.length;
@@ -21168,9 +21504,9 @@ async function statusCommand() {
     console.log(source_default.gray("No memory file yet (will be created on first session)"));
     console.log("");
   }
-  const agentsDir = join4(cwd, ".opencode", "agents");
-  const commandsDir = join4(cwd, ".opencode", "commands");
-  if (existsSync4(agentsDir)) {
+  const agentsDir = (0, import_path4.join)(cwd, ".opencode", "agents");
+  const commandsDir = (0, import_path4.join)(cwd, ".opencode", "commands");
+  if ((0, import_fs4.existsSync)(agentsDir)) {
     const agents = await listFiles(agentsDir);
     if (agents.length > 0) {
       console.log(source_default.bold("Custom Agents:"));
@@ -21180,7 +21516,7 @@ async function statusCommand() {
       console.log("");
     }
   }
-  if (existsSync4(commandsDir)) {
+  if ((0, import_fs4.existsSync)(commandsDir)) {
     const commands = await listFiles(commandsDir);
     if (commands.length > 0) {
       console.log(source_default.bold("Custom Commands:"));
@@ -21202,6 +21538,7 @@ async function listFiles(dir) {
 }
 
 // packages/cli/src/commands/setup.ts
+init_cjs_shims();
 async function setupCommand(options) {
   console.log("");
   console.log(source_default.cyan("\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557"));

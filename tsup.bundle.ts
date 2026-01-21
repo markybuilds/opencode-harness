@@ -2,10 +2,11 @@ import { defineConfig } from 'tsup';
 
 export default defineConfig({
     entry: ['packages/cli/src/index.ts'],
-    format: ['esm'],
+    format: ['cjs'],
     outDir: 'dist',
     clean: true,
     // Bundle all dependencies
     noExternal: [/.*/],
-    target: 'es2022',
+    target: 'node20',
+    shims: true,
 });
